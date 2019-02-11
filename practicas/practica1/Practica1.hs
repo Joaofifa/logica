@@ -39,8 +39,11 @@ rotate = error "Implementar"
 
 -- |8| Función palindrome: Nos dice si una lista es palindroma o no.
 palindrome :: (Eq a) => [a] -> Bool
-palindrome [] = True;
-palindrome [a] = True;
+palindrome [] = True
+palindrome [a] = True
+palindrome (x:xs) =
+    if (headlL (x:xs) == lastL (x:xs)) then palindrome (initL (tailL (x:xs)))  
+    else False
 
 -- Función headL: Regresa el primer elemento de una lista.
 headlL :: [a] -> a
@@ -52,6 +55,21 @@ lastL :: [a] -> a
 lastL [] = error " "
 lastL (x:[]) = x
 lastL (x:xs) = lastL xs 
+
+-- Función tailL: Regresa la cola de una lista.
+tailL :: [a] -> [a]
+tailL [] = error ""
+tailL (x:xs) = xs 
+
+-- Función initL: Regresa la lista sin el último elemento.
+initL :: [a] -> [a]
+initL [] = error " D="
+initL (x:xs) = if (isEmpty xs) then [] else x:(initL xs)
+
+-- Función isEmpty: Nos dice si una lista es la lista vacía.
+isEmpty :: [a] -> Bool
+isEmpty [] = True
+isEmpty _ = False
 
 {- |9| Función intercala: Recibe un elemento y una lista de elementos. 
    Devuelve la lista de listas con el elemento intercalado en una lista.
