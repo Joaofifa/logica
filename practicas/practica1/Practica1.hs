@@ -37,13 +37,51 @@ filterP = error "Implementar"
 rotate :: Int -> [a] -> [a]
 rotate = error "Implementar"
 
--- |8| Función palindrome: Nos dice si una lista es palindroma o no.
+{- |8| Función palindrome: Nos dice si una lista es palindroma o no. Por
+   definición, una palabra palíndroma es la lista vacía y la lista con un
+   elemento. Si la lista es igual a su reversa, entonces regresa True.
+   En caso contrario, regresa False.
+-} 
 palindrome :: (Eq a) => [a] -> Bool
 palindrome [] = True
 palindrome [a] = True
 palindrome (x:xs) =
     if (headlL (x:xs) == lastL (x:xs)) then palindrome (initL (tailL (x:xs)))  
     else False
+
+{- |9| Función intercala: Recibe un elemento y una lista de elementos. 
+   Devuelve la lista de listas con el elemento intercalado en una lista.
+-}
+intercala :: a -> [a] -> [[a]]
+intercala a [] = [[a]]
+intercala a (x:xs) = (a:x:xs) : [(x:xs) | xs <- intercala a xs]
+ 
+{- |10| Función factorial: Recibe un número. Si el número es negativo, regresa
+   un error. En caso contrario, regresa el factorial del número.
+-} 
+factorial :: Int -> Int
+factorial 0 = 1
+factorial n = 
+    if n < 0 then error "El número debe ser un entero positvo." 
+    else n*factorial (n-1)  
+
+{- |11| Función repite: Recibe un número y un elemento. Si el número es
+   negativo, regresa un error. En caso contrario, regresa una lista con el
+   elemento repetivo n veces.
+-}
+repite :: Int -> a -> [a] 
+repite 0 a = []
+repite n a = 
+    if n < 0 then error "El número debe ser un entero positivo." 
+    else (a:repite (n-1) a)
+
+{- |12| Función fib: Recibe un número y regresa la función fibonacci aplicada
+   al número.
+ -}
+fib :: Int -> Int
+fib = error "Implementar"
+
+-- Funciones auxiliares.
 
 -- Función headL: Regresa el primer elemento de una lista.
 headlL :: [a] -> a
@@ -70,35 +108,3 @@ initL (x:xs) = if (isEmpty xs) then [] else x:(initL xs)
 isEmpty :: [a] -> Bool
 isEmpty [] = True
 isEmpty _ = False
-
-{- |9| Función intercala: Recibe un elemento y una lista de elementos. 
-   Devuelve la lista de listas con el elemento intercalado en una lista.
--}
-intercala :: a -> [a] -> [[a]]
-intercala = error "Implementar"
- 
-
-{- |10| Función factorial: Recibe un número. Si el número es negativo, regresa
-   un error. En caso contrario, regresa el factorial del número.
--} 
-factorial :: Int -> Int
-factorial 0 = 1
-factorial n = 
-    if n < 0 then error "El número debe ser un entero positvo." 
-    else n*factorial (n-1)  
-
-{- |11| Función repite: Recibe un número y un elemento. Si el número es
-   negativo, regresa un error. En caso contrario, regresa una lista con el
-   elemento repetivo n veces.
--}
-repite :: Int -> a -> [a] 
-repite 0 a = []
-repite n a = 
-    if n < 0 then error "El número debe ser un entero positivo." 
-    else (a:repite (n-1) a)
-
-{- |12| Función fib: Recibe un número y regresa la función fibonacci aplicada
-   al número.
- -}
-fib :: Int -> Int
-fib = error "Implementar"
