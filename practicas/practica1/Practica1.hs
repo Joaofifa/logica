@@ -122,7 +122,7 @@ fib 0 = 0
 fib 1 = 1
 fib n =
     if n < 0 then error "El número debe ser un entero positivo."
-    else fib (n-1) + fib(n-2)
+    else fib (n-1) + fib (n-2)
 
 -- Funciones auxiliares.
 

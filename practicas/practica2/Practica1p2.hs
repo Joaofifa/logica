@@ -1,11 +1,13 @@
 module Practica1p2 where
 
-{-|1|
-   Función permutaciones: Recibe una lista de elementos y devuelve todas las permutaciones de los elementos de la lista.
+{- |1| Función permutaciones: Recibe una lista de elementos y devuelve todas   
+   las permutaciones de los elementos de la lista.
    Hint: Se recomienda el uso de la función intercala.
 -}
 permutaciones:: [a] -> [[a]]
-permutaciones = error "Implementar"
+permutaciones [] = []
+permutaciones [e] = [[a]]
+permutaciones (x:xs) = (x:xs) : [(x:ys) | xs <- intercala y xs]
 
 -- |2| Función factores: Recibe un entero y regresa la lista de sus factores.
 factores :: Int -> [Int]
@@ -38,3 +40,12 @@ balanced = error "Implementar"
 -- |8| Función pre: Devuelve el resultado de recorrer un arbol en pre-orden.
 pre :: Tree a -> [a]
 pre = error "Implementar"
+
+-- Funciones auxiliares.
+
+{- |9| Función intercala: Recibe un elemento y una lista de elementos. 
+   Devuelve la lista de listas con el elemento intercalado en una lista.
+-}
+intercala :: a -> [a] -> [[a]]
+intercala a [] = [[a]]
+intercala a (x:xs) = (a:x:xs) : [(x:xs) | xs <- intercala a xs]
