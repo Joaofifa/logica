@@ -1,0 +1,133 @@
+\documentclass[letterpaper,12pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Lógica Computacional \\ Tarea Semanal 1}
+\author{Rubí Rojas Tania Michelle}
+\date{21 de febrero de 2019}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    
+    % Ejercicio 1.
+    \item Define recursivamente la función $icd$ que se especifica como sigue:
+    $icd$ toma como entrada una fórmula $\phi$ y devuelve la fórmula resultante
+    al intercambiar en $\phi$ todas las conjunciones por disyunciones, y las 
+    disyunciones por conjunciones, respectivamente. Por ejemplo, se debe 
+    cumplir que:
+    \begin{center}
+        $icd (p \land (q \lor \neg r) \rightarrow \neg (r \lor s) \land t) = $
+        $p \lor (q \land \neg r) \rightarrow \neg (r \land s) \lor t$
+    \end{center}
+
+    % Solución del ejercicio 1.
+    \textit{Solución:} Definimos recursivamente la función 
+    $icd :: PROP \rightarrow PROP$ de la siguiente forma:
+    \begin{itemize}
+        \item $icd (\phi) = \phi$,  si $\phi$ es atómica. 
+        \item $icd (\neg \phi) = \neg icd(\phi)$. 
+        \item $icd (\phi \land \psi) = icd(\phi) \lor icd(\psi)$. 
+        \item $icd (\phi \lor \psi) = icd(\phi) \land icd(\psi)$. 
+        \item $icd (\phi \rightarrow \psi) = icd(\phi) \rightarrow icd(\psi)$. 
+    \end{itemize}
+
+    % Ejercicio 2.
+    \item Verifica tu definición mostrando paso a paso el cálculo del ejemplo 
+    de arriba.
+
+    % Solución del ejercicio 2.
+    \textit{Solución: }
+    \begin{align*}
+        icd(p \land (q \lor \neg r) \rightarrow \neg (r \lor s) \land t)
+        &= icd(p \land (q\lor\neg r)) \rightarrow icd(\neg (r\lor s) \land t)\\
+        &= icd(p) \lor icd(q\lor\neg r) \rightarrow icd( \neg(r\lor s)) \lor icd(t)\\
+        &= p \lor (icd(q) \land icd(\neg r)) \rightarrow \neg icd(r \lor s) \lor t\\
+        &= p \lor (q \land \neg icd(r)) \rightarrow \neg (icd(r) \land icd(s)) \lor t\\
+        &= p \lor (q  \land \neg r) \rightarrow \neg (r \land s) \lor t
+    \end{align*}
+
+    \newpage
+    % Ejercicio 3.
+    \item Define la función $atom(\phi)$ que, para $\phi \in PL$, devuelve el 
+    número de fórmulas atómicas $(\top, \bot$ o variables$)$ en $\phi$.
+    
+    % Solución del ejercicio 3.
+    \textit{Solución:} Definimos la función $atom :: PL \rightarrow \mathbb{N}$
+    de la siguiente forma:
+    \begin{itemize}
+        \item $atom(\phi) = 1$, si $\phi$ es atómica.
+        \item $atom(\neg \phi) = atom(\phi)$. 
+        \item $atom(\phi \star \psi) = atom(\phi) + atom(\psi)$.
+    \end{itemize}
+
+    % Ejercicio 4.
+    \item Demuestra que para cualquier fórmula $\phi \in PL$ se cumple que:
+    \begin{center}
+        $atom(\phi) \leq con(\phi) + 1$
+    \end{center}
+    donde $con(\phi$) es la función que devuelve el número de conectivos de 
+    $\phi$.
+
+    % Demostración del ejercicio 4.
+    \begin{proof}
+        Inducción sobre fórmulas. \\ \\
+        \textbf{Base:} $\phi$ es atómica. Entonces 
+        $atom(\phi) = 1 = 0 + 1 = con(\top) + 1$.\\
+        Por lo tanto, se cumple la base de inducción.
+
+        \textbf{Hipótesis de inducción:} Supongamos que para cualquier fórmula
+        $\phi' \in PL$ se cumple que $atom(\phi') \leq con(\phi') + 1$.
+
+        \textbf{Paso inductivo:} Tenemos dos casos
+        \begin{itemize}
+            \item[i)] $\phi = \neg \phi'$. Entonces 
+            $atom(\phi) = atom(\phi')$ y $con(\phi) = con(\phi')$. Así, 
+            \begin{align*}
+                atom(\phi) &= atom(\neg \phi')
+                           && \text{def. de $\phi$ en el caso $i$)} \\
+                           &= atom(\phi')
+                           && \text{def. recursiva de $\phi$} \\
+                           &\leq con(\phi') + 1
+                           && \text{hipótesis de inducción} \\
+                           &\leq con(\phi) + 1
+                           && \text{ya que $con(\phi) = con(\phi')$}
+            \end{align*} 
+
+            \item[ii)] $\phi = (\varphi$ $\star$ $\psi)$. Entonces tenemos que 
+            \begin{align*}
+                atom(\phi) &= atom(\varphi \star \psi) 
+                           && \text{def. de $\phi$ en el caso $ii)$} \\ 
+                           &= atom(\varphi) + atom(\psi)
+                           && \text{def. recursiva de $atom$} \\
+                           &\leq (1 + con(\varphi)) + (1 + con(\psi))
+                           && \text{hipótesis de inducción} \\
+                           &\leq 1 + (1 + con(\varphi) + con(\psi))
+                           && \text{reagrupando} \\
+                           &\leq 1 + con(\phi)
+                           && \text{def. recursiva de $con$}
+            \end{align*}
+
+        \end{itemize} 
+        
+    \end{proof}
+
+\end{enumerate}
+
+\end{document}
