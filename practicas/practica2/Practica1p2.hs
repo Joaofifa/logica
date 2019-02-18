@@ -1,27 +1,31 @@
 module Practica1p2 where
 
-{- |1| Función permutaciones: Recibe una lista de elementos y devuelve todas   
-   las permutaciones de los elementos de la lista.
+{- |1| Función permutaciones: Recibe una lista de elementos. Regresa todas las   
+   permutaciones de los elementos de la lista.
    Hint: Se recomienda el uso de la función intercala.
 -}
 permutaciones:: [a] -> [[a]]
 permutaciones [] = []
-permutaciones [e] = [[a]]
-permutaciones (x:xs) = (x:xs) : [(x:ys) | xs <- intercala y xs]
+permutaciones [e] = [[e]]
 
 -- |2| Función factores: Recibe un entero y regresa la lista de sus factores.
 factores :: Int -> [Int]
-factores = error "Implementar"
+factores n = [d | d <- [1..n], mod n d == 0]
 
--- |3| Función perfectos: Recibe un número n y devuelve la lista de números perfectos que se encuentran hasta el número n. 
+{- |3| Función perfectos: Recibe un número n. Regresa la lista de números 
+   perfectos que se encuentran hasta el número n.
+-}
 perfectos :: Int -> [Int]
-perfectos = error "Implementar"
+perfectos n = [p | p <- [2..n], sum (initL (divisores p)) == p]
+    where divisores p = [d | d <- [1..n-1], mod p d == 0]
 
 -- |4| Función ternasPitagoricas: Recibe un número y regresa la lista de ternas pitagóricas que correspondan.
 ternasPitagoricas:: Int -> [(Int,Int,Int)]
 ternasPitagoricas = error "Implementar"
 
--- |5| Función isSubSet: Recibe dos listas y nos dice si la primera lista es subconjunto de la segunda. 
+{- |5| Función isSubSet: Recibe dos listas. Nos dice si la primera lista está
+   contenida en la segunda lista.
+-} 
 isSubSet :: Eq a => [a] -> [a] -> Bool
 isSubSet = error "Implementar"
 
@@ -37,15 +41,28 @@ deleteT = error "Implementar"
 balanced :: Tree a -> Bool
 balanced = error "Implementar"
 
--- |8| Función pre: Devuelve el resultado de recorrer un arbol en pre-orden.
+{- |8| Función pre: Recibe un árbol binario. Regresa la lista con los elementos
+   del árbol al ser recorrido en pre-órden. 
+-}
 pre :: Tree a -> [a]
-pre = error "Implementar"
+pre Empty = []
+pre (Branch e i d) = e : (pre i ++ pre d)
 
 -- Funciones auxiliares.
 
-{- |9| Función intercala: Recibe un elemento y una lista de elementos. 
+{- |Aux. 1| Función intercala: Recibe un elemento y una lista de elementos. 
    Devuelve la lista de listas con el elemento intercalado en una lista.
 -}
 intercala :: a -> [a] -> [[a]]
 intercala a [] = [[a]]
 intercala a (x:xs) = (a:x:xs) : [(x:xs) | xs <- intercala a xs]
+
+-- |Aux. 2| Función initL: Regresa la lista sin el último elemento.
+initL :: [a] -> [a]
+initL [] = error "La lista está vacía."
+initL (x:xs) = if (isEmpty xs) then [] else x:(initL xs)
+
+-- |Aux. 3| isEmpty: Nos dice si una lista es la lista vacía.
+isEmpty :: [a] -> Bool
+isEmpty [] = True
+isEmpty _ = False
