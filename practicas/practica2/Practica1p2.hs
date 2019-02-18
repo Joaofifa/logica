@@ -8,6 +8,7 @@ permutaciones:: [a] -> [[a]]
 permutaciones [] = []
 permutaciones [e] = [[e]]
 
+
 -- |2| Función factores: Recibe un entero y regresa la lista de sus factores.
 factores :: Int -> [Int]
 factores n = [d | d <- [1..n], mod n d == 0]
