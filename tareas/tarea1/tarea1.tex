@@ -87,18 +87,26 @@
 
     % Demostración del ejercicio 4.
     \begin{proof}
-        Inducción sobre fórmulas. \\ \\
-        \textbf{Base:} $\phi$ es atómica. Entonces 
-        $atom(\phi) = 1 = 0 + 1 = con(\top) + 1$.\\
-        Por lo tanto, se cumple la base de inducción.
-
-        \textbf{Hipótesis de inducción:} Supongamos que para cualquier fórmula
-        $\phi' \in PL$ se cumple que $atom(\phi') \leq con(\phi') + 1$.
-
-        \textbf{Paso inductivo:} Tenemos dos casos
+        Inducción sobre la fórmula $\phi$. \\ \\
+        \textbf{Base de inducción:} $\phi$ es atómica (no tiene operadores). 
         \begin{itemize}
-            \item[i)] $\phi = \neg \phi'$. Entonces 
-            $atom(\phi) = atom(\phi')$ y $con(\phi) = con(\phi')$. Así, 
+            \item $\phi = \top$. Entonces 
+            $atom(\top)= 1 = 0 + 1 = con(\top) + 1$
+            \item $\phi = \bot$. Entonces 
+            $atom(\bot)= 1 = 0 + 1 = con(\bot) + 1$
+            \item $\phi = Var P$. Entonces 
+            $atom(Var P) = 1 = 0 + 1 = con(Var P) + 1$
+        \end{itemize}
+
+        \textbf{Hipótesis de inducción:} Supongamos que 
+        \begin{center}
+            $atom(\phi') \leq con(\phi') + 1$ y $atom(\phi'') \leq con(\phi'') + 1$
+        \end{center}
+
+        \textbf{Paso inductivo:} Probamos la propiedad para dos casos:
+        \begin{itemize}
+            \item[i)] $\phi = \neg \phi'$. Sabemos que  
+            $atom(\phi) = atom(\phi')$ y $con(\phi) = con(\phi')$. Entonces, 
             \begin{align*}
                 atom(\phi) &= atom(\neg \phi')
                            && \text{def. de $\phi$ en el caso $i$)} \\
@@ -116,12 +124,14 @@
                            && \text{def. de $\phi$ en el caso $ii)$} \\ 
                            &= atom(\varphi) + atom(\psi)
                            && \text{def. recursiva de $atom$} \\
-                           &\leq (1 + con(\varphi)) + (1 + con(\psi))
+                           &\leq (con(\varphi) + 1) + (con(\psi) + 1)
                            && \text{hipótesis de inducción} \\
-                           &\leq 1 + (1 + con(\varphi) + con(\psi))
+                           &\leq (con(\varphi) + con(\psi) + 1) + 1
                            && \text{reagrupando} \\
-                           &\leq 1 + con(\phi)
-                           && \text{def. recursiva de $con$}
+                           &\leq con (\varphi \star \psi) + 1
+                           && \text{def. recursiva de $con$} \\
+                           &\leq con(\phi) + 1
+                           && \text{def. de $\phi$ en el caso $ii)$}
             \end{align*}
 
         \end{itemize} 

@@ -5,20 +5,26 @@ module Practica1p2 where
    Hint: Se recomienda el uso de la función intercala.
 -}
 permutaciones:: [a] -> [[a]]
-permutaciones [] = []
-permutaciones [e] = [[e]]
+permutaciones [] = [[]]
+permutaciones (x:xs) = 
+    [ys | zs <- permutaciones xs, ys <- intercala x zs]
 
-
--- |2| Función factores: Recibe un entero y regresa la lista de sus factores.
+{- |2| Función factores: Recibe un número entero positivo n. Regresa la lista
+   de sus factores.
+-}
 factores :: Int -> [Int]
-factores n = [d | d <- [1..n], mod n d == 0]
+factores n =
+    if n < 0 then error "El número debe ser un entero positivo."
+    else [f | f <- [1..n], mod n f == 0]
 
-{- |3| Función perfectos: Recibe un número n. Regresa la lista de números 
-   perfectos que se encuentran hasta el número n.
+{- |3| Función perfectos: Recibe un número entero positivo n. Regresa la lista
+   de números perfectos que se encuentran hasta el número n.
 -}
 perfectos :: Int -> [Int]
-perfectos n = [p | p <- [2..n], sum (initL (divisores p)) == p]
-    where divisores p = [d | d <- [1..n-1], mod p d == 0]
+perfectos n = 
+    if n < 0 then error "El número debe ser un entero positivo."
+    else [p | p <- [1..n], sum (initL (divisores p)) == p]
+        where divisores p = [d | d <- [1..n-1], mod p d == 0]
 
 -- |4| Función ternasPitagoricas: Recibe un número y regresa la lista de ternas pitagóricas que correspondan.
 ternasPitagoricas:: Int -> [(Int,Int,Int)]
