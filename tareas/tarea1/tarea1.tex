@@ -41,7 +41,9 @@
     \textit{Solución:} Definimos recursivamente la función 
     $icd :: PROP \rightarrow PROP$ de la siguiente forma:
     \begin{itemize}
-        \item $icd (\phi) = \phi$,  si $\phi$ es atómica. 
+        \item $icd (\top) = \top$.
+        \item $icd (\bot) = \bot$.
+        \item $icd (Var P) = Var P$. 
         \item $icd (\neg \phi) = \neg icd(\phi)$. 
         \item $icd (\phi \land \psi) = icd(\phi) \lor icd(\psi)$. 
         \item $icd (\phi \lor \psi) = icd(\phi) \land icd(\psi)$. 
@@ -72,7 +74,9 @@
     \textit{Solución:} Definimos la función $atom :: PL \rightarrow \mathbb{N}$
     de la siguiente forma:
     \begin{itemize}
-        \item $atom(\phi) = 1$, si $\phi$ es atómica.
+        \item $atom(\top) = 1$.
+        \item $atom(\bot) = 1$.
+        \item $atom(Var P) = 1$.
         \item $atom(\neg \phi) = atom(\phi)$. 
         \item $atom(\phi \star \psi) = atom(\phi) + atom(\psi)$.
     \end{itemize}
