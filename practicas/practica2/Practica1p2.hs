@@ -6,8 +6,7 @@ module Practica1p2 where
 -}
 permutaciones:: [a] -> [[a]]
 permutaciones [] = [[]]
-permutaciones (x:xs) = 
-    [ys | zs <- permutaciones xs, ys <- intercala x zs]
+permutaciones (x:xs) = [ys | zs <- permutaciones xs, ys <- intercala x zs]
 
 {- |2| Función factores: Recibe un número entero positivo n. Regresa la lista
    de sus factores.
@@ -26,9 +25,14 @@ perfectos n =
     else [p | p <- [1..n], sum (initL (divisores p)) == p]
         where divisores p = [d | d <- [1..n-1], mod p d == 0]
 
--- |4| Función ternasPitagoricas: Recibe un número y regresa la lista de ternas pitagóricas que correspondan.
+{- |4| Función ternasPitagoricas: Recibe un número entero positivo n. Regresa 
+   la lista de ternas pitagóricas que corresponden. 
+-}
 ternasPitagoricas:: Int -> [(Int,Int,Int)]
-ternasPitagoricas = error "Implementar"
+ternasPitagoricas n =
+    if n < 0 then error "El número debe ser un entero positivo."
+    else [(a, b, c) | a <- [1..n], b <- [1..n], c <- [1..n], terna a b c]
+        where terna a b c = c*c == a*a + b*b 
 
 {- |5| Función isSubSet: Recibe dos listas. Nos dice si la primera lista está
    contenida en la segunda lista.
