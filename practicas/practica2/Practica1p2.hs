@@ -34,11 +34,14 @@ ternasPitagoricas n =
     else [(a, b, c) | a <- [1..n], b <- [1..n], c <- [1..n], terna a b c]
         where terna a b c = c*c == a*a + b*b 
 
-{- |5| Función isSubSet: Recibe dos listas. Nos dice si la primera lista está
-   contenida en la segunda lista.
--} 
+-- |5| Función isSubSet: Recibe dos listas y nos dice si la primera lista es subconjunto de la segunda. 
 isSubSet :: Eq a => [a] -> [a] -> Bool
-isSubSet = error "Implementar"
+isSubSet [] _ = True
+isSubSet [a] [] = False
+isSubSet [a] (x:xs) = if(a == x)
+	 then True
+	 else isSubSet [a] xs
+isSubSet (y:ys) xs = ((isSubSet [y] xs) && isSubSet ys xs)
 
 data Tree a = Empty | Branch a (Tree a) (Tree a) deriving (Show, Ord, Eq)
 
@@ -46,11 +49,21 @@ leaf x = Branch x Empty Empty
 
 -- |6| Función deleteT: Elimina el elemento de un árbol binario. 
 deleteT :: (Eq a, Ord a) => a -> Tree a -> Tree a
-deleteT = error "Implementar"
+deleteT _ Empty = Empty
+deleteT a (Branch e l r)= if(a == e)
+	then deleteActual (Branch e l r)
+	else if (a < e)
+		then (Branch e (deleteT a l) r)
+		else (Branch e l (deleteT a r))
+
 
 -- |7| Función balanced: Nos dice si un árbol binario esta balanceado.
 balanced :: Tree a -> Bool
-balanced = error "Implementar"
+balanced Empty = True
+balanced (Branch e l r) = if(not(((altura l) - (altura r) > 1) || ((altura l) - (altura r) < -1))) 
+	then (balanced l) && (balanced r)
+	else False
+
 
 {- |8| Función pre: Recibe un árbol binario. Regresa la lista con los elementos
    del árbol al ser recorrido en pre-órden. 
@@ -77,3 +90,45 @@ initL (x:xs) = if (isEmpty xs) then [] else x:(initL xs)
 isEmpty :: [a] -> Bool
 isEmpty [] = True
 isEmpty _ = False
+
+-- |Aux. 4| altura: Nos regresa la altura del nodo actual
+altura :: Tree a -> Int
+altura Empty = 0
+altura (Branch e Empty Empty) = 1
+altura (Branch e l r) = if(altura l <= altura r)
+	then 1 + altura r
+	else 1 + altura l
+
+-- |Aux. 5| deleteActual: Elimina el nodo principal del arbol, y lo cambia por el nodo menor de la rama derecha
+deleteActual :: (Eq a, Ord a) => Tree a -> Tree a
+deleteActual (Branch e Empty Empty) = Empty
+deleteActual (Branch e l Empty) = l
+deleteActual (Branch e Empty r) = r
+deleteActual (Branch e l r) = if(leftT r)
+	then (Branch (leftE r) l (removeLeft 1 r))
+	else (Branch (elementT r) l (rightReplace r))
+
+-- |Aux. 6| leftE: Regresa el elemento menor del arbol
+leftE :: (Eq a, Ord a) => Tree a ->  a
+leftE (Branch e Empty _) = e
+leftE (Branch _ l _) = leftE l
+
+-- |Aux. 7| removeLeft: Elimina el elemento menor del arbol
+removeLeft :: (Eq a, Ord a) => Int -> Tree a -> Tree a
+removeLeft 1 (Branch e Empty Empty) = Empty
+removeLeft 1 (Branch e l r) = (Branch e (removeLeft 1 l) r)
+removeLeft 0 (Branch e l r) = (Branch e l r)
+
+-- |Aux. 8| leftT: Avisa si el Branch izquierdo esta vacio
+leftT :: (Eq a, Ord a) => Tree a -> Bool
+leftT (Branch a l r) = if(l == Empty) 
+	then False
+	else True
+
+-- |Aux. 9| elementT: Regresa el nodo principal del arbol
+elementT :: (Eq a, Ord a) => Tree a -> a
+elementT (Branch e _ _) = e
+
+-- |Aux. 10| rightReplace: Reemplaza el arbol con la rama derecha
+rightReplace :: (Eq a, Ord a) => Tree a -> Tree a
+rightReplace (Branch a _ r) = r
