@@ -1,0 +1,83 @@
+\documentclass[letterpaper,11pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Lógica Computacional \\ Tarea Semanal 2}
+\author{Rubí Rojas Tania Michelle}
+\date{28 de febrero de 2019}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    
+    % Pregunta 1.
+    \item Sea $\varphi = ((p \rightarrow r) \land (q \rightarrow r)) 
+    \rightarrow ((p \land q) \rightarrow r)$. Convierte a $\varphi$ en una
+    fórmula equivalente $\varphi'$ que se encuentre en forma normal negativa.\\
+    \textit{Solución:}
+    \begin{align*}
+        \varphi &= ((p \rightarrow r) \land (q \rightarrow r)) 
+                   \rightarrow ((p \land q) \rightarrow r) 
+                && \text{definición de $\varphi$} \\
+                &\equiv \neg ((\neg p \lor r) \land (\neg q \lor r))
+                   \lor (\neg (p \land q) \lor r)
+                && \text{ya que $P \rightarrow Q \equiv \neg P \lor Q$} \\
+                &\equiv (\neg (\neg p \lor r) \lor \neg (\neg q \lor r))
+                   \lor ((\neg p \lor \neg q) \lor r)
+                && \text{De Morgan} \\
+                &\equiv ((\neg \neg p \land \neg r) \lor 
+                   (\neg \neg q \land \neg r)) \lor ((\neg p \lor \neg q) \lor r)
+                && \text{De Morgan} \\
+                &\equiv ((p \land \neg r) \lor (q \land \neg r))
+                   \lor ((\neg p \lor \neg q) \lor r)
+                && \text{ya que $\neg \neg P \equiv P$}
+    \end{align*}
+
+    Como $\varphi' = ((p \land \neg r) \lor (q \land \neg r)) \lor 
+    ((\neg p \lor \neg q) \lor r)$ no contiene equivalencias ni implicaciones y
+    las negaciones que figuran en $\varphi$ afectan sólo a fórmulas atómicas, 
+    entonces $\varphi'$ es una fórmula equivalente a $\varphi$ que se encuentra 
+    en forma normal negativa.
+    
+    % Pregunta 2.
+    \item Define recursivamente la función \textbf{isPermutation} que, dadas
+    dos listas nos dice si una es permutación de la otra.\\
+    \textit{Solución:} Definimos recursivamente la función 
+    $isPermutation :: [a] -> [a] -> Bool$ de la siguiente manera:
+
+    \begin{itemize}
+        \item isPermutation $[] [] = True$
+        \item isPermutation $(x:xs) (y:ys) = $
+    \end{itemize}
+
+    % Pregunta 3.
+    \item Verifica tu definición aplicándola a las siguientes listas (debes
+    mostrar paso a paso las llamadas recursivas) $A = [1,2,3,4],$ 
+    $B = [1,2,3,4]$, osea, hacer la ejecución de \textbf{isPermutation A B}.\\
+    \textit{Solución:}
+    
+    % Pregunta 4.
+    \item Determina mediante el método de Tableaux si $\Gamma \models \varphi$
+    donde $\Gamma = \{ \neg p \lor q$, $\neg (q \land \neg r)$, 
+    $r \rightarrow s \}$ y $\varphi = \neg p \lor s$.\\
+    \textit{Solución:}
+
+\end{enumerate}
+    
+\end{document}
