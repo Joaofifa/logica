@@ -124,10 +124,13 @@ fnc phi = case (fnn phi) of
 -}
 esFNC :: Prop -> Bool
 esFNC phi = case phi of
-    Top -> isClause Top
-    Bot -> isClause Bot 
-    Var p -> isClause (Var p)
-    Conj p q -> esFNC p && esFNC q
+    Top -> True 
+    Bot -> True 
+    Var p -> True 
+    Neg p -> case p of
+        (Var k) -> True
+        _ -> False 
+    Conj p q-> isClause p && isClause q 
     _ -> False 
 
 {- |12| Función correcto: Recibe una lista de expresiones proposicionales 
@@ -143,15 +146,16 @@ correcto = error "Implementar"
    si una expresión proposicional P es una cláusula.
 -}
 isClause :: Prop -> Bool
-isClause c = case c of 
-    Top -> True
+isClause phi = case phi of
+    Top -> True 
     Bot -> True 
     Var p -> True 
-    Neg l -> case l of
-        Var l -> True 
+    Neg p -> case p of
+        (Var k) -> True
         _ -> False 
-    Disy p q -> isClause p && isClause q  
-    _ -> False
+    Disy (Var p) (Var q) -> True 
+    Disy p q -> isClause p && isClause q 
+    _ -> False 
 
 {- |Aux. 2| Función fnn: Recibe una expresión proposicional P. Regresa una
    expresión proposicional P' equivalente a P tal que P' es la Forma Normal
@@ -173,6 +177,6 @@ fnn phi = case deleteImpl phi of
 -}
 distri :: Prop -> Prop -> Prop 
 distri phi psi = case (phi, psi) of 
-    (Conj phi psi, _) -> Conj (distri phi psi) (distri phi psi)
-    (_, Conj phi psi) -> Conj (distri phi psi) (distri phi psi)
-    (_, _) -> Disy phi psi
+    (Conj phi psi, n) -> Conj (distri phi n) (distri phi n)
+    (n, Conj phi psi) -> Conj (distri n psi) (distri n psi)
+    (phi, psi) -> Disy phi psi
