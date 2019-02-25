@@ -1,0 +1,518 @@
+\documentclass[letterpaper,11pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Tablas
+\usepackage{multirow}
+% Código
+\usepackage{listings}
+%Tableaux
+\usepackage{prooftrees}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Lógica Computacional \\ Tarea 1}
+\author{Rubí Rojas Tania Michelle}
+\date{28 de febrero de 2019}
+
+\begin{document}
+    \maketitle
+
+    \begin{enumerate}
+        
+        % Ejercicio 1.
+        \item Enuncia formalmente lo siguiente:
+        \begin{itemize}
+
+            % Definición 1.
+            \item[a)] Sintaxis de la lógica proposicional. \\
+            \textit{Solución:} Definamos un lenguaje para la lógica de
+            proposiciones.  \\
+            El alfabeto consta de:
+
+            \begin{itemize}
+                \item Símbolos o variables proposicionales (un número
+                infinito) : $p_{1}, ... , p_{n}, ...$
+                \item Constantes lógicas: $\bot, \top$
+                \item Conectivos u operadores lógicos: $\neg, \land, \lor 
+                \rightarrow, \leftrightarrow$
+                \item Símbolos auxiliares: $(,)$
+            \end{itemize}
+
+            El conjunto de expresiones o fórmulas atómicas, denotado
+            $ATOM$ consta de:
+
+            \begin{itemize}
+                \item Las variables proposicionales: $p_{1}, ..., p_{n}, ...$
+                \item Las constantes $\bot, \top$
+            \end{itemize}
+
+            Las expresiones que formarán nuestro lenguaje $PROP$, llamadas
+            usualmente fórmulas, se definen recursivamente como sigue:
+
+            \begin{itemize}
+                \item Si $\varphi \in ATOM$ entonces $\varphi \in PROP$. Es 
+                decir, toda fórmula atómica es una fórmula.
+                \item Si $\varphi \in PROP$ entonces 
+                $(\neg \varphi) \in PROP$.
+                \item $\varphi, \psi$ entonces $(\varphi \land \psi), 
+                (\varphi \lor \psi), (\varphi \rightarrow \psi), 
+                (\varphi \leftrightarrow \psi) \in PROP$.
+                \item Son todas.
+            \end{itemize}
+
+            % Definición 2. 
+            \item[b)] Semántica de la lógica proposicional. \\ 
+            \textit{Solución:} Definamos el significado de cada conectivo 
+            lógico:
+
+            \begin{itemize}
+                \item \textbf{La negación}
+    
+                \begin{itemize}
+                    \item La negación de la fórmula $P$ es la fórmula 
+                    $\neg P$.
+                    \item Símbolo utilizado: $\neg$
+                    \item Su significado en español es: No $P$, no es cierto
+                    que $P$, es falso que $P$, etc.
+                    \item Semántica (tabla de verdad):
+                    \begin{table}[htbp]
+                        \begin{center}
+                        \begin{tabular}{|l|l|}
+                        \hline
+                        $P$ & $\neg P$ \\
+                        \hline \hline
+                        1 & 0 \\ \hline
+                        0 & 1 \\ \hline
+                        \end{tabular}
+                        \end{center}
+                    \end{table}
+                \end{itemize}
+
+                \newpage
+                \item \textbf{La conjunción}
+                \begin{itemize}
+                    \item La conjunción de las fórmulas $P, Q$ es la fórmula 
+                    $P \land Q$. Las fórmulas $P, Q$ se llaman conyuntos.
+                    \item Símbolo utilizado: $\land$
+                    \item Su significado en español es: $P$ y $Q$, $P$ además
+                    de $Q$, $P$ pero $Q$, etc.
+                    \item Semántica (tabla de verdad):
+                    \begin{table}[htbp]
+                        \begin{center}
+                        \begin{tabular}{|l|l|l|}
+                        \hline
+                        $P$ & $Q$ & $P \land Q$ \\
+                        \hline \hline 
+                        1 & 1 & 1 \\ \hline
+                        1 & 0 & 0\\ \hline
+                        0 & 1 & 0\\ \hline
+                        0 & 0 & 0\\  \hline
+                        \end{tabular}
+                        \end{center}
+                    \end{table}
+                \end{itemize}
+                \item \textbf{La disyunción}
+                
+                \begin{itemize}
+                    \item La disyunción de las fórmulas $P, Q$ es la fórmula
+                    $P \lor Q$. Las fórmulas $P, Q$ se llaman disyuntos.
+                    \item Símbolo utilizado: $\lor$
+                    \item Su significado en español es: $P$ o bien $Q$, o 
+                    $P$ o $Q$, etc.
+                    \item Semántica (tabla de verdad):
+                    \begin{table}[htbp]
+                        \begin{center}
+                        \begin{tabular}{|l|l|l|}
+                        \hline
+                        $P$ & $Q$ & $P \lor Q$ \\
+                        \hline \hline 
+                        1 & 1 & 1 \\ \hline
+                        1 & 0 & 1\\ \hline
+                        0 & 1 & 1\\ \hline
+                        0 & 0 & 0\\  \hline
+                        \end{tabular}
+                        \end{center}
+                    \end{table}
+                \end{itemize}
+
+                \item \textbf{La implicación}
+                
+                \begin{itemize}
+                    \item La implicación o condicional de las fórmulas $P, Q$
+                    es la fórmula $P \rightarrow Q$. La fórmula $P$ es el 
+                    antecedente y la fórmula $Q$ es el consecuente de la 
+                    implicación.
+                    \item Símbolo utilizado: $\rightarrow$
+                    \item Su significado en español es: si $P$ entonces $Q$,
+                    $P$ implica $Q$, $P$ es condición suficiente para $Q$,
+                    $Q$ siempre que $P$, $P$ sólo si $Q$, etc.
+                    \item Semántica (tabla de verdad):
+                    \begin{table}[htbp]
+                        \begin{center}
+                        \begin{tabular}{|l|l|l|}
+                        \hline
+                        $P$ & $Q$ & $P \rightarrow Q$ \\
+                        \hline \hline 
+                        1 & 1 & 1 \\ \hline
+                        1 & 0 & 0 \\ \hline
+                        0 & 1 & 1 \\ \hline
+                        0 & 0 & 1 \\  \hline
+                        \end{tabular}
+                        \end{center}
+                    \end{table}
+                \end{itemize}
+
+                \newpage
+                \item \textbf{La equivalencia}
+                \begin{itemize}
+                    \item La equivalencia o bicondicional de las fórmulas 
+                    $P, Q$ es la fórmula $P \leftrightarrow Q$.
+                    \item Símbolo utilizado: $\leftrightarrow$
+                    \item Su significado en español es:$P$ si y sólo si $Q$,
+                    $P$ es equivalente a $Q$, $P$ es condición necesaria y
+                    suficiente para $Q$, etc.
+                    \item Semántica (tabla de verdad):
+                    \begin{table}[htbp]
+                        \begin{center}
+                        \begin{tabular}{|l|l|l|}
+                        \hline
+                        $P$ & $Q$ & $P \leftrightarrow Q$ \\
+                        \hline \hline 
+                        1 & 1 & 1 \\ \hline
+                        1 & 0 & 0 \\ \hline
+                        0 & 1 & 0 \\ \hline
+                        0 & 0 & 1 \\  \hline
+                        \end{tabular}
+                        \end{center}
+                    \end{table}  
+
+                \end{itemize}
+
+            \end{itemize}
+            
+        \end{itemize}
+
+        % Ejercicio 2.
+        \item Dado el conjunto de proposiciones 
+        $\Gamma = \{ \neg (p \land q), (t \leftrightarrow r), q, (\neg r) \}$.
+        Verifica si el conjunto $\Gamma$ es tautología, satisfacible o
+        insatisfacible. \\
+        \textit{Solución:}
+
+        % Ejercicio 3.
+        \item Utilizando interpretaciones verifica si el siguiente argumento
+        es verdadero o falso.
+        \begin{center}
+            $\{ (p \land q), (q \lor r), (\neg s) \} \models p \land s$
+        \end{center}
+        \textit{Solución:}
+
+        % Ejercicio 4.
+        \item Demuestra que los siguientes secuentes son válidos usando
+        deducción natural.
+        \begin{itemize}
+
+            % Demostración 1.
+            \item[a)] $\{ p \rightarrow (q \lor r) \} \vdash
+            (p \rightarrow q) \lor (p \rightarrow r)$
+            \begin{proof}
+                
+            \end{proof}
+
+            % Demostración 2.
+            \item[b)] $\{ \} \vdash p \lor (q \land r) 
+            \rightarrow (p \land r) \lor q$
+            \begin{proof}
+                
+            \end{proof}
+        
+        \end{itemize}
+
+        % Ejercicio 5.
+        \item Realiza las siguientes sustituciones eliminando los paréntesis
+        innecesarios en el resultado:
+        \begin{itemize}
+            
+            % Sustitución 1.
+            \item[a)] $((q \lor r) [q, p := \neg p, s] 
+            \rightarrow (r \land \neg (r \leftrightarrow p)))
+            [p, r, q := r \lor q, q \land p, s]$ \\
+            \textit{Solución: \\ \\}
+            $((q \lor r) [q, p := \neg p, s] \rightarrow (r \land \neg (r \leftrightarrow p)))
+            [p, r, q := r \lor q, q \land p, s] $ \\ \\
+            $= (((\neg p) \lor r) \rightarrow (r \land \neg (r \leftrightarrow p)))
+            [p, r, q := r \lor q, q \land p, s] $ \\
+            $= (((\neg (r \lor q) \lor (q \land p)) \rightarrow 
+            ((q \land p) \land \neg ((q \land p) \leftrightarrow (r \lor q))))$ \\
+            $= (((\neg (r \lor q) \lor q \land p) \rightarrow
+            ((q \land p) \land \neg (q \land p \leftrightarrow r \lor q)))$  
+            
+            % Sustitución 2.
+            \item[b)] $(u \lor t) \rightarrow 
+            (\neg r \leftrightarrow (u \leftrightarrow s))[r, u, t := u, t, r]$ \\
+            \textit{Solución:}
+            \begin{align*}
+                (u \lor t) \rightarrow (\neg r \leftrightarrow (u \leftrightarrow s))
+                [r, u, t := u, t, r]
+                &= (u \lor t) \rightarrow (\neg (u) \leftrightarrow ((t) \leftrightarrow s)) \\
+                &= (u \lor t) \rightarrow (\neg u \leftrightarrow (t \leftrightarrow s))
+            \end{align*}
+
+        \end{itemize}
+
+        % Ejercicio 6. 
+        \item Realizar el Tableaux de la siguiente fórmula en $PL$ y da el
+        modelo que satisfaga la fórmula en caso de que el Tableaux sea 
+        abierto.
+        \begin{center}
+            $\neg ((q \lor \neg (p \rightarrow r)) 
+            \rightarrow (p \land (q \rightarrow r)))$
+        \end{center}
+        \textit{Solución:}
+
+        % Ejercicio 7.
+        \item Obtener la forma normal conjuntiva de las siguientes fórmulas
+        (mencionando la operación realizada en cada paso):
+        \begin{itemize}
+            
+            % Ejercicio 7.1
+            \item[a)] $((q \rightarrow r) \rightarrow q) 
+            \land (r \rightarrow q)$ \\
+            \textit{Solución:}
+            \begin{align*}
+                ((q \rightarrow r) \rightarrow q) \land (r \rightarrow q)
+                &\equiv (\neg (\neg q \lor r) \lor q) \land (\neg r \lor q)
+                && \text{ya que $P \rightarrow Q \equiv \neg P \lor Q$} \\
+                &\equiv ((q \land \neg r) \lor q) \land (\neg r \lor q)
+                && \text{De Morgan} \\
+                &\equiv (\neg r \land (q \lor q)) \land (\neg r \lor q)
+                && \text{asociatividad y conmutatividad} \\
+                &\equiv (\neg r \land q) \land (\neg r \lor q)
+                && \text{idempotencia} \\
+                &\equiv (\neg r \land \neg r) \land (q \lor q)
+                && \text{asociatividad y conmutatividad}\\
+                &\equiv \neg r \land q
+                && \text{idempotencia}
+            \end{align*}
+
+            Como $\varphi = \neg r \land q$ es una conjunción de literales, 
+            entonces $\varphi$ es de la Forma Normal Conjuntiva.
+
+            \item[b)] $\neg p \land q \rightarrow p \land (r \rightarrow q)$ \\
+            \textit{Solución:} 
+            \begin{align*}
+                \neg p \land q \rightarrow p \land (r \rightarrow q)
+                &\equiv (\neg p \land q) \rightarrow (p \land (r \rightarrow q))
+                && \text{precedencia y asociatividad de conectivos} \\
+                &\equiv \neg (\neg p \land q) \lor (p \land (\neg r \lor q))
+                && \text{{ya que $P \rightarrow Q \equiv \neg P \lor Q$}} \\
+                &\equiv (p \lor \neg q) \lor (p \land (\neg r \lor q))
+                && \text{De Morgan} \\
+                &\equiv (p \lor p) \lor (\neg q \land (\neg r \lor q))
+                && \text{asociatividad y conmutatividad} \\
+                &\equiv p \lor (\neg q \land (\neg r \lor q))
+                && \text{idempotencia} \\
+                &\equiv (p \lor \neg q) \land (\neg r \lor q)
+                && \text{asociatividad}
+            \end{align*}
+
+            Como $\varphi =  (p \lor \neg q) \land (\neg r \lor q)$ es una 
+            conjunción de disyunciones, entonces $\varphi$ es de la Forma 
+            Normal Conjuntiva.
+             
+        \end{itemize}
+
+        % Ejercicio 8.
+        \item Obtener la Forma Normal Disyuntiva de 
+        $\neg (w \rightarrow \neg p) \lor \neg ((\neg s \leftrightarrow w) 
+        \lor (p \land s))$. \\
+        \textit{Solución:} 
+        \begin{align*}
+            \neg (w \rightarrow \neg p) \lor \neg ((\neg s \leftrightarrow w) 
+            \lor (p \land s))
+            &\equiv \neg (\neg w \lor \neg p) \lor 
+            \neg ((\neg s \leftrightarrow w) \lor (p \land s)) \\
+            &\equiv \neg (\neg w \lor \neg p) \lor 
+            \neg (((s \lor w) \land (\neg s \lor \neg w)) \lor (p \land s)) \\
+            &\equiv (w \land p) \lor (((\neg s \land \neg w) \lor 
+            (s \land w)) \land (\neg p \lor \neg s)) \\
+            &\equiv (w \land p) \lor (\neg s \land \neg w) \lor (s \land w)
+            \land (\neg p \lor \neg s) \\
+            &\equiv (w \land p) \lor (\neg s \land \neg w) \lor (s \land w
+            \land \neg p) \lor \neg s
+        \end{align*}
+
+        Por falta de espacio, no pude colocar arriba la justificación de cada 
+        paso, pero lo explico en seguida:
+        \begin{itemize}
+            \item Eliminamos la implicación, ya que 
+            $P \rightarrow Q \equiv \neg P \lor Q$.
+            \item Elimamos la doble implicación, ya que 
+            $P \leftrightarrow Q \equiv (\neg P \lor Q) \land (P \lor \neg Q)$
+            \item Hacemos que las negaciones figuren únicamente en las variables
+            proposicionales.
+            \item Eliminamos los paréntesis innecesarios, pues todos los
+            operadores tienen la misma precedencia.
+            \item Aplicamos asociatividad.
+        \end{itemize}
+
+        Como $\varphi = (w \land p) \lor (\neg s \land \neg w) \lor (s \land w
+        \land \neg p) \lor \neg s$ es una disyunción de conjunciones o
+        literales, entonces $\varphi$ es de la Forma Normal Disyuntiva.
+        
+        % Ejercicio 9.
+        \item Obtener la Forma Normal Negativa de 
+        $(p \land (q \rightarrow r)) \rightarrow s$ \\
+        \textit{Solución:}
+        \begin{align*}
+            (p \land (q \rightarrow r)) \rightarrow s 
+            &\equiv \neg (p \land (\neg q \lor r)) \lor s
+            && \text{ya que $P \rightarrow Q \equiv \neg P \lor Q$} \\
+            &\equiv (\neg p \lor \neg (\neg q \lor r)) \lor s
+            && \text{prop. de $\neg$} \\
+            &\equiv (\neg p \lor (\neg \neg q \land \neg r)) \lor s
+            && \text{{prop. de $\neg$}} \\
+            &\equiv (\neg p \lor (q \land \neg r)) \lor s
+            && \text{ya que $\neg \neg P \equiv P$}
+        \end{align*}
+
+        Como $\varphi = (\neg p \lor (q \land \neg r)) \lor s$ no contiene 
+        implicaciones ni equivalencias, y las negaciones que figuran en 
+        $\varphi$ sólo afectan a fórmulas atómicas, entonces $\varphi$
+        es de la Forma Normal Negativa.
+            
+
+        % Ejercicio 10.
+        \item 
+        \begin{itemize}
+
+            % Ejercicio 10.1
+            \item [a)] Define una función recursiva \textbf{pa} que, dada una 
+            fórmula $\phi$, devuelve el número de paréntesis abiertos $"("$ que
+            tiene $\phi$. \\
+            \textit{Solución:} Definimos recursivamente la función 
+            $\textbf{pa} :: PROP \rightarrow \mathbb{N}$ de la siguiente forma:
+
+            \begin{itemize}
+                \item $pa (\top) = 0$
+                \item $pa (\bot) = 0$
+                \item $pa (Var P) = 0$
+                \item $pa (\neg \varphi) = pa (\varphi)$
+                \item $pa ((\varphi \star \psi)) = pa(\varphi) + pa(\psi) + 1$
+            \end{itemize}
+
+            % Ejercicio 10.2
+            \item[b)] Define una función recursiva \textbf{pc} que dada una 
+            fórmula $\phi$, devuelve el número de paréntesis cerrados $")"$ que
+            tiene $\phi$. \\
+            \textit{Solución:} Definimos recursivamente la función 
+            $\textbf{pc} :: PROP \rightarrow \mathbb{N}$ de la siguiente forma:
+
+            \begin{itemize}
+                \item $pc (\top) = 0$
+                \item $pc (\bot) = 0$
+                \item $pc (Var P) = 0$
+                \item $pc (\neg \varphi) = pc (\varphi)$
+                \item $pc ((\varphi \star \psi)) = pc (\varphi) + pc (\psi) + 1$
+            \end{itemize}
+            
+            % Ejercicio 10.3
+            \item[c)] Sea $\phi = ((( \neg p \land q) \lor \neg r) 
+            \rightarrow r)$. Prueba que 
+            \textbf{pa}$(\phi)$ - \textbf{pc}$(\phi) = 0$. 
+            \begin{proof}
+                Aplicamos la definición de \textbf{pa} a $\phi$:
+
+                \begin{align*}
+                    pa(\phi) 
+                    &= pa(((( \neg p \land q) \lor \neg r) \rightarrow r))
+                    && \text{def. de $\phi$.} \\
+                    &= pa(((\neg p \land q) \lor \neg r)) + pa(r) + 1
+                    && \text{def. recursiva de \textbf{pa}} \\
+                    &= pa((\neg p \land q)) + pa(\neg r) + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pa}} \\
+                    &= pa(\neg p) + pa(q) + 1 + pa(r) + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pa}} \\
+                    &= pa(p) + 0 + 1 + 0 + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pa}} \\
+                    &= 0 + 0 + 1 + 0 + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pa}} \\
+                    &= 3
+                    && \text{aritmética}
+                \end{align*}
+
+                Análogamente, aplicamos la definición de \textbf{pc} a $\phi$:
+                \begin{align*}
+                    pc(\phi) 
+                    &= pc(((( \neg p \land q) \lor \neg r) \rightarrow r))
+                    && \text{def. de $\phi$} \\
+                    &= pc(((\neg p \land q) \lor \neg r)) + pc(r) + 1
+                    && \text{def. recursiva de \textbf{pc}} \\
+                    &= pc((\neg p \land q)) + pc(\neg r) + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pc}} \\
+                    &= pc(\neg p) + pc(q) + 1 + pa(r) + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pc}} \\
+                    &= pc(p) + 0 + 1 + 0 + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pc}} \\
+                    &= 0 + 0 + 1 + 0 + 1 + 0 + 1
+                    && \text{def. recursiva de \textbf{pc}} \\
+                    &= 3
+                    && \text{aritmética}
+                \end{align*}
+
+                Por lo tanto, 
+                \textbf{pa}$(\phi)$ - \textbf{pc}$(\phi) = 3 - 3 = 0$.
+
+            \end{proof}
+
+        \end{itemize}
+
+        % Ejercicio 10.
+        \item Define recursivamente una función \textbf{compress} que comprime 
+        los elementos consecutivos repetidos de una lista. Ejemplo:
+        \textit{> compress ''mooloolaba'' = ''mololaba''}. Prueba, usando tu
+        definición, que:
+        \begin{center}
+            \textit{compress [1,2,2,3,3,3] = [1,2,3]}
+        \end{center}
+
+        \textit{Solución:}
+        \begin{lstlisting}
+            compress :: (Eq a) => [a] -> [a]
+            compress [] = []
+            compress [a] = [a]
+            compress xs =
+                if (head xs) == (head (tail xs)) then compress (drop 1 xs)
+                else (head xs) : compress (tail xs)
+         \end{lstlisting}
+
+         Finalmente, probemos que \textit{compress [1,2,2,3,3,3] = [1,2,3]}
+         \begin{proof}
+            \begin{align*}
+                compress [1,2,3,3,3] 
+                &= 1 : compress [2,3,3,3] \\
+                &= 1 : 2 : compress [3,3,3] \\
+                &= 1 : 2 : compress [3,3] \\
+                &= 1 : 2 : compress [3] \\
+                &= 1 : 2 : [3] \\
+                &= [1, 2, 3]
+            \end{align*} 
+
+         \end{proof}
+
+    \end{enumerate}
+
+\end{document}
