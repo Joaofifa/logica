@@ -8,6 +8,8 @@ Obervaciones:
 1. La gramática para el lenguaje proposicional ha sido cambiado únicamente para
    las proposiciones booleanas, es decir, TTrue ahora es Top y FFalse ahora es 
    Bot. Esto para mayor comodidad y entendimiento.
+   Hay que tenerlo en cuenta sobre todo en la función inter, ya que recibe un 
+   valor que debe der Top (True) o Bot (False).
 
 2. Se agregó Show en el deriving() del lenguaje proposicional ya que mandaba un
    error de compilación porque haskell bebé no podía mostrar la salida en la 

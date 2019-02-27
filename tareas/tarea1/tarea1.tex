@@ -210,7 +210,16 @@
         $\Gamma = \{ \neg (p \land q), (t \leftrightarrow r), q, (\neg r) \}$.
         Verifica si el conjunto $\Gamma$ es tautología, satisfacible o
         insatisfacible. \\
-        \textit{Solución:}
+        \textit{Solución:} Veamos si $\Gamma$ es satisfacible: \\
+        Inicialmente podemos asignar los estados $\mathcal{I}(q) = 1$ y
+        $(\mathcal{I}(\neg r) = 1$ sii $\mathcal{I}(r) = 0)$ ya que $q$ y $r$
+        se encuentran solitas. Ahora, sabemos que 
+        $\mathcal{I}(t \leftrightarrow r) = 1$ sii 
+        $\mathcal{I}(t) = \mathcal{I}(r)$, por lo que 
+        $\mathcal{I}(r) = 0 = \mathcal{I}(t)$. Finalmente, como 
+        $\mathcal{I}(q) = 1$ entonces $\mathcal{I}(p) = 0$ para que 
+        $\mathcal{I}(\neg (p \land q)) = 1$. \\
+        Por lo tanto, $\Gamma$ es satisfacible. \\ \\
 
         % Ejercicio 3.
         \item Utilizando interpretaciones verifica si el siguiente argumento
@@ -218,8 +227,30 @@
         \begin{center}
             $\{ (p \land q), (q \lor r), (\neg s) \} \models p \land s$
         \end{center}
-        \textit{Solución:}
+        \textit{Solución:} Debemos mostrar que $\mathcal{I}(p \land s) = 1$.
+        Entonces 
+        \begin{align*}
+            \mathcal{I}(p \land q) &= 1
+            && \text{Premisa (1)} \\
+            \mathcal{I}(q \lor r) &= 1
+            && \text{Premisa (2)} \\
+            \mathcal{I}(\neg s) &= 1 
+            && \text{Premisa (3)} \\
+            \mathcal{I}(p) &= 1
+            && \text{por (1)} \\
+            \mathcal{I}(q) &= 1
+            && \text{por (1)} \\
+            \mathcal{I}(s) &= 0
+            && \text{por (3)}
+        \end{align*}
 
+        De manera que la interpretación dada por 
+        $\mathcal{I}(p) = \mathcal{I}(q) = 1$ e $\mathcal{I}(s) = 0$ e 
+        $\mathcal{I}(r) =$ arbitrario, es un contraejemplo al argumento, pues 
+        con esta interpretación tenemos que $\mathcal{I}(p \land s) = 0$.
+        Por lo tanto, el argumento es falso.
+
+        \newpage
         % Ejercicio 4.
         \item Demuestra que los siguientes secuentes son válidos usando
         deducción natural.
@@ -229,14 +260,27 @@
             \item[a)] $\{ p \rightarrow (q \lor r) \} \vdash
             (p \rightarrow q) \lor (p \rightarrow r)$
             \begin{proof}
-                
+                Utilizando reglas de deducción natural obtenemos que:
+                \begin{align*}
+                    \{p \rightarrow (q \lor r)\} 
+                    &\vdash (p \rightarrow q) \lor (p \rightarrow r) \\ 
+                    \{p \rightarrow (q \lor r), (p \rightarrow q)\} 
+                    &\vdash p \rightarrow r \\
+                    \{p \rightarrow (q \lor r), (p \rightarrow q), p\} 
+                    &\vdash r
+                \end{align*}
+
             \end{proof}
 
             % Demostración 2.
             \item[b)] $\{ \} \vdash p \lor (q \land r) 
             \rightarrow (p \land r) \lor q$
             \begin{proof}
-                
+                Utilizando una regla de la implicación podemos hacer lo siguiente:
+                \begin{center}
+                    $\{ q \lor (q \land r) \} \vdash (p \land r) \lor q$  
+                \end{center}
+                Por lo tanto, podemos afirmar que el secuente es válido.
             \end{proof}
         
         \end{itemize}
@@ -255,9 +299,9 @@
             [p, r, q := r \lor q, q \land p, s] $ \\ \\
             $= (((\neg p) \lor r) \rightarrow (r \land \neg (r \leftrightarrow p)))
             [p, r, q := r \lor q, q \land p, s] $ \\
-            $= (((\neg (r \lor q) \lor (q \land p)) \rightarrow 
+            $= ((\neg (r \lor q) \lor (q \land p)) \rightarrow 
             ((q \land p) \land \neg ((q \land p) \leftrightarrow (r \lor q))))$ \\
-            $= (((\neg (r \lor q) \lor q \land p) \rightarrow
+            $= 7((\neg (r \lor q) \lor q \land p) \rightarrow
             ((q \land p) \land \neg (q \land p \leftrightarrow r \lor q)))$  
             
             % Sustitución 2.
@@ -273,6 +317,7 @@
 
         \end{itemize}
 
+        \newpage
         % Ejercicio 6. 
         \item Realizar el Tableaux de la siguiente fórmula en $PL$ y da el
         modelo que satisfaga la fórmula en caso de que el Tableaux sea 
@@ -281,7 +326,67 @@
             $\neg ((q \lor \neg (p \rightarrow r)) 
             \rightarrow (p \land (q \rightarrow r)))$
         \end{center}
-        \textit{Solución:}
+        \textit{Solución:} Primero, eliminamos las implicaciones y simplificamos la 
+        expresión para facilitar la elaboración de nuestro Tableaux:
+        \begin{align*}
+            \neg ((q \lor \neg (p \rightarrow r)) 
+            \rightarrow (p \land (q \rightarrow r)))
+            &\equiv \neg (\neg (q \lor \neg (\neg p \lor r)) 
+            \lor (p \land (\neg q \lor r)))
+            && \text{ya que $P \rightarrow Q \equiv \neg P \lor Q$} \\
+            &\equiv \neg (\neg (q \lor (p \land \neg r)) 
+            \lor (p \land (\neg q \lor r)))
+            && \text{De Morgan} \\
+            &\equiv \neg ((\neg q \land (\neg p \lor r)) 
+            \lor (p \land (\neg q \lor r)))
+            && \text{De Morgan} \\
+            &\equiv \neg (\neg q \land (\neg p \lor r)) 
+            \land \neg (p \land (\neg q \lor r)))
+            && \text{De Morgan} \\
+            &\equiv (q \lor (p \land \neg r)) 
+            \land (\neg p \lor (q \land \neg r)))
+            && \text{De Morgan} \\
+            &\equiv ((q \lor p) \land (q \lor \neg r))
+            \land ((\neg p \lor q) \land (\neg p \lor \neg r)))
+            && \text{distributividad} \\
+            &\equiv (q \lor p) \land (q \lor \neg r)
+            \land (\neg p \lor q) \land (\neg p \lor \neg r)
+            && \text{eliminando paréntesis} \\
+            &\equiv (q \lor q) \land (q \lor \neg r) \land (\neg p \lor \neg r)
+            && \text{resolución binaria} \\
+            &\equiv (q \land q) \lor (\neg r \land \neg p \lor \neg r)
+            && \text{idempotencia y asocia.} \\
+            &\equiv q \lor (\neg r \land \neg p \lor \neg r)
+            && \text{idempotencia} \\
+            &\equiv q \lor (\neg p \land (\neg r \lor \neg r))
+            && \text{asociatividad y conmuta.} \\
+            &\equiv q \lor (\neg p \land \neg r)
+            && \text{idempotencia} \\
+            &\equiv (\neg p \lor \neg r) \land q
+            && \text{asociatividad y conmuta.}
+        \end{align*}
+
+        Ahora que tenemos una expresión equivalente más simple a la original,
+        procedemos a realizar su Tableaux:
+
+        \begin{center}
+        \begin{prooftree}{}
+            [(\neg p \lor \neg r) \land q, checked
+               [q, just={ext. de $\alpha$ en 1}
+                  [\neg p \lor \neg r, checked, just={ext. de $\alpha$ en 1}
+                     [p, just={ext. de $\beta$ en 3}]
+                        [\neg r]]]]
+        \end{prooftree}
+        \end{center}
+
+        
+        Como el Tableaux es abierto, entonces podemos dar un modelo que
+        satisfaga la fórmula. En particular, $\mathcal{I}(q) = 1$ e 
+        $\mathcal{I}(p) = \mathcal{I}(r) = 0$ satisface la fórmula. 
+
+        Nota: Una de las justificaciones para obtener una expresión equivalente
+        es la resolución binaria. Por falta de tiempo ya no pude transcribirla
+        a latex, pero la incluyo anexada junto con la tarea.
 
         % Ejercicio 7.
         \item Obtener la forma normal conjuntiva de las siguientes fórmulas
@@ -394,7 +499,7 @@
         $\varphi$ sólo afectan a fórmulas atómicas, entonces $\varphi$
         es de la Forma Normal Negativa.
             
-
+        \newpage
         % Ejercicio 10.
         \item 
         \begin{itemize}
@@ -480,7 +585,8 @@
 
         \end{itemize}
 
-        % Ejercicio 10.
+        \newpage
+        % Ejercicio 11.
         \item Define recursivamente una función \textbf{compress} que comprime 
         los elementos consecutivos repetidos de una lista. Ejemplo:
         \textit{> compress ''mooloolaba'' = ''mololaba''}. Prueba, usando tu
