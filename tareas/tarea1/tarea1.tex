@@ -1,4 +1,4 @@
-\documentclass[letterpaper,11pt]{article}
+\documentclass[letterpaper,10pt]{article}
 
 % Soporte para los acentos.
 \usepackage[utf8]{inputenc}
@@ -75,134 +75,53 @@
 
             % Definición 2. 
             \item[b)] Semántica de la lógica proposicional. \\ 
-            \textit{Solución:} Definamos el significado de cada conectivo 
-            lógico:
+            \textit{Solución:}
+            \newtheorem{teo}{Definición}[]
+            \begin{teo} 
+                El tipo de valores booleanos denotado \textbf{Bool} se define
+                como $Bool = \{0, 1 \}$
+            \end{teo}
 
-            \begin{itemize}
-                \item \textbf{La negación}
-    
-                \begin{itemize}
-                    \item La negación de la fórmula $P$ es la fórmula 
-                    $\neg P$.
-                    \item Símbolo utilizado: $\neg$
-                    \item Su significado en español es: No $P$, no es cierto
-                    que $P$, es falso que $P$, etc.
-                    \item Semántica (tabla de verdad):
-                    \begin{table}[htbp]
-                        \begin{center}
-                        \begin{tabular}{|l|l|}
-                        \hline
-                        $P$ & $\neg P$ \\
-                        \hline \hline
-                        1 & 0 \\ \hline
-                        0 & 1 \\ \hline
-                        \end{tabular}
-                        \end{center}
-                    \end{table}
-                \end{itemize}
+            \begin{teo}
+                Un estado o asignación de las variables (proposicionales) es 
+                una función 
+                \begin{center}
+                    $\mathcal{I} : (Var P) \rightarrow Bool$
+                \end{center}
+                Dadas $n$ variables proposicionales existen $2^{n}$ estados
+                distintos para estas variables.
+            \end{teo}
 
-                \newpage
-                \item \textbf{La conjunción}
+            \begin{teo}
+                Dado un estado de las variables 
+                $\mathcal{I} : (Var P) \rightarrow Bool$, definamos la
+                interpretación de las fórmulas con respecto a $\mathcal{I}$ 
+                como la función $\mathcal{I^{\star}} : PROP \rightarrow Bool$
+                tal que: 
                 \begin{itemize}
-                    \item La conjunción de las fórmulas $P, Q$ es la fórmula 
-                    $P \land Q$. Las fórmulas $P, Q$ se llaman conyuntos.
-                    \item Símbolo utilizado: $\land$
-                    \item Su significado en español es: $P$ y $Q$, $P$ además
-                    de $Q$, $P$ pero $Q$, etc.
-                    \item Semántica (tabla de verdad):
-                    \begin{table}[htbp]
-                        \begin{center}
-                        \begin{tabular}{|l|l|l|}
-                        \hline
-                        $P$ & $Q$ & $P \land Q$ \\
-                        \hline \hline 
-                        1 & 1 & 1 \\ \hline
-                        1 & 0 & 0\\ \hline
-                        0 & 1 & 0\\ \hline
-                        0 & 0 & 0\\  \hline
-                        \end{tabular}
-                        \end{center}
-                    \end{table}
-                \end{itemize}
-                \item \textbf{La disyunción}
-                
-                \begin{itemize}
-                    \item La disyunción de las fórmulas $P, Q$ es la fórmula
-                    $P \lor Q$. Las fórmulas $P, Q$ se llaman disyuntos.
-                    \item Símbolo utilizado: $\lor$
-                    \item Su significado en español es: $P$ o bien $Q$, o 
-                    $P$ o $Q$, etc.
-                    \item Semántica (tabla de verdad):
-                    \begin{table}[htbp]
-                        \begin{center}
-                        \begin{tabular}{|l|l|l|}
-                        \hline
-                        $P$ & $Q$ & $P \lor Q$ \\
-                        \hline \hline 
-                        1 & 1 & 1 \\ \hline
-                        1 & 0 & 1\\ \hline
-                        0 & 1 & 1\\ \hline
-                        0 & 0 & 0\\  \hline
-                        \end{tabular}
-                        \end{center}
-                    \end{table}
-                \end{itemize}
-
-                \item \textbf{La implicación}
-                
-                \begin{itemize}
-                    \item La implicación o condicional de las fórmulas $P, Q$
-                    es la fórmula $P \rightarrow Q$. La fórmula $P$ es el 
-                    antecedente y la fórmula $Q$ es el consecuente de la 
-                    implicación.
-                    \item Símbolo utilizado: $\rightarrow$
-                    \item Su significado en español es: si $P$ entonces $Q$,
-                    $P$ implica $Q$, $P$ es condición suficiente para $Q$,
-                    $Q$ siempre que $P$, $P$ sólo si $Q$, etc.
-                    \item Semántica (tabla de verdad):
-                    \begin{table}[htbp]
-                        \begin{center}
-                        \begin{tabular}{|l|l|l|}
-                        \hline
-                        $P$ & $Q$ & $P \rightarrow Q$ \\
-                        \hline \hline 
-                        1 & 1 & 1 \\ \hline
-                        1 & 0 & 0 \\ \hline
-                        0 & 1 & 1 \\ \hline
-                        0 & 0 & 1 \\  \hline
-                        \end{tabular}
-                        \end{center}
-                    \end{table}
-                \end{itemize}
-
-                \newpage
-                \item \textbf{La equivalencia}
-                \begin{itemize}
-                    \item La equivalencia o bicondicional de las fórmulas 
-                    $P, Q$ es la fórmula $P \leftrightarrow Q$.
-                    \item Símbolo utilizado: $\leftrightarrow$
-                    \item Su significado en español es:$P$ si y sólo si $Q$,
-                    $P$ es equivalente a $Q$, $P$ es condición necesaria y
-                    suficiente para $Q$, etc.
-                    \item Semántica (tabla de verdad):
-                    \begin{table}[htbp]
-                        \begin{center}
-                        \begin{tabular}{|l|l|l|}
-                        \hline
-                        $P$ & $Q$ & $P \leftrightarrow Q$ \\
-                        \hline \hline 
-                        1 & 1 & 1 \\ \hline
-                        1 & 0 & 0 \\ \hline
-                        0 & 1 & 0 \\ \hline
-                        0 & 0 & 1 \\  \hline
-                        \end{tabular}
-                        \end{center}
-                    \end{table}  
+                    \item $\mathcal{I^{\star}}(p) = \mathcal{I}(p)$ para 
+                    $p \in Var P$, es decir, 
+                    $\mathcal{I^{\star}}|_{Var P} = \mathcal{I}$
+                    \item $\mathcal{I^{\star}}(\top) = 1$
+                    \item $\mathcal{I^{\star}}(\bot) = 0$
+                    \item $\mathcal{I^{\star}}(\neg \varphi) = 1$ sii 
+                    $\mathcal{I^{\star}}(\varphi) = 0$
+                    \item $\mathcal{I^{\star}}(\varphi \land \psi) = 1$
+                    sii $\mathcal{I^{\star}}(\varphi) = 
+                    \mathcal{I^{\star}}(\psi) = 1$
+                    \item $\mathcal{I^{\star}}(\varphi \lor \psi) = 0$
+                    sii $\mathcal{I^{\star}}(\varphi) = 
+                    \mathcal{I^{\star}}(\psi) = 0$
+                    \item $\mathcal{I^{\star}}(\varphi \rightarrow \psi) = 0$
+                    sii $\mathcal{I^{\star}}(\varphi) = 1$ e
+                    $\mathcal{I^{\star}}(\psi) = 0$
+                    \item $\mathcal{I^{\star}}(\varphi \leftrightarrow \psi) = 1$
+                    sii $\mathcal{I^{\star}}(\varphi) = 
+                    \mathcal{I^{\star}}(\psi)$
 
                 \end{itemize}
+            \end{teo}
 
-            \end{itemize}
-            
         \end{itemize}
 
         % Ejercicio 2.
@@ -219,7 +138,15 @@
         $\mathcal{I}(r) = 0 = \mathcal{I}(t)$. Finalmente, como 
         $\mathcal{I}(q) = 1$ entonces $\mathcal{I}(p) = 0$ para que 
         $\mathcal{I}(\neg (p \land q)) = 1$. \\
-        Por lo tanto, $\Gamma$ es satisfacible. \\ \\
+        Por lo tanto, como $\mathcal{I}(q) = 1$ e 
+        $\mathcal{I}(p) = \mathcal{I}(r) = \mathcal{I}(t) = 0$ hacen que 
+        $\mathcal{I}(\Gamma) = 1$, entonces $\Gamma$ es satisfacible. \\
+
+        Más aún, podemos afirmar que $\Gamma$ no es una tautología, ya que se 
+        puede dar una asignación de estado que no hace a $\Gamma$ verdadera.
+        En particular, 
+        $\mathcal{I}(p) = \mathcal{I}(q) = \mathcal{I}(t) =\mathcal{I}(r)= 1$ 
+        hacen que $\mathcal{I}(\Gamma) = 0$.
 
         % Ejercicio 3.
         \item Utilizando interpretaciones verifica si el siguiente argumento
@@ -250,7 +177,6 @@
         con esta interpretación tenemos que $\mathcal{I}(p \land s) = 0$.
         Por lo tanto, el argumento es falso.
 
-        \newpage
         % Ejercicio 4.
         \item Demuestra que los siguientes secuentes son válidos usando
         deducción natural.
@@ -260,15 +186,27 @@
             \item[a)] $\{ p \rightarrow (q \lor r) \} \vdash
             (p \rightarrow q) \lor (p \rightarrow r)$
             \begin{proof}
-                Utilizando reglas de deducción natural obtenemos que:
+                Utilizando una estrategia de derivación que está en las notas 
+                de clase, basta derivar 
+                $\{ p \rightarrow (q \lor r) \} \vdash (p \rightarrow q)$ o
+                bien, $\{ p \rightarrow (q \lor r) \} \vdash 
+                (p \rightarrow r)$. Así, 
                 \begin{align*}
-                    \{p \rightarrow (q \lor r)\} 
-                    &\vdash (p \rightarrow q) \lor (p \rightarrow r) \\ 
-                    \{p \rightarrow (q \lor r), (p \rightarrow q)\} 
-                    &\vdash p \rightarrow r \\
-                    \{p \rightarrow (q \lor r), (p \rightarrow q), p\} 
-                    &\vdash r
+                    p \rightarrow (q \lor r)
+                    && \text{Premisa (1)} \\
+                    \neg p \lor (q \lor r)
+                    && \text{Eliminación de equivalencia en 1, (2)} \\
+                    (\neg p \lor \neg p) \lor (q \lor r)
+                    && \text{idempotencia en 2, (3)} \\
+                    (\neg p \lor q) \lor (\neg p \lor r)
+                    && \text{conmuta. y asocia. en 3, (4)} \\
+                    (p \rightarrow q) \lor (p \rightarrow r)
+                    && \text{$P \rightarrow Q \equiv \neg P \lor Q$, 
+                    en 4, (5)}
                 \end{align*}
+                Por lo tanto, podemos concluir que es válido 
+                $\{ p \rightarrow (q \lor r) \} \vdash
+                (p \rightarrow q) \lor (p \rightarrow r)$
 
             \end{proof}
 
@@ -276,15 +214,24 @@
             \item[b)] $\{ \} \vdash p \lor (q \land r) 
             \rightarrow (p \land r) \lor q$
             \begin{proof}
-                Utilizando una regla de la implicación podemos hacer lo siguiente:
-                \begin{center}
-                    $\{ q \lor (q \land r) \} \vdash (p \land r) \lor q$  
-                \end{center}
-                Por lo tanto, podemos afirmar que el secuente es válido.
+                Utilizando una estrategia de derivación que está en las notas
+                de clase, basta derivar 
+                $\{p\lor (q \land r) \} \vdash (p \land r) \lor q$. Así, 
+                \begin{align*}
+                    p \lor (q \land r) 
+                    && \text{Premisa (1)} \\
+                    q \lor (p \land r) 
+                    && \text{Conmuta. y asocia. en 1, (2)} \\
+                    (p \land r) \lor q
+                    && \text{Conmutatividad en 2, (3)}
+                \end{align*}
+                Por lo tanto, podemos concluir que es válido
+                $\{p\lor (q \land r) \} \vdash (p \land r) \lor q$
             \end{proof}
         
         \end{itemize}
 
+        \newpage
         % Ejercicio 5.
         \item Realiza las siguientes sustituciones eliminando los paréntesis
         innecesarios en el resultado:
@@ -317,7 +264,6 @@
 
         \end{itemize}
 
-        \newpage
         % Ejercicio 6. 
         \item Realizar el Tableaux de la siguiente fórmula en $PL$ y da el
         modelo que satisfaga la fórmula en caso de que el Tableaux sea 
@@ -388,6 +334,7 @@
         es la resolución binaria. Por falta de tiempo ya no pude transcribirla
         a latex, pero la incluyo anexada junto con la tarea.
 
+        \newpage
         % Ejercicio 7.
         \item Obtener la forma normal conjuntiva de las siguientes fórmulas
         (mencionando la operación realizada en cada paso):
