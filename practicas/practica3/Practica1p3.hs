@@ -1,34 +1,51 @@
 module Practica1p3 where
 
 data Graph = Graph { gId :: Int, 
-					nodes :: [String],
-					edges :: [(String, String)]
+                     nodes :: [String],
+                     edges :: [(String, String)]
                     } deriving (Show, Eq)
 
-{- |1| Función neighbors: 
+{- |1| Función neighbors: Recibe un nodo y una gráfica. Regresa la lista de
+   nodos que son vecinos del nodo dado como parámetro.
 -}
 neighbors :: String -> Graph -> [String]
-neighbors = error "Implementar"
+neighbors s (Graph {gId = gId, nodes = n, edges = []}) = []
+neighbors s (Graph {gId = gId, nodes = n, edges = ((x,y):xs)})
+   | s == x = y:(neighbors s (Graph { gId = gId, nodes = n, edges = xs}))
+   | s == y = x:(neighbors s (Graph {gId = gId, nodes = n, edges = xs}))
+   | otherwise = (neighbors s (Graph {gId= gId, nodes = n, edges = xs}))
 
-{- |2| Función mindegree:
+{- |2| Función mindegree: Recibe una gráfica. Regresa el grado menor de la 
+   gráfica.
 -}
 mindegree :: Graph -> Int
-mindegree = error "Implementar"
+mindegree (Graph{gId = gId, nodes = [], edges = e}) = 0
+mindegree (Graph{gId = dId, nodes = [x], edges = e})= contarGrafica x e
+mindegree (Graph{gId = gId, nodes = (x:xs) , edges = e}) = 
+    min (contarGrafica x e) (mindegree (Graph{gId = gId, nodes = (xs) , edges = e}) )
 
-{- |3| Función maxdegree: 
+{- |3| Función maxdegree: Recibe una gráfica. Regresa el grado mayor de la
+   gráfica.
 -}
 maxdegree :: Graph -> Int 
-maxdegree = error "Implementar"
+maxdegree (Graph{gId = gId, nodes = [], edges = e}) = 0
+maxdegree (Graph{gId = dId, nodes = [x], edges = e})= contarGrafica x e
+maxdegree (Graph{gId = gId, nodes = (x:xs) , edges = e}) = 
+    max (contarGrafica x e) (maxdegree (Graph{gId = gId, nodes = (xs) , edges = e}) )
 
-{- |4| Función path: 
--}
+{- |4| Función path: Recibe dos nodos y una gráfica. Nos dice si existe un
+   camino entre ambos nodos.
+
 path :: String -> String -> Graph -> Bool
 path = error "Implementar"
+-}
 
-{- |5| Funciónn delete: 
+{- |5| Funciónn delete: Recibe un nodo y una gráfica. Elimina el nodo de la 
+   gráfica.
 -}
 delete :: String -> Graph -> Graph
-delete = error "Implementar"
+delete a (Graph {gId = gId, nodes = (xs), edges = e}) = 
+    (Graph {gId = gId, nodes = (deleteElemento a xs), edges = (deleteEdges a e)})
 
 -- Tipo de dato para representar expresiones de la lógica proposicional.
 data Prop = Top -- True
@@ -138,11 +155,37 @@ esFNC phi = case phi of
    correcto o no.
 -}
 correcto :: [Prop] -> Prop -> Bool
-correcto = error "Implementar"
+correcto gamma phi = consecuencia gamma phi
 
 -- Funciones auxiliares. 
 
-{- |Aux. 1| Función isClause: Recibe una expresión proposicional P. Nos dice
+{- |Aux. 1| Funcion contarGrafica: Cuenta el numero de aristas que tiene un 
+   vertice.
+-}
+contarGrafica :: String -> [(String,String)] -> Int
+contarGrafica _ [] = 0
+contarGrafica e ((x1,x2):xs)
+   | e == x1 || e == x2 = 1 + contarGrafica e xs
+   | otherwise = contarGrafica e xs
+
+{- |Aux. 2| Funcion deleteElemento: Elimina un elemento de una lista.
+-}
+deleteElemento :: String -> [String] -> [String]
+deleteElemento a [] = []
+deleteElemento a (x:xs) 
+   | a == x = deleteElemento a xs
+   | otherwise = x: deleteElemento a xs
+
+{- |Aux. 3| Funcion contarEdges: Elimina todo los parejas que tiene un 
+   elemento.
+-}
+deleteEdges :: String -> [(String, String)] -> [(String, String)]
+deleteEdges a [] = []
+deleteEdges a ((x1,x2):xs)
+   | a == x1 || a ==x2 = deleteEdges a xs
+   | otherwise = ((x1,x2):deleteEdges a xs)
+    
+{- |Aux. 4| Función isClause: Recibe una expresión proposicional P. Nos dice
    si una expresión proposicional P es una cláusula.
 -}
 isClause :: Prop -> Bool
@@ -157,7 +200,7 @@ isClause phi = case phi of
     Disy p q -> isClause p && isClause q 
     _ -> False 
 
-{- |Aux. 2| Función fnn: Recibe una expresión proposicional P. Regresa una
+{- |Aux. 5| Función fnn: Recibe una expresión proposicional P. Regresa una
    expresión proposicional P' equivalente a P tal que P' es la Forma Normal
    Negativa de P.
 -}
@@ -171,7 +214,7 @@ fnn phi = case deleteImpl phi of
     Conj p q -> Conj (fnn p) (fnn q)
     Disy p q -> Disy (fnn p) (fnn q)
 
-{- |Aux. 3| Función lawDistri: Recibe una expresión proposicional P. Regresa una
+{- |Aux. 6| Función distri: Recibe una expresión proposicional P. Regresa una
    expresión proposicional P' equivalente a P tal que P' es el resultado de 
    aplicarle las leyes distributivas de conjunción y disyunción a P. 
 -}
@@ -180,3 +223,45 @@ distri phi psi = case (phi, psi) of
     (Conj phi psi, n) -> Conj (distri phi n) (distri phi n)
     (n, Conj phi psi) -> Conj (distri n psi) (distri n psi)
     (phi, psi) -> Disy phi psi
+
+{- |Aux. 7| Función consecuencia: Recibe una lista de expresiones 
+   proposicionales [P, Q,..] y una conclusión C. Nos dice si la conclusión
+   es consecuencia lógica de los argumentos.
+-}
+consecuencia :: [Prop] -> Prop -> Bool
+consecuencia gamma phi = insatisfConj ((Neg phi) : gamma)
+
+{- |Aux. 8| Función insatisfConj: Recibe una lista de expresiones 
+   proposicionales [P, Q, ...]. Nos dice si el conjunto de proposiciones
+   es insatisfacible.
+-}
+insatisfConj :: [Prop] -> Bool
+insatisfConj [psi] = modelos(psi) == []
+
+{- |Aux. 9| Función modelos: Regresa la lista con todos aquellos estados I 
+   tales que I(phi) = 1
+-}
+modelos :: Prop -> [Prop]
+modelos psi = 
+    [i | i <- estados psi, (inter psi [("Top", i)]) == True,  
+    (inter psi [("Bot", i)]) == True]
+
+{- |Aux. 10| Función estados: Recibe una expresión proposicional. Devuelve
+   la lista con los 2^n estados distintos para la expresión proposicional.
+-}
+estados :: Prop -> [Prop]
+estados psi = vars psi
+
+{- |Aux. 11| Función vars: Recibe una expresión proposicional. Regresa la lista
+   de variables proposicionales que figuran en la expresión proposicional.
+-}
+vars :: Prop -> [Prop]
+vars phi = case phi of
+    Top -> []
+    Bot -> [] 
+    Var p -> [Var p]
+    Neg p -> vars(p)
+    Conj p q -> vars (p) ++ vars (q)
+    Disy p q -> vars (p) ++ vars (q)
+    Impl p q -> vars (p) ++ vars (q)
+    Syss p q -> vars (p) ++ vars (q)
