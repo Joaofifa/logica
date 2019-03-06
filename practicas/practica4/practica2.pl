@@ -77,21 +77,29 @@ mediohermano(D,E) :-
 % satisfactoria cuando S es tío de T. 
 tio(S,T) :- (hermano(S,A); mediohermano(S,A)), (mama(A,T); papa(A,T)), S \== A.
 
-% | 7 | Regla hss.
-%hss(A,B) :- aqui_va_su_código_:)
+% | 7 | Regla hss. Recibe dos parametros: A y B. La regla sera satisfactoria
+% cuando se cumpla la propiedad de que A es hermano o mediohermano de B.
+hss(A,B) :- (hermano(A,B); mediohermano(A,B)), A \== B.
 
-% | 8 | Regla primo. 
-%primo(U,V) :- aqui_va_su_código_:)
+% | 8 | Regla primo. Recibe dos parametros: U y V. La regla sera satisfactoria
+% cuando se cumpla la propiedad de que U es primo de V.
+primo(U,V) :- 
+    padres(A,B,U), padres(C,D,V), (hermano(A,C); hermano(A,D); hermano(B,C); 
+    hermano(B,D)), U \== V.
 
-% | 9 | Regla tutor.
-%tutor(A,B) :- aqui_va_su_código_:)
+% | 9 | Regla tutor. Recibe dos parametros: A y B. La regla se cumple cuando
+% se cumpla la propiedad de que A es tutor de B.
+tutor(A,B) :- papa(A,B); mama(A,B), A \== B.
 
-% | 10 | Regla abuelo.
-%abuelo(C,D) :- aqui_va_su_código_:)
+% | 10 | Regla abuelo. Recibe dos parametros: C y D. La regla sera
+% satisfactoria cuando se cumpla la propiedad de que C es abuelo de D.
+abuelo(C,D) :- 
+    (papa(C,A), papa(A,D)); (mama(C,A), papa(A,D)); (papa(C,A), mama(A,D));
+    (mama(C,B), mama(B,D)), C \== D.
 
-% | 11 | Regla nieto.
-%nieto(E,F) :- aqui_va_su_código_:)
+% | 11 | Regla nieto. 
+nieto(E,F) :- hijo(E,Y), hijo(Y,F), E \== F.
 
-% | 12 | Regla p. 
-%p([A|B]) :- aqui_va_su_código_:)
+% | 12 | Regla p.
+%p([A|B]) :-
 % ésto puede ser de ayuda =D print('→←')
