@@ -97,9 +97,10 @@ abuelo(C,D) :-
     (papa(C,A), papa(A,D)); (mama(C,A), papa(A,D)); (papa(C,A), mama(A,D));
     (mama(C,B), mama(B,D)), C \== D.
 
-% | 11 | Regla nieto. 
+% | 11 | Regla nieto. Recibe dos parámetros: E y F. La regla es satisfactoria
+% cuando E es nieto de F.
 nieto(E,F) :- hijo(E,Y), hijo(Y,F), E \== F.
 
-% | 12 | Regla p.
-%p([A|B]) :-
-% ésto puede ser de ayuda =D print('→←')
+% | 12 | Regla p.  Recibe un parametro: una lista. La regla imprimira la lista
+% con dos flechitas entre cada elemento.
+p([A|B]) :- print('→←'), print(A), p(B).
