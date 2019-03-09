@@ -1,3 +1,5 @@
+module LogicaProp where
+
 -- Las variables proposicionales son del tipo Char.
 type VarP = Char
 
@@ -79,7 +81,9 @@ contrad phi = modelos phi == []
 
 -- Funciones auxiliares.
 
-{- Recibe una variable proposicional. 
+{- Recibe una variable proposicional v, y un estado e = [(v,b)]. Regresa 
+   la segunda entrada del primer par ordenado de la lista de estados l,
+   cuya primer entrada sea igual a la variable v,
 -}
-busca :: (Eq c) => c -> [(c,b)] -> b 
-busca c t = head [b | (x,b) <- t, c == x]
+busca :: (Eq v) => v -> [(v,b)] -> b 
+busca v l = head [b | (x,b) <- l, v == x]
