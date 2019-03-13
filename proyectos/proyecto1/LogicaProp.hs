@@ -51,6 +51,7 @@ estados phi = subconj (vars phi)
     subconj (x:xs) = 
         [(x, True) : i | i <- subconj xs] ++ [(x, False) : i | i <- subconj xs] 
 
+
 {- Recibe una fórmula proposicional (phi). Regresa la lista con todos aquellos
    estados I tales que I(phi) = 1.
 -}
