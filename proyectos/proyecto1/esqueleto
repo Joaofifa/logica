@@ -1,0 +1,18 @@
+Cuerpo del proyecto.
+
+1. Lógica proposicional
+1.1 Definición (con ejemplos).
+1.2 Sintaxis de la lógica proposicional (con ejemplos).
+1.3 Semántica de la lógica proposicional (con ejemplos).
+1.3.1 Conceptos semánticos básicos (con ejemplos).
+1.4 Especificación formal de propiedades y teoremas (teoremas, lemas, con 
+    ejemplos).
+
+2. El problema a resolver (el texto del acertijo lógico).
+
+3. Solución del problema lógico.
+3.2 Implementación de la solución (la explicación detallada del código).
+3.3 ¿Quién es el asesino? (una vez que el porgrama me arroja el modelo
+   que cumple con la solución, podemos decidir quién es cada personaje).
+
+4. Referencias.    

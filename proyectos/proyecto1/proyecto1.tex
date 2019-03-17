@@ -1,4 +1,4 @@
-\documentclass[letterpaper,10pt]{article}
+\documentclass[letterpaper,11pt]{article}
 
 % Soporte para los acentos.
 \usepackage[utf8]{inputenc}
@@ -18,17 +18,502 @@
 \usepackage{multirow}
 % Código
 \usepackage{listings}
-%Tableaux
-\usepackage{prooftrees}
+\usepackage{qtree}
+ 
 % Modificamos los márgenes del documento.
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ 
-Proyecto 1: Implementación de la resolución de un acertijo lógico.}
+Proyecto 1: Implementación de la solución de un problema lógico}
 \author{Rubí Rojas Tania Michelle}
 \date{24 de marzo de 2019}
 
 \begin{document}
     \maketitle
+
+    % Sección 1: Introducción a la lógica computacional.
+    \section{Lógica proposicional}
+
+    % 1.1 Definición.
+    \subsection{Definición}
+    La lógica proposicional es el sistema lógico más simple. Se encarga del 
+    manejo de proposiciones mediante conectivos lógicos. \\
+    Una proposición es un enunciado que puede calificarse de verdadero o falso.
+    Ejemplos de proposiciones:
+    \begin{itemize}
+        \item Los números pares son divisibles por dos. 
+        \item La música clásica es la más antigua del mundo.
+        \item Una ballena no es roja.
+        \item He pasado mis vacaciones en Grecia.
+    \end{itemize}
+
+    Ejemplos de enunciados que no son proposiciones:
+    \begin{itemize}
+        \item ¡Auxilio, me desmayo!
+        \item ¿Qué día es hoy?
+        \item No sé si vendrán al viaje.
+        \item $x + y$
+    \end{itemize}
+
+    % 1.2 Sintaxis de la lógica proposicional.
+    \subsection{Sintaxis de la lógica proposicional}
+    Definimos ahora un lenguaje formal para la lógica proposicional. \\
+    El alfabeto consta de:
+    \begin{itemize}
+        \item Símbolos o variables proposicionales (un número 
+        infinito) : $p_{1}, ... , p_{n}, ...$
+        \item Constantes lógicas: $\bot, \top$
+        \item Conectivos u operadores lógicos: $\neg, \land, \lor 
+        \rightarrow, \leftrightarrow$
+        \item Símbolos auxiliares: $(,)$
+    \end{itemize}
+
+    El conjunto de expresiones o fórmulas atómicas, denotado $ATOM$ consta de:
+
+    \begin{itemize}
+        \item Las variables proposicionales: $p_{1}, ..., p_{n}, ...$
+        \item Las constantes $\bot, \top$
+    \end{itemize}
+    
+    Las expresiones que formarán nuestro lenguaje $PROP$, llamadas usualmente
+    fórmulas, se definen recursivamente como sigue: 
+    
+    \begin{itemize}
+        \item Si $\varphi \in ATOM$ entonces $\varphi \in PROP$. Es decir,
+        toda fórmula atómica es una fórmula.
+        \item Si $\varphi \in PROP$ entonces $(\neg \varphi) \in PROP$.
+        \item $\varphi, \psi$ entonces $(\varphi \land \psi), 
+        (\varphi \lor \psi), (\varphi \rightarrow \psi), 
+        (\varphi \leftrightarrow \psi) \in PROP$.
+        \item Son todas.
+    \end{itemize}
+    
+    Ahora veamos un par de ejemplos:
+    \begin{itemize}
+        \item[i)] El enunciado \textbf{nuestra bandera es blanca y celeste} se
+        puede ver en lógica proposicional como 
+        \begin{center}
+            $p \land q$
+        \end{center}
+        donde $p =$ nuestra bandera es blanca, y $q =$ nuestra bandera es
+        celeste.
+        \item[ii)] El enunciado \textbf{está nublado por lo que va a llover;
+        entonces no saldremos} se puede ver en lógica proposicional como 
+        \begin{center}
+            $(a \rightarrow b) \rightarrow \neg c$
+        \end{center}
+        donde $a =$ está nublado, $b =$ va a llover y $c =$ saldremos.
+    \end{itemize}
+
+    % 1.3 Semántica de la lógica proposicional.
+    \subsection{Semántica de la lógica proposicional}
+    \newtheorem{teo}{Definición}[]
+
+    \begin{teo} 
+        El tipo de valores booleanos denotado \textbf{Bool} se define
+        como $Bool = \{0, 1 \}$
+    \end{teo}
+    
+    \begin{teo}
+        Un estado o asignación de las variables (proposicionales) es una 
+        función 
+
+        \begin{center}
+            $\mathcal{I} : (Var P) \rightarrow Bool$
+        \end{center}
+        
+        Dadas $n$ variables proposicionales existen $2^{n}$ estados 
+        distintos para estas variables.
+    \end{teo}
+    
+    \begin{teo}
+        Dado un estado de las variables 
+        $\mathcal{I} : (Var P) \rightarrow Bool$, definamos la interpretación
+        de las fórmulas con respecto a $\mathcal{I}$ como la función 
+        $\mathcal{I^{\star}} : PROP \rightarrow Bool$ tal que: 
+        
+        \begin{itemize}
+            \item $\mathcal{I^{\star}}(p) = \mathcal{I}(p)$ para 
+            $p \in Var P$, es decir, 
+            $\mathcal{I^{\star}}|_{Var P} = \mathcal{I}$
+            \item $\mathcal{I^{\star}}(\top) = 1$
+            \item $\mathcal{I^{\star}}(\bot) = 0$
+            \item $\mathcal{I^{\star}}(\neg \varphi) = 1$ sii 
+            $\mathcal{I^{\star}}(\varphi) = 0$
+            \item $\mathcal{I^{\star}}(\varphi \land \psi) = 1$
+            sii $\mathcal{I^{\star}}(\varphi) = \mathcal{I^{\star}}(\psi) = 1$
+            \item $\mathcal{I^{\star}}(\varphi \lor \psi) = 0$
+            sii $\mathcal{I^{\star}}(\varphi) = 
+            \mathcal{I^{\star}}(\psi) = 0$
+            \item $\mathcal{I^{\star}}(\varphi \rightarrow \psi) = 0$
+            sii $\mathcal{I^{\star}}(\varphi) = 1$ e
+            $\mathcal{I^{\star}}(\psi) = 0$
+            \item $\mathcal{I^{\star}}(\varphi \leftrightarrow \psi) = 1$
+            sii $\mathcal{I^{\star}}(\varphi) = \mathcal{I^{\star}}(\psi)$
+        \end{itemize}
+    \end{teo}
+
+    \newpage
+    Notemos que dado un estado de las variables $\mathcal{I}$, la 
+    interpretación $\mathcal{I^{\star}}$ generada por $I$ está 
+    determinada de manera única, por lo que de ahora en adelante
+    escribiremos simplemente $\mathcal{I}$ en lugar de $\mathcal{I^{\star}}$.\\
+    Ahora veamos un par de ejemplos:
+    \begin{itemize}
+        \item[i)] $(s \lor t) \leftrightarrow (s \land t)$ \\
+        Si $\mathcal{I}(s) = 1$, $\mathcal{I}(t) = 0$, por la definición 
+        de $\mathcal{I}$ tenemos que 
+        $\mathcal{I}(s \lor t) = 1$ y $\mathcal{I}(s \land t) = 0$,
+        por lo que 
+        \begin{center}
+            $\mathcal{I}((s \lor t \leftrightarrow (s \land t))) = 0$
+        \end{center}
+
+        \item[ii)] $(p \land q) \rightarrow \neg (r \land q)$ \\
+        Si $\mathcal{I}(p) = 1$, $\mathcal{I}(q) = 1$, $\mathcal{I}(r) = 0$,
+        por la definición de $\mathcal{I}$ tenemos que  
+        $\mathcal{I}(p \land q) = 1$, $\mathcal{I}(r \land q) = 0$ y
+        $\mathcal{I}(\neg (r \land q)) = 1$, por lo que
+        \begin{center}
+            $\mathcal{I}((p \land q) \rightarrow \neg (r \land q)) = 1$
+        \end{center}
+    \end{itemize}
+
+    % 1.3.1 Conceptos semánticos básicos.
+    \subsubsection{Conceptos semánticos básicos}
+    \begin{teo}
+        Sea $\varphi$ una fórmula. Entonces 
+        \begin{itemize}
+            \item Si $\mathcal{I}(\varphi) = 1$ para toda interpretación 
+            $\mathcal{I}$ decimos que $\varphi$ es una tautología o una 
+            fórmula válida y escribimos $\models \varphi$. 
+            \item Si $\mathcal{I}(\varphi) = 1$ para alguna interpretación
+            $\mathcal{I}$ decimos que $\varphi$ es satisfacible o que
+            $\mathcal{I}$ es modelo de $\varphi$ y escribimos 
+            $\mathcal{I} \models \varphi$.
+            \item Si $\mathcal{I}(\varphi) = 0$ para alguna interpretación
+            $\mathcal{I}$ decimos que $\varphi$ es falsa o insatisfacible
+            en $\mathcal{I}$ o que $\mathcal{I}$ no es modelo de $\varphi$
+            y escribimos $\mathcal{I} \not \models \varphi$.  
+            \item Si $\mathcal{I}(\varphi) = 0$ para toda interpretación
+            $\mathcal{I}$ decimos que $\varphi$ es una contradicción o fórmula
+            no satisfacible. 
+        \end{itemize}
+    \end{teo}
+
+    Similarmente, si $\Gamma$ es un conjunto de fórmulas decimos que:
+    \begin{itemize}
+        \item $\Gamma$ es satisfacible si tiene un modelo, es decir, si existe
+        una interpretación $\mathcal{I}$ tal que $\mathcal{I}(\varphi) = 1$
+        para toda $\varphi \in \Gamma$.
+        \item $\Gamma$ es insatisfacible si no tiene un modelo, es decir, si 
+        no existe una interpretación $\mathcal{I}$ tal que 
+        $\mathcal{I}(\varphi) = 1$ para toda $\varphi \in \Gamma$.
+    \end{itemize}
+
+    Ahora, veamos ejemplos de lo anterior: 
+    \begin{itemize}
+        \item[i)] $\varphi = p \lor \neg p$ \\
+        Notemos que si $\mathcal{I}(p) = 1$ entonces $\mathcal{I}(\varphi) = 1$
+        pero si $\mathcal{I}(p) = 0$ entonces también $\mathcal{I}(\varphi) = 1$
+        . Como en ambos casos obtenemos que $\mathcal{I}(\varphi) = 1$, entonces 
+        $\varphi$ es una tautología.
+        \item[ii)] $\Gamma = \{ p \rightarrow q, r \rightarrow s, \neg s\}$.\\
+        Si $\mathcal{I}(s) = \mathcal{I}(r) = \mathcal{I}(p) = 0$, entonces 
+        $\mathcal{I}(\Gamma) = 1$, por lo que $\Gamma$ es satisfacible en 
+        $\mathcal{I}$.
+        \item[iii)] $\varphi = p \rightarrow (q \lor r)$ \\
+        Si $\mathcal{I}(p) = 1$ y $\mathcal{I}(q) = \mathcal{I}(r) = 0$, 
+        entonces $\mathcal{I}(\varphi) = 0$, por lo que $\varphi$ es 
+        insatisfacible en $\mathcal{I}$
+        \item[iv)] $\Gamma = \{ p \rightarrow q, \neg (q \lor s), s \lor p\}$\\
+        Notemos que $\Gamma$ es insatisfacible, pues supóngase que existe una 
+        interpretación $\mathcal{I}$ tal que $\mathcal{I}(\Gamma) = 1$. Entonces
+        se tiene que $\mathcal{I}(\neg (q \lor s)) = 1$, por lo que 
+        $\mathcal{I}(\neg q) = \mathcal{I}(\neg s) = 1$. Además, como 
+        $\mathcal{I}(p \rightarrow q) = 1$, entonces $\mathcal{I}(p) = 0$,
+        puesto que el consecuente de la implicación es falso. De esto último 
+        se tiene que $\mathcal{I}(s) = 1$, dado que $\mathcal{I}(s \lor p) = 1$.
+        De manera que se tiene $\mathcal{I}(\neg s) = 1 = \mathcal{I}(s)$, lo 
+        cual es imposible. Por lo tanto, no puede existir una interpretación
+        $\mathcal{I}$ que satisfaga a $\Gamma$.
+    \end{itemize}
+
+    % 2.4 Especificación formal de propiedades y teoremas.
+    \subsection{Espeficicación formal de propiedades y teoremas}
+    \newtheorem{theorem}{Lema}
+    \begin{theorem} [\textbf{Coincidencia}]
+        Sean $\mathcal{I}_{1}$, $\mathcal{I}_{2} : PROP \rightarrow Bool$ dos
+        estados que coinciden en las variables proposicionales de la fórmula 
+        $\varphi$, es decir, $\mathcal{I}_{1}(p) = \mathcal{I}_{2}(p)$ para 
+        toda $p \in vars(\varphi)$. Entonces 
+        $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$
+    \end{theorem}
+    \begin{proof}
+        Inducción estructural sobre $\varphi$. \\\\
+        \textbf{Base de inducción:} $\phi$ es atómica (no tiene operadores). 
+        \begin{itemize}
+            \item $\phi = \top$. Entonces 
+            $atom(\top)= 1 = 0 + 1 = con(\top) + 1$
+            \item $\phi = \bot$. Entonces 
+            $atom(\bot)= 1 = 0 + 1 = con(\bot) + 1$
+            \item $\phi = Var P$. Entonces 
+            $atom(Var P) = 1 = 0 + 1 = con(Var P) + 1$
+        \end{itemize}
+
+        \textbf{Hipótesis de inducción:} Supongamos que 
+        \begin{center}
+            $atom(\phi') \leq con(\phi') + 1$ y $atom(\phi'') \leq con(\phi'') + 1$
+        \end{center}
+
+        \textbf{Paso inductivo:} Probamos la propiedad para dos casos:
+        \begin{itemize}
+            \item[i)] $\phi = \neg \phi'$. Sabemos que  
+            $atom(\phi) = atom(\phi')$ y $con(\phi) = con(\phi')$. Entonces, 
+            \begin{align*}
+                atom(\phi) &= atom(\neg \phi')
+                           && \text{def. de $\phi$ en el caso $i$)} \\
+                           &= atom(\phi')
+                           && \text{def. recursiva de $\phi$} \\
+                           &\leq con(\phi') + 1
+                           && \text{hipótesis de inducción} \\
+                           &\leq con(\phi) + 1
+                           && \text{ya que $con(\phi) = con(\phi')$}
+            \end{align*} 
+
+            \item[ii)] $\phi = (\varphi$ $\star$ $\psi)$. Entonces tenemos que 
+            \begin{align*}
+                atom(\phi) &= atom(\varphi \star \psi) 
+                           && \text{def. de $\phi$ en el caso $ii)$} \\ 
+                           &= atom(\varphi) + atom(\psi)
+                           && \text{def. recursiva de $atom$} \\
+                           &\leq (con(\varphi) + 1) + (con(\psi) + 1)
+                           && \text{hipótesis de inducción} \\
+                           &\leq (con(\varphi) + con(\psi) + 1) + 1
+                           && \text{reagrupando} \\
+                           &\leq con (\varphi \star \psi) + 1
+                           && \text{def. recursiva de $con$} \\
+                           &\leq con(\phi) + 1
+                           && \text{def. de $\phi$ en el caso $ii)$}
+            \end{align*}
+
+        \end{itemize} 
+        
+    \end{proof}
+
+    % Sección 3; El acertijo a resolver.
+    \section{El acertijo a resolver.}
+    Se ha cometido un asesinato (sólo hay un asesino). Se sospecha del esposo,
+    del amante y del mayordomo. Durante los interrogatorios cada sospechoso 
+    hizo 2 declaraciones clave:
+    \begin{itemize}
+        \item Esposo.
+        \begin{enumerate}
+            \item Yo no lo hice.
+            \item EL mayordomo tampoco lo hizo.
+        \end{enumerate}
+        \item Mayordomo.
+        \begin{enumerate}
+            \item El esposo no lo hizo.
+            \item Lo hizo el amante.
+        \end{enumerate}
+        \item Amante.
+        \begin{enumerate}
+            \item Yo no lo hice.
+            \item Lo hizo el esposo.
+        \end{enumerate}
+    \end{itemize}
+
+    Al final del juicio pudimos enterarnos de que uno de los sospechosos era un
+    lógico que había dicho la verdad en sus dos declaraciones, otro sospechoso
+    resultó ser un estafador ya que mintió en ambas declaraciones. El tercer 
+    sospechoso resultó ser un loco que dijo la verdad en una declaración, pero 
+    mintió en otra.
+    El objetivo es determinar quién es el asesino, quién es el lógico, quién es
+    el estafador y quién es el loco.
+
+    % Sección 4: Implementación de la solución del acertijo.
+    \section{Solución del problema lógico.}
+    \subsection{Implementación de la solución.}
+    Se crearon dos programas para este proyecto. Explicaremos detalladamente el 
+    propósito de cada programa y sus funciones, aunque esto también se 
+    encuentra en el programa, incluyendo un ejemplo de entrada y salida de 
+    cada función.
+    \begin{itemize}
+        \item \textbf{LogicaProp.hs} \\
+        Importamos la biblioteca \texttt{Data.List} para poder utilizar 
+        la función \texttt{union} más adelante. Una variable proposiconal 
+        será del tipo \texttt{Char} y un estado será una lista de tuplas donde 
+        el primer componente de la tupla es una variable proposicional y su 
+        segundo componente será el valor booleano asociado a dicha variable.
+        Para su implementación funcional, creamos los sinónimos de tipo para 
+        \texttt{VarP} como sinónimo de \texttt{Char}, y \texttt{Estado} como 
+        sinónimo de \texttt{[(VarP, Bool)]}. Creamos el tipo de dato para las 
+        fórmulas proposicionales, el cual definimos de la siguiente forma:
+
+        \begin{lstlisting}
+            data Prop = Top | Bot | Var VarP | Neg Prop | Conj Prop Prop 
+            | Disy Prop Prop | Impl Prop Prop | Syss Prop Prop 
+            deriving (Eq, Ord, Show)
+        \end{lstlisting}
+
+        donde \texttt{Top = True}, \texttt{Bot = False}, 
+        \texttt{Var VarP = Var Char}, y los demás son los conectivos lógicos
+        (binarios y unarios) que ya definimos anteriormente. \\
+        También se dan ejemplos de variables proposicionales y fórmulas 
+        como referencias al lector de cómo se deben escribir y pueda utilizar 
+        el programa con mayor claridad en un futuro. \\ 
+        En seguida se encuentran las funciones de lógica proposicional, las
+        cuales son:
+
+        \begin{itemize}
+            \item \textbf{Función interp}. Recibe una fórmula $\varphi$ y un 
+            estado e. Regresa la interpretación de $\varphi$ con el estado 
+            dado.\\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                interp :: Prop -> Estado -> Bool
+                interp phi e = case phi of 
+                    Var i -> buscaBool i e
+                    Neg p -> not (interp p e)
+                    Conj p q -> (interp p e) && (interp q e)
+                    Disy p q -> (interp p e) || (interp q e)
+                    Impl p q -> (not (interp p e)) || (interp q e)
+                    Syss p q -> (interp p e) == (interp q e)
+            \end{lstlisting}
+            la cual es una aplicación directa de nuestra definición de 
+            semántica. Aquí podemos notar dos cosas: la primera, que se 
+            utilizó una equivalencia lógica para obtener la interpretación 
+            de la implicación; y la segunda, que utilizamos una función 
+            auxiliar \texttt{buscaBool}. Ésta recibe una variable proposicional
+            $p$, y un estado $[(p,b)]$, y regresa la segunda componente del 
+            primer par ordenado de la lista de estados I, cuyo primer 
+            componente sea igual a la variable p.
+            La función auxiliar está implementada de la siguiente forma:
+            \begin{lstlisting}
+                buscaBool :: (Eq p) => p -> [(p,b)] -> b 
+                buscaBool p e = head [b | (x,b) <- e, p == x]
+            \end{lstlisting}
+            
+            Esta función en particular se encuentra hasta abajo del código, en
+            el apartado de \textit{Funciones auxiliares}.
+
+            \item \textbf{Función vars}. Recibe una formula $\varphi$. Regresa
+            la lista de variables proposicionales que figuran en $\varphi$, 
+            sin repetición. \\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                vars :: Prop -> [VarP]
+                vars phi = case phi of
+                    Var x -> [x]
+                    Neg p -> vars p
+                    Conj p q -> vars p `union` vars q
+                    Disy p q -> vars p `union` vars q
+                    Impl p q -> vars p `union` vars q
+                    Syss p q -> vars p `union` vars q
+            \end{lstlisting}
+
+            En un inicio se utilizó \texttt{++} para concatenar las variables,
+            pero hacía que fallara la función \texttt{estados} pues al parecer
+            concatenada cadenas de más, y así se consideraban más de $2^{n}$
+            casos. Así que buscando una solución al problema, nos encontramos
+            con que la función \texttt{union} era la ideal para tener todos los 
+            elementos que necesitabamos y así no irnos a Disneylandia.
+
+            \item \textbf{Función estados}. Recibe una fórmula $\varphi$ con 
+            $n-$variables proposicionales. Regresa la lista con los $2^{n}$
+            estados distintos para $\varphi$. \\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                estados:: Prop -> [Estado]
+                estados phi = subconj (vars phi)
+                    where subconj [] = [[]]
+                          subconj (x:xs) = 
+                            [(x,True):i | i <- subconj xs] 
+                            ++ [(x,False):i | i <- subconj xs] 
+            \end{lstlisting}
+
+            Notemos que para obtener los $2^{n}$ estados posibles, debemos 
+            obtener el subconjunto de listas de la lista de variables 
+            proposicionales de $\varphi$, y hacer las combinaciones posibles
+            entre los estados y los valores booleanos (que es justo lo que 
+            hacemos en la sub-función \texttt{subconj}). Así, estamos
+            regresando una lista con las listas de estados posibles para la 
+            fórmula $\varphi$.  
+
+            \item \textbf{Función varCN}. Recibe una fórmula $\varphi$. Regresa
+            la lista de variables proposicionales que figuran en $\varphi$. La 
+            diferencia con la función vars es que si la variable porposicional 
+            tiene una negación, la manda a la lista junto con su conectivo 
+            unario. \\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                varCN :: Prop -> [Prop]
+                varCN phi = case phi of
+                Var x -> [Var x]
+                (Neg (Var i)) -> [Neg (Var i)]
+                Neg p -> varCN p
+                Conj p q -> varCN p `union` varCN q
+                Disy p q -> varCN p `union` varCN q
+                Impl p q -> varCN p `union` varCN q
+                Syss p q -> varCN p `union` varCN q
+            \end{lstlisting}
+
+            La gran utilidad de esta función será explicada en la función donde
+            es utilizada. 
+        \end{itemize}
+
+        \item \textbf{Proyecto1.hs} \\
+        Importamos el módulo del programa anterior con 
+        \texttt{import LogicaProp}, y nuevamente importamos la biblioteca 
+        \texttt{Data.List} para poder utilizar la función \texttt{intersect}
+        más adelante. \\
+        Definimos las variables proposicionales que vamos a utilizar para 
+        resolver el problema de la siguiente manera:
+        \begin{itemize}
+            \item $p =$ Lo hizo el esposo.
+            \item $q =$ Lo hizo el amante.
+            \item $r =$ Lo hizo el mayordomo.
+        \end{itemize}
+    \end{itemize}
+
+    \subsection{¿Quién es el asesino?}
+    Una vez que estamos dentro de la capeta \textbf{proyecto1}, compilamos el 
+    programa. 
+    \begin{lstlisting}
+        *Main> :l Proyecto1
+        [1 of 2] Compiling LogicaProp       ( LogicaProp.hs, interpreted )
+        [2 of 2] Compiling Main             ( Proyecto1.hs, interpreted )
+        Ok, two modules loaded.
+    \end{lstlisting}
+
+    Luego, ejecutamos el programa con el siguiente comando
+    \begin{lstlisting}
+        *Main> juicio declaracionFinal
+    \end{lstlisting}
+
+    donde \textit{declaracionFinal} es la conjunción de la declaración de los 
+    tres sospechosos. Dicha ejecución nos arroja el siguiente resultado
+    \begin{lstlisting}
+        *Main> 
+    \end{lstlisting}
+
+    Este es el estado donde un sospechoso dice dos verdades, otro dice una 
+    verdad y el último dice dos mentiras. Comparando nuestro resultado con 
+    nuestra implementación del problema, es fácil ver que las dos primeras tuplas
+    pertenecen a las declaración del esposo, las dos tuplas que le siguen
+    pertenecen a las declaración del mayordomo, y las últimas dos tuplas 
+    pertenecen a la declaración del amante. Con esto podemos concluir que 
+    \begin{itemize}
+        \item El amante es el lógico.
+        \item El esposo es el loco.
+        \item El mayordomo es el estafador.
+    \end{itemize}
+
+    Y como el amante es el lógico, entonces sabemos que sus dos declaraciones
+    son verdaderas. Por lo tanto, \textbf{el esposo es el asesino}.
+
+    % Sección 6: Referencias.
+    \section{Referencias}
     
 \end{document}
