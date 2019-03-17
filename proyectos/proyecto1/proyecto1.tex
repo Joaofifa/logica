@@ -249,57 +249,6 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         toda $p \in vars(\varphi)$. Entonces 
         $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$
     \end{theorem}
-    \begin{proof}
-        Inducción estructural sobre $\varphi$. \\\\
-        \textbf{Base de inducción:} $\phi$ es atómica (no tiene operadores). 
-        \begin{itemize}
-            \item $\phi = \top$. Entonces 
-            $atom(\top)= 1 = 0 + 1 = con(\top) + 1$
-            \item $\phi = \bot$. Entonces 
-            $atom(\bot)= 1 = 0 + 1 = con(\bot) + 1$
-            \item $\phi = Var P$. Entonces 
-            $atom(Var P) = 1 = 0 + 1 = con(Var P) + 1$
-        \end{itemize}
-
-        \textbf{Hipótesis de inducción:} Supongamos que 
-        \begin{center}
-            $atom(\phi') \leq con(\phi') + 1$ y $atom(\phi'') \leq con(\phi'') + 1$
-        \end{center}
-
-        \textbf{Paso inductivo:} Probamos la propiedad para dos casos:
-        \begin{itemize}
-            \item[i)] $\phi = \neg \phi'$. Sabemos que  
-            $atom(\phi) = atom(\phi')$ y $con(\phi) = con(\phi')$. Entonces, 
-            \begin{align*}
-                atom(\phi) &= atom(\neg \phi')
-                           && \text{def. de $\phi$ en el caso $i$)} \\
-                           &= atom(\phi')
-                           && \text{def. recursiva de $\phi$} \\
-                           &\leq con(\phi') + 1
-                           && \text{hipótesis de inducción} \\
-                           &\leq con(\phi) + 1
-                           && \text{ya que $con(\phi) = con(\phi')$}
-            \end{align*} 
-
-            \item[ii)] $\phi = (\varphi$ $\star$ $\psi)$. Entonces tenemos que 
-            \begin{align*}
-                atom(\phi) &= atom(\varphi \star \psi) 
-                           && \text{def. de $\phi$ en el caso $ii)$} \\ 
-                           &= atom(\varphi) + atom(\psi)
-                           && \text{def. recursiva de $atom$} \\
-                           &\leq (con(\varphi) + 1) + (con(\psi) + 1)
-                           && \text{hipótesis de inducción} \\
-                           &\leq (con(\varphi) + con(\psi) + 1) + 1
-                           && \text{reagrupando} \\
-                           &\leq con (\varphi \star \psi) + 1
-                           && \text{def. recursiva de $con$} \\
-                           &\leq con(\phi) + 1
-                           && \text{def. de $\phi$ en el caso $ii)$}
-            \end{align*}
-
-        \end{itemize} 
-        
-    \end{proof}
 
     % Sección 3; El acertijo a resolver.
     \section{El acertijo a resolver.}
@@ -340,7 +289,7 @@ Proyecto 1: Implementación de la solución de un problema lógico}
     encuentra en el programa, incluyendo un ejemplo de entrada y salida de 
     cada función.
     \begin{itemize}
-        \item \textbf{LogicaProp.hs} \\
+        \item[1)] \textbf{LogicaProp.hs} \\
         Importamos la biblioteca \texttt{Data.List} para poder utilizar 
         la función \texttt{union} más adelante. Una variable proposiconal 
         será del tipo \texttt{Char} y un estado será una lista de tuplas donde 
@@ -415,10 +364,11 @@ Proyecto 1: Implementación de la solución de un problema lógico}
 
             En un inicio se utilizó \texttt{++} para concatenar las variables,
             pero hacía que fallara la función \texttt{estados} pues al parecer
-            concatenada cadenas de más, y así se consideraban más de $2^{n}$
-            casos. Así que buscando una solución al problema, nos encontramos
-            con que la función \texttt{union} era la ideal para tener todos los 
-            elementos que necesitabamos y así no irnos a Disneylandia.
+            no concatenada de la forma que nosotros necesitabamos, y así se 
+            consideraban más de $2^{n}$ casos. Buscando una solución al
+            problema nos encontramos con que la función \texttt{union} era la 
+            ideal para tener todos los elementos que necesitabamos y así no 
+            irnos a Disneylandia.
 
             \item \textbf{Función estados}. Recibe una fórmula $\varphi$ con 
             $n-$variables proposicionales. Regresa la lista con los $2^{n}$
@@ -459,22 +409,277 @@ Proyecto 1: Implementación de la solución de un problema lógico}
                 Syss p q -> varCN p `union` varCN q
             \end{lstlisting}
 
-            La gran utilidad de esta función será explicada en la función donde
-            es utilizada. 
+            La gran utilidad de esta función será explicada más adelante.
         \end{itemize}
 
-        \item \textbf{Proyecto1.hs} \\
+        \item[2)] \textbf{Proyecto1.hs} \\
         Importamos el módulo del programa anterior con 
         \texttt{import LogicaProp}, y nuevamente importamos la biblioteca 
         \texttt{Data.List} para poder utilizar la función \texttt{intersect}
         más adelante. \\
         Definimos las variables proposicionales que vamos a utilizar para 
-        resolver el problema de la siguiente manera:
+        resolver el problema de la siguiente manera
+    
         \begin{itemize}
             \item $p =$ Lo hizo el esposo.
             \item $q =$ Lo hizo el amante.
             \item $r =$ Lo hizo el mayordomo.
         \end{itemize}
+
+        las cuales corresponden a las proposiciones atómicas de las 
+        declaraciones de los sospechosos. Luego, definimos cada una de las 
+        declaraciones que hizo cada persona
+
+        \begin{itemize}
+            \item \texttt{desposo = (Conj (Neg (Var p)) (Neg (Var r)))}
+            $\equiv \neg p \land \neg r$
+            \item \texttt{damante = (Conj (Neg (Var p)) (Var q))}
+            $\equiv \neg p \land q$
+            \item \texttt{demayordomo = (Conj (Neg (Var q)) (Var p))}
+            $\equiv \neg q \land p$
+        \end{itemize}
+
+        Y finalmente, definimos la conjunción de la declaración de los tres 
+        sospechosos
+        \begin{center}
+            \texttt{argumento = (Conj desposo (Conj dmayordomo damante))}
+        \end{center}
+
+        Enseguida están las funciones que son propias del proyecto.
+
+        \begin{itemize}
+            \item \textbf{Función modelos} Recibe una fórmula $\varphi$. 
+            Regresa la lista con todos los modelos que satisfacen a la 
+            fórmula $\varphi$. \\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                modelos :: Prop -> [Estado]
+                modelos phi = 
+                    [e | e <- estados argumento, interp phi e == True]
+            \end{lstlisting}
+            
+            Modificamos esta función para que, en lugar de tomar los estados de 
+            la fórmula $\varphi$, tome los estados del argumento. Esto es 
+            necesario ya que de lo contrario sólo estaríamos evaluando una 
+            declaración con los estados posibles de sus dos variables 
+            porposicionales, y nosotros necesitamos que estén siendo evaluadas
+            con los estados de las tres variables proposicionales.
+            Las evaluaciones de cada una de las declaraciones son:
+            \begin{lstlisting}
+                *Main> modelos desposo
+                [[('p',False),('r',False),('q',True)],
+                [('p',False),('r',False),('q',False)]]
+                
+                *Main> modelos damante
+                [[('p',True),('r',True),('q',False)],
+                [('p',True),('r',False),('q',False)]]
+                
+                *Main> modelos dmayordomo
+                [[('p',False),('r',True),('q',True)],
+                [('p',False),('r',False),('q',True)]]
+            \end{lstlisting}
+
+            \item \textbf{Función noModelos}. Recibe una fórmula $\varphi$.
+            Regresa la lista con todos los estados que no satisfacen a la 
+            fórmula $\varphi$. \\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                noModelos :: Prop -> [Estado]
+                noModelos phi = 
+                    [e | e <- estados argumento, interp phi e == False]
+            \end{lstlisting}
+
+            Modificamos esta función para que, en lugar de tomar los estados de
+            la fórmula $\varphi$, tome los estados del argumento.  Esto es 
+            necesario ya que de lo contrario sólo estaríamos evaluando una 
+            declaración con los estados posibles de sus dos variables 
+            porposicionales, y nosotros necesitamos que esté siendo 
+            evaluadas con los estados de las tres variables proposicionales.
+            Las evaluaciones de cada una de las declaraciones son: 
+            \begin{lstlisting}
+                *Main> noModelos desposo
+                [[('p',True),('r',True),('q',True)],
+                [('p',True),('r',True),('q',False)],
+                [('p',True),('r',False),('q',True)],
+                [('p',True),('r',False),('q',False)],
+                [('p',False),('r',True),('q',True)],
+                [('p',False),('r',True),('q',False)]]
+                
+                *Main> noModelos damante
+                [[('p',True),('r',True),('q',True)],
+                [('p',True),('r',False),('q',True)],
+                [('p',False),('r',True),('q',True)],
+                [('p',False),('r',True),('q',False)],
+                [('p',False),('r',False),('q',True)],
+                [('p',False),('r',False),('q',False)]]
+                
+                *Main> noModelos dmayordomo
+                [[('p',True),('r',True),('q',True)],
+                [('p',True),('r',True),('q',False)],
+                [('p',True),('r',False),('q',True)],
+                [('p',True),('r',False),('q',False)],
+                [('p',False),('r',True),('q',False)],
+                [('p',False),('r',False),('q',False)]]
+            \end{lstlisting}
+
+            \item \textbf{Función unaVerdad}. Recibe una fórmula. Regresa la 
+            lista de estados que satisfacen a una de las declaraciones de los 
+            sospechosos y al resto no. \\
+            La función está implementada de la siguiente forma: 
+            \begin{lstlisting}
+                unaVerdad :: Prop -> [Estado]
+                unaVerdad _ = 
+                    [i | i <- interseccion (modelos desposo) 
+                    (noModelos dmayordomo) (noModelos damante)] 
+                    ++ [i | i <- interseccion (modelos dmayordomo) 
+                    (noModelos desposo) (noModelos damante)] 
+                    ++ [i | i <- interseccion (modelos damante) 
+                    (noModelos desposo) (noModelos dmayordomo)]
+            \end{lstlisting}
+
+            Expliquemos el por qué tenemos esta función. El problema nos dice 
+            que hay una persona que dice dos verdades, por lo que es buena idea
+            comenzar descartando todos aquellos estados que no cumplen la 
+            propiedad de tener sólo una persona que dice la verdad. Es decir, 
+            descartamos los estados que no satisfacen a ninguna de las 
+            declaraciones. Esto lo logramos mediante la intersección de los 
+            modelos de una declaracion y los noModelos de las otras dos 
+            declaraciones. Así ganantizamos que obtendremos los estados 
+            donde sólo una persona dice la verdad. \\
+            Por ejemplo, supongamos que el estado 
+            \texttt{[('p', True), ('r', False), ('q', True)]} satisface a la
+            declaracion del esposo. Como ya tenemos una verdad, los demás 
+            tienen que ser no modelos de las otras declaraciones pues una 
+            persona es un estafador y otra un loco que sólo dice una verdad.
+            Notemos que no nos importa qué fórmula recibamos como entrada, 
+            la función siempre nos arrojará el mismo resultado (que es lo que 
+            queremos). \\
+            La evaluación de la función es
+            \begin{lstlisting}
+                *Main> unaVerdad argumento
+                [[('p',False),('r',False),('q',False)],
+                [('p',False),('r',True),('q',True)],
+                [('p',True),('r',True),('q',False)],
+                [('p',True),('r',False),('q',False)]]
+            \end{lstlisting}
+
+            Ahora, veamos el auxiliar que utilizamos aqui. La función 
+            \texttt{interseccion} recibe tres listas \texttt{xs, ys, zs}. 
+            Regresa una lista con los elementos que tienen en común las tres
+            listas. \\
+            La implementación de la función es de la siguiente forma:
+            \begin{lstlisting}
+                interseccion :: Eq a => [a] -> [a] -> [a] -> [a]
+                interseccion [] [] [] = [] 
+                interseccion xs ys zs = 
+                    intersect (intersect xs ys) zs
+            \end{lstlisting}
+
+            Para nuestro caso particular, la utiilizamos para obtener la 
+            intersección de tres listas de listas. Notemos que aquí 
+            utilizamos la función de listas \texttt{intersect}, la cual 
+            nos ahorra tener que hacer a pie la función de intersección.
+            Nuestra función simplemente es un caso particular que 
+            necesitamos para el proyecto. \\
+            Esta función la podemos encontrar hasta abajo del código, en el 
+            apartado de \textit{Funciones auxiliares}.
+        \end{itemize}
+
+        Ahora que tenemos los cuatro estados que cumplen que sólo una persona
+        dice la verdad, sólo nos interesa saber qué pasa con las otras dos 
+        evaluaciones de nuestros estados. Así, necesitamos ver cuál estado 
+        es dónde tenemos efectivamente que hay un lógico, un estafador y un
+        loco. Para ello, veamos las siguientes funciones:
+
+        \item \textbf{Función sonDiferentes}. Recibe una fórmula $\varphi$ con
+        únicamente dos variables proposicionales y un estado e. Nos dice si 
+        la interpretación de cada una de sus variables con el estado e son 
+        diferentes. \\
+        La implementación de la función es de la siguiente forma: 
+        \begin{lstlisting}
+            sonDiferentes :: Prop -> Estado -> Bool
+            sonDiferentes phi e = 
+                (interp (head (varCN phi)) e) 
+                /= (interp (last (varCN phi)) e)
+        \end{lstlisting}
+
+        En esta función es donde \texttt{varCN} cobra mucha importancia. 
+        Sabemos que las variables proposicionales de $\varphi$ pueden estar 
+        solas o negadas, por lo que no nos sirve usar la función \texttt{vars}
+        ya que no estaríamos considerando el caso en que las variables están 
+        negadas. Así, utilizamos la función \texttt{varCN} para evaluar ambas 
+        variables de la fórmula $\varphi$ y verificar si la interpretación de 
+        éstas es diferente o no.
+
+        \item \textbf{Función sonIguales}. Recibe una fórmula $\varphi$ con 
+        únicamente dos variables proposicionales y un estado e. Nos dice si 
+        la interpretación de cada una de sus variables con el estado e son 
+        iguales. \\
+        La implementación de la función es de la siguiente forma:
+        \begin{lstlisting}
+            sonIguales :: Prop -> Estado -> Bool
+            sonIguales beta e = 
+                (interp (head (varCN beta)) e) 
+                == (interp (last (varCN beta)) e)
+        \end{lstlisting}
+
+        En esta función es donde \texttt{varCN} cobra mucha importancia. 
+        Sabemos que las variables proposicionales de $\varphi$ pueden estar 
+        solas o negadas, por lo que no nos sirve usar la función \texttt{vars}
+        ya que no estaríamos considerando el caso en que las variables están 
+        negadas. Así, utilizamos la función \texttt{varCN} para evaluar ambas 
+        variables de la fórmula $\varphi$ y verificar si la interpretación de 
+        éstas es igual o no.
+
+        \item \textbf{Función juicio}. Recibe una fórmula. Regresa la lista 
+        con los estados que cumplen la propiedad de que exista un lógico 
+        (dos verdades), un estafador (dos mentiras) y un loco (una verdad y
+        una mentira). \\
+        La implementación de la función es de la siguiente manera:
+        \begin{lstlisting}
+            juicio:: Prop -> [Estado]
+            juicio _ = 
+                [e | e <- unaVerdad argumento, 
+                (sonDiferentes desposo e == True 
+                && sonIguales dmayordomo e == True) 
+                && (sonIguales dmayordomo e == True 
+                && sonIguales damante e == True)
+                || (sonIguales desposo e == True 
+                && sonDiferentes dmayordomo e == True) 
+                && (sonDiferentes dmayordomo e == True 
+                && sonIguales damante e == True)
+                || (sonIguales desposo e == True 
+                && sonIguales dmayordomo e == True) 
+                && (sonIguales dmayordomo e == True 
+                && sonDiferentes damante e == True)]
+        \end{lstlisting}
+
+        Expliquemos cómo funciona juicio. Tomamos los estado que obtuvimos de 
+        la función \texttt{unaVerdad}, los cuales son cuatro. Y como sabemos 
+        que en éstos estados sólo una persona dice la verdad, entonces debemos
+        buscar al estafador y al loco, los cuales tienen una característica muy
+        peculiar: la interpretación de cada una de las variables 
+        proposicionales de la declaración de éstos dos personajes con algún 
+        estado de la función \texttt{esVerdad} es diferente (si es el loco) e 
+        igual (si es el estafador). Entonces, recordemos que sabemos que hay 
+        un lógico, el cual dice dos verdades y por lo tanto la interpretación 
+        de cada una de sus variables es igual con algún estado de 
+        \texttt{esVerdad}. Sabiendo esto, basta considerar tres casos simples
+        para deducir quién es quién. Veremos sólo el primer caso, ya que los
+        demás son análogos. \\
+        Supongamos que la interpretación de las variables de la declaracion del
+        esposo con algún estado de \texttt{unaVerdad} es diferente y la 
+        interpretación de las variables de la declaración del mayordomo con 
+        algún estado de \texttt{unaVerdad} es igual. Entonces sabemos que el 
+        esposo es el loco (ya que dice una verdad y una mentira) y el mayordomo 
+        puede ser el estafador o el lógico. Pero si además, la interpretación de
+        las variables proposicionales de la declaración del amante con algún 
+        estado de \texttt{unaVerdad} son iguales entonces significa que el 
+        amante también puede ser el estafador y el lógico. Y como ese 
+        \textit{alǵun estado de \texttt{unaVerdad}}, es el mismo que aplicamos
+        en las tres declaraciones, entonces sabemos que ese estado es el que 
+        cumple la propiedad que estamos buscando. Bastaría conseguir el estado 
+        y revisar manualmente quién es nuestro lógico y nuestro estafador. 
     \end{itemize}
 
     \subsection{¿Quién es el asesino?}
@@ -489,21 +694,18 @@ Proyecto 1: Implementación de la solución de un problema lógico}
 
     Luego, ejecutamos el programa con el siguiente comando
     \begin{lstlisting}
-        *Main> juicio declaracionFinal
+        *Main> juicio argumento
     \end{lstlisting}
 
-    donde \textit{declaracionFinal} es la conjunción de la declaración de los 
+    donde \textit{argumento} es la conjunción de la declaración de los 
     tres sospechosos. Dicha ejecución nos arroja el siguiente resultado
     \begin{lstlisting}
-        *Main> 
+        [[('p',False),('r',True),('q',True)],
+        [('p',True),('r',False),('q',False)]]
     \end{lstlisting}
 
     Este es el estado donde un sospechoso dice dos verdades, otro dice una 
-    verdad y el último dice dos mentiras. Comparando nuestro resultado con 
-    nuestra implementación del problema, es fácil ver que las dos primeras tuplas
-    pertenecen a las declaración del esposo, las dos tuplas que le siguen
-    pertenecen a las declaración del mayordomo, y las últimas dos tuplas 
-    pertenecen a la declaración del amante. Con esto podemos concluir que 
+    verdad y el último dice dos mentiras. 
     \begin{itemize}
         \item El amante es el lógico.
         \item El esposo es el loco.
