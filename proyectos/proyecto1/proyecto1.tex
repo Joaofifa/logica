@@ -14,43 +14,59 @@
 \usepackage{latexsym}
 \usepackage{enumerate}
 \usepackage{ragged2e}
-% Tablas
-\usepackage{multirow}
-% Código
+% Soporte para el código.
 \usepackage{listings}
-\usepackage{qtree}
- 
+% Eliminamos el título del abstract.
+\AtBeginDocument{\renewcommand{\abstractname}{}}
+% Definiciones, teoremas y lemas.
+\newtheorem{define}{Definición}[]
+\newtheorem{lema}{Lema}[]
+\newtheorem{prop}{Proposición}[]
+% Deducción natural.
+\usepackage{bussproofs}
 % Modificamos los márgenes del documento.
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
+% Datos del título.
 \title{Lógica Computacional \\ 
 Proyecto 1: Implementación de la solución de un problema lógico}
-\author{Rubí Rojas Tania Michelle}
-\date{24 de marzo de 2019}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        $\#$ de cuenta: 315121719}
+\date{\today}
 
 \begin{document}
     \maketitle
 
-    % Sección 1: Introducción a la lógica computacional.
-    \section{Lógica proposicional}
+    % Abstract: Incluí la bibliografía y el breve propósito del proyecto.
+    \begin{abstract}
+        La parte teórica del proyecto está basado en las notas de clase del
+        curso de Lógica Computacional impartido por la profesora Estefanía 
+        Prieto Larios y se nutrió con las sugerencias y correcciones de la 
+        misma. El propósito de este proyecto es realizar la implementación 
+        computacional de la solución a un clásico problema lógico.
+    \end{abstract}
+
+    % Sección 1. Lógica Proposicional.
+    \section{Lógica Proposicional}
 
     % 1.1 Definición.
     \subsection{Definición}
     La lógica proposicional es el sistema lógico más simple. Se encarga del 
-    manejo de proposiciones mediante conectivos lógicos. \\
-    Una proposición es un enunciado que puede calificarse de verdadero o falso.
+    manejo de proposiciones mediante conectivos lógicos. Una proposición es
+    un enunciado que puede calificarse de verdadero o falso. \\
     Ejemplos de proposiciones:
     \begin{itemize}
         \item Los números pares son divisibles por dos. 
-        \item La música clásica es la más antigua del mundo.
         \item Una ballena no es roja.
         \item He pasado mis vacaciones en Grecia.
     \end{itemize}
 
-    Ejemplos de enunciados que no son proposiciones:
+    \justify
+    Ejemplos de enunciados que no son proposiciones.
     \begin{itemize}
         \item ¡Auxilio, me desmayo!
-        \item ¿Qué día es hoy?
         \item No sé si vendrán al viaje.
         \item $x + y$
     \end{itemize}
@@ -69,7 +85,6 @@ Proyecto 1: Implementación de la solución de un problema lógico}
     \end{itemize}
 
     El conjunto de expresiones o fórmulas atómicas, denotado $ATOM$ consta de:
-
     \begin{itemize}
         \item Las variables proposicionales: $p_{1}, ..., p_{n}, ...$
         \item Las constantes $\bot, \top$
@@ -77,7 +92,6 @@ Proyecto 1: Implementación de la solución de un problema lógico}
     
     Las expresiones que formarán nuestro lenguaje $PROP$, llamadas usualmente
     fórmulas, se definen recursivamente como sigue: 
-    
     \begin{itemize}
         \item Si $\varphi \in ATOM$ entonces $\varphi \in PROP$. Es decir,
         toda fórmula atómica es una fórmula.
@@ -87,9 +101,11 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         (\varphi \leftrightarrow \psi) \in PROP$.
         \item Son todas.
     \end{itemize}
-    
+
+    \justify
     Ahora veamos un par de ejemplos:
     \begin{itemize}
+        % Ejemplo 1.
         \item[i)] El enunciado \textbf{nuestra bandera es blanca y celeste} se
         puede ver en lógica proposicional como 
         \begin{center}
@@ -97,6 +113,7 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         \end{center}
         donde $p =$ nuestra bandera es blanca, y $q =$ nuestra bandera es
         celeste.
+        % Ejemplo 2.
         \item[ii)] El enunciado \textbf{está nublado por lo que va a llover;
         entonces no saldremos} se puede ver en lógica proposicional como 
         \begin{center}
@@ -107,31 +124,28 @@ Proyecto 1: Implementación de la solución de un problema lógico}
 
     % 1.3 Semántica de la lógica proposicional.
     \subsection{Semántica de la lógica proposicional}
-    \newtheorem{teo}{Definición}[]
-
-    \begin{teo} 
+    % Definición. Valores booleanos.
+    \begin{define} 
         El tipo de valores booleanos denotado \textbf{Bool} se define
         como $Bool = \{0, 1 \}$
-    \end{teo}
-    
-    \begin{teo}
+    \end{define}
+    % Definición. Estado de las variables.
+    \begin{define}
         Un estado o asignación de las variables (proposicionales) es una 
         función 
-
         \begin{center}
             $\mathcal{I} : (Var P) \rightarrow Bool$
         \end{center}
-        
         Dadas $n$ variables proposicionales existen $2^{n}$ estados 
         distintos para estas variables.
-    \end{teo}
-    
-    \begin{teo}
+    \end{define}
+    % Definición. Interpretación de las fórmulas.
+    \begin{define}
         Dado un estado de las variables 
         $\mathcal{I} : (Var P) \rightarrow Bool$, definamos la interpretación
         de las fórmulas con respecto a $\mathcal{I}$ como la función 
         $\mathcal{I^{\star}} : PROP \rightarrow Bool$ tal que: 
-        
+        % Interpretación de cada una de las fórmulas.
         \begin{itemize}
             \item $\mathcal{I^{\star}}(p) = \mathcal{I}(p)$ para 
             $p \in Var P$, es decir, 
@@ -151,15 +165,17 @@ Proyecto 1: Implementación de la solución de un problema lógico}
             \item $\mathcal{I^{\star}}(\varphi \leftrightarrow \psi) = 1$
             sii $\mathcal{I^{\star}}(\varphi) = \mathcal{I^{\star}}(\psi)$
         \end{itemize}
-    \end{teo}
+    \end{define}
 
     \newpage
     Notemos que dado un estado de las variables $\mathcal{I}$, la 
     interpretación $\mathcal{I^{\star}}$ generada por $I$ está 
     determinada de manera única, por lo que de ahora en adelante
-    escribiremos simplemente $\mathcal{I}$ en lugar de $\mathcal{I^{\star}}$.\\
+    escribiremos simplemente $\mathcal{I}$ en lugar de $\mathcal{I^{\star}}$.
+    \newline
     Ahora veamos un par de ejemplos:
     \begin{itemize}
+        % Ejemplo 1.
         \item[i)] $(s \lor t) \leftrightarrow (s \land t)$ \\
         Si $\mathcal{I}(s) = 1$, $\mathcal{I}(t) = 0$, por la definición 
         de $\mathcal{I}$ tenemos que 
@@ -168,7 +184,7 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         \begin{center}
             $\mathcal{I}((s \lor t \leftrightarrow (s \land t))) = 0$
         \end{center}
-
+        % Ejemplo 2. 
         \item[ii)] $(p \land q) \rightarrow \neg (r \land q)$ \\
         Si $\mathcal{I}(p) = 1$, $\mathcal{I}(q) = 1$, $\mathcal{I}(r) = 0$,
         por la definición de $\mathcal{I}$ tenemos que  
@@ -179,57 +195,201 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         \end{center}
     \end{itemize}
 
+    \justify
+    El siguiente lema es de importancia para restringir las interpretaciones
+    de interés al analizar una fórmula.
+    % --- Primer lema que hay que demostrar ---
+    \begin{lema} [\textbf{Coincidencia}]
+        Sean $\mathcal{I}_{1}$, $\mathcal{I}_{2} : PROP \rightarrow Bool$ dos
+        estados que coinciden en las variables proposicionales de la fórmula 
+        $\varphi$, es decir, $\mathcal{I}_{1}(p) = \mathcal{I}_{2}(p)$ para 
+        toda $p \in vars(\varphi)$. Entonces 
+        $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$
+    \end{lema}
+    % Demostración.
+    \begin{proof}
+        Inducción estructural sobre $\varphi$.\\ \\
+        % Base de inducción.
+        \texttt{Base de inducción.} $\varphi$ es atómica.
+        \begin{itemize}
+            % Caso cuando phi es top.
+            \item $\varphi = \top$. Notemos que 
+            $\mathcal{I}_{1}(\top) = \mathcal{I}_{2}(\top) = 1$ siempre.
+            % Caso cuando phi es bot.
+            \item $\varphi = \bot$. Notemos que 
+            $\mathcal{I}_{1}(\bot) = \mathcal{I}_{2}(\bot) = 0$ siempre.
+            % Caso cuando phi es una variable proposicional.
+            \item $\varphi = VarP$. Como la única fórmula atómica que ocurre
+            en $\varphi$ es $\varphi$, tenemos que 
+            $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$.
+        \end{itemize}
+
+        \justify
+        % Hipótesis de inducción.
+        \texttt{Hipótesis de inducción.} Supongamos que el argumento es cierto
+        para la fórmula $\varphi '$, es decir, que se cumple 
+        $\mathcal{I}_{1}(\varphi ') = \mathcal{I}_{2}(\varphi ')$. \\ \\
+        % Paso inductivo.
+        \texttt{Paso inductivo.} Tenemos $5$ casos:
+        \begin{itemize}
+            % Caso cuando la phi es la negación de una fórmula.
+            \item $\varphi = \neg \varphi '$. Supongamos que 
+            $\mathcal{I}_{1} = \mathcal{I}_{2}$ coinciden en las variables
+            proposicionales de $\neg \varphi '$; pero las variables de 
+            $\neg \varphi$ son las mismas variables de $\varphi$, y luego 
+            por hipótesis de inducción tenemos que 
+            $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$. Así, 
+            \begin{align*}
+                \mathcal{I}_{1}(\neg \varphi) = 1 
+                &\Leftrightarrow \mathcal{I}_{1}(\varphi) = 0
+                && \text{por definición de $\mathcal{I}$} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\varphi) = 0
+                && \text{por Hipótesis de Inducción} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\neg \varphi) = 1
+                && \text{por definición de $\mathcal{I}$}
+            \end{align*}
+
+            Por lo tanto, 
+            $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$.
+
+            % Caso cuando phi es la conjunción de dos fórmulas.
+            \item $\varphi = \phi \land \psi$. Entonces tenemos que
+            \begin{align*}
+                \mathcal{I}_{1}(\phi \land \psi) = 1
+                &\Leftrightarrow \mathcal{I}_{1}(\phi) = \mathcal{I}_{1}(\psi)
+                = 1
+                && \text{por definición de $\mathcal{I}$} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi) = \mathcal{I}_{2}(\psi)
+                = 1
+                && \text{por Hipótesis de Inducción} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi \land \psi) = 1
+                && \text{por definición de $\mathcal{I}$}
+            \end{align*}
+
+            Por lo tanto, 
+            $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$.
+
+            % Caso cuando phi es una disyunción de fórmulas.
+            \item $\varphi = \phi \lor \psi$. Entonces tenemos que 
+            \begin{align*}
+                \mathcal{I}_{1}(\phi \lor \psi) = 0
+                &\Leftrightarrow \mathcal{I}_{1}(\phi) = \mathcal{I}_{1}(\psi)
+                = 0
+                && \text{por definición de $\mathcal{I}$} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi) = \mathcal{I}_{2}(\psi)
+                = 0
+                && \text{por Hipótesis de Inducción} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi \lor \psi) = 0
+                && \text{por definición de $\mathcal{I}$} 
+            \end{align*}
+
+            Por lo tanto, 
+            $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$.
+
+            % Caso en que phi es la implicación de dos fórmulas.
+            \item $\varphi = \phi \rightarrow \psi$. Entonces tenemos que 
+            \begin{align*}
+                \mathcal{I}_{1}(\phi \rightarrow \psi) = 0
+                &\Leftrightarrow \mathcal{I}_{1}(\phi) = 1,
+                \mathcal{I}_{1}(\psi) = 0
+                && \text{por definición de $\mathcal{I}$} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi) = 1, 
+                \mathcal{I}_{2}(\psi) = 0
+                && \text{por Hipótesis de Inducción} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi \rightarrow \psi) = 0
+            \end{align*}
+
+            Por lo tanto, 
+            $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$.
+
+            % Caso en que phi es la equivalencia de dos fórmulas.
+            \item $\varphi = \phi \leftrightarrow \psi$. Entonces tenemos que
+            \begin{align*}
+                \mathcal{I}_{1}(\phi \leftrightarrow \psi) = 1
+                &\Leftrightarrow \mathcal{I}_{1}(\phi) = \mathcal{I}_{1}(\psi)
+                && \text{por definición de $\mathcal{I}$} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi) = \mathcal{I}_{2}(\psi)
+                && \text{por Hipótesis de Inducción} \\
+                &\Leftrightarrow \mathcal{I}_{2}(\phi \leftrightarrow \psi) = 1
+                && \text{por definición de $\mathcal{I}$}
+            \end{align*}
+
+            Por lo tanto, 
+            $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$.
+
+        \end{itemize}
+    \end{proof}
+
+    El lema anterior implica que aún cuando existen una infinidad de estados,
+    dada una fórmula $\varphi$ basta considerar únicamente aquellos que 
+    difieren en las variables proposicionales de $\varphi$, a saber $2^{n}$
+    estados distintos si $\varphi$ tiene $n$ variables proposicionales.
+
     % 1.3.1 Conceptos semánticos básicos.
     \subsubsection{Conceptos semánticos básicos}
-    \begin{teo}
+    % Definición de satisfacibilidad, tautología y contradicción.
+    \begin{define}
         Sea $\varphi$ una fórmula. Entonces 
         \begin{itemize}
+            % Definición de tautología.
             \item Si $\mathcal{I}(\varphi) = 1$ para toda interpretación 
             $\mathcal{I}$ decimos que $\varphi$ es una tautología o una 
             fórmula válida y escribimos $\models \varphi$. 
+            % Definición de satisfacibilidad.
             \item Si $\mathcal{I}(\varphi) = 1$ para alguna interpretación
             $\mathcal{I}$ decimos que $\varphi$ es satisfacible o que
             $\mathcal{I}$ es modelo de $\varphi$ y escribimos 
             $\mathcal{I} \models \varphi$.
+            % Definición de insatisfacibilidad.
             \item Si $\mathcal{I}(\varphi) = 0$ para alguna interpretación
             $\mathcal{I}$ decimos que $\varphi$ es falsa o insatisfacible
             en $\mathcal{I}$ o que $\mathcal{I}$ no es modelo de $\varphi$
-            y escribimos $\mathcal{I} \not \models \varphi$.  
+            y escribimos $\mathcal{I} \not \models \varphi$.
+            % Definición de contradicción.  
             \item Si $\mathcal{I}(\varphi) = 0$ para toda interpretación
             $\mathcal{I}$ decimos que $\varphi$ es una contradicción o fórmula
             no satisfacible. 
         \end{itemize}
-    \end{teo}
+    \end{define}
 
+    \justify
     Similarmente, si $\Gamma$ es un conjunto de fórmulas decimos que:
     \begin{itemize}
+        % Definición de conjunto satisfacible.
         \item $\Gamma$ es satisfacible si tiene un modelo, es decir, si existe
         una interpretación $\mathcal{I}$ tal que $\mathcal{I}(\varphi) = 1$
         para toda $\varphi \in \Gamma$.
+        % Definición de conjunto insatisfacible.
         \item $\Gamma$ es insatisfacible si no tiene un modelo, es decir, si 
         no existe una interpretación $\mathcal{I}$ tal que 
         $\mathcal{I}(\varphi) = 1$ para toda $\varphi \in \Gamma$.
     \end{itemize}
 
+    \newpage
+    \justify
     Ahora, veamos ejemplos de lo anterior: 
     \begin{itemize}
+        % Ejemplo 1. Tautología.
         \item[i)] $\varphi = p \lor \neg p$ \\
-        Notemos que si $\mathcal{I}(p) = 1$ entonces $\mathcal{I}(\varphi) = 1$
-        pero si $\mathcal{I}(p) = 0$ entonces también $\mathcal{I}(\varphi) = 1$
-        . Como en ambos casos obtenemos que $\mathcal{I}(\varphi) = 1$, entonces 
-        $\varphi$ es una tautología.
+        Notemos que si $\mathcal{I}(p) = 1$ entonces 
+        $\mathcal{I}(\varphi) = 1$ pero si $\mathcal{I}(p) = 0$ entonces 
+        también $\mathcal{I}(\varphi) = 1$. Como en ambos casos obtenemos 
+        que $\mathcal{I}(\varphi) = 1$, entonces $\varphi$ es una tautología.
+        % Ejemplo 2. Satisfacibilidad.
         \item[ii)] $\Gamma = \{ p \rightarrow q, r \rightarrow s, \neg s\}$.\\
         Si $\mathcal{I}(s) = \mathcal{I}(r) = \mathcal{I}(p) = 0$, entonces 
         $\mathcal{I}(\Gamma) = 1$, por lo que $\Gamma$ es satisfacible en 
         $\mathcal{I}$.
+        % Ejemplo 3. Insatisfacibilidad.
         \item[iii)] $\varphi = p \rightarrow (q \lor r)$ \\
         Si $\mathcal{I}(p) = 1$ y $\mathcal{I}(q) = \mathcal{I}(r) = 0$, 
         entonces $\mathcal{I}(\varphi) = 0$, por lo que $\varphi$ es 
         insatisfacible en $\mathcal{I}$
+        % Ejemplo 4. Contradicción.
         \item[iv)] $\Gamma = \{ p \rightarrow q, \neg (q \lor s), s \lor p\}$\\
         Notemos que $\Gamma$ es insatisfacible, pues supóngase que existe una 
-        interpretación $\mathcal{I}$ tal que $\mathcal{I}(\Gamma) = 1$. Entonces
-        se tiene que $\mathcal{I}(\neg (q \lor s)) = 1$, por lo que 
+        interpretación $\mathcal{I}$ tal que $\mathcal{I}(\Gamma) = 1$. 
+        Entonces se tiene que $\mathcal{I}(\neg (q \lor s)) = 1$, por lo que 
         $\mathcal{I}(\neg q) = \mathcal{I}(\neg s) = 1$. Además, como 
         $\mathcal{I}(p \rightarrow q) = 1$, entonces $\mathcal{I}(p) = 0$,
         puesto que el consecuente de la implicación es falso. De esto último 
@@ -239,18 +399,115 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         $\mathcal{I}$ que satisfaga a $\Gamma$.
     \end{itemize}
 
-    % 2.4 Especificación formal de propiedades y teoremas.
-    \subsection{Espeficicación formal de propiedades y teoremas}
-    \newtheorem{theorem}{Lema}
-    \begin{theorem} [\textbf{Coincidencia}]
-        Sean $\mathcal{I}_{1}$, $\mathcal{I}_{2} : PROP \rightarrow Bool$ dos
-        estados que coinciden en las variables proposicionales de la fórmula 
-        $\varphi$, es decir, $\mathcal{I}_{1}(p) = \mathcal{I}_{2}(p)$ para 
-        toda $p \in vars(\varphi)$. Entonces 
-        $\mathcal{I}_{1}(\varphi) = \mathcal{I}_{2}(\varphi)$
-    \end{theorem}
+    \justify
+    \begin{prop}
+        Sea $\Gamma = \{ \varphi_{1},..., \varphi_{n}\}$ un conjunto de 
+        fórmulas.
+        \begin{itemize}
+            \item $\Gamma$ es satisfacible si y sólo si
+            $\varphi_{1} \land ... \land \varphi_{n}$ es satisfacible.
+            \item $\Gamma$ es insatisfacible si y sólo si 
+            $\varphi_{1} \land ... \land \varphi_{n}$ es insatisfacible.
+        \end{itemize}
+    \end{prop}
 
-    % Sección 3; El acertijo a resolver.
+    % Sección 2. Consecuencia Lógica.
+    \section{Consecuencia Lógica}
+    % Definición de consecuencia lógica.
+    \begin{define}
+        Sean $\Gamma$ un conjunto de fórmulas y $\varphi$ una fórmula. Decimos
+        que $\varphi$ es consecuencia lógica de $\Gamma$ si para toda 
+        interpretación $\mathcal{I}$ que satisface a $\Gamma$ se tiene que 
+        $\mathcal{I}(\varphi) = 1$. Es decir, si se cumple que siempre que 
+        $\mathcal{I}$ satisface a $\Gamma$ entonces necesariamente 
+        $\mathcal{I}$ satisface a $\varphi$. En tal caso escribimos 
+        $\Gamma \models \varphi$.
+    \end{define}
+
+    \justify
+    Nótese que la relación de consecuencia lógica está dada por una implicación
+    de la forma 
+    \begin{center}
+        $\mathcal{I}(\Gamma) = 1 \Rightarrow \mathcal{I}(\varphi) = 1$
+    \end{center}
+
+    \justify
+    lo cual informalmente significa que \textit{todo modelo de $\Gamma$ es 
+    modelo de $\varphi$}. \\
+    Obsérvese la sobrecarga del símbolo $\models$ que previamente utilizamos
+    para denotar satisfacibilidad $\mathcal{I} \models \varphi$ y tautologías
+    $\models \varphi$.
+
+    % Propiedades de la consecuencia lógica.
+    \begin{prop}
+        La relación de consecuencia lógica cumple las siguientes propiedades:
+        \begin{itemize}
+            \item Si $\varphi \in \Gamma$ entonces $\Gamma \models \varphi$.
+            \item Principio de refutación: $\Gamma \models \varphi$ si y 
+            sólo si $\Gamma \cup \{ \neg \varphi\}$ es insatisfacible.
+            \item $\Gamma \models \varphi \rightarrow \psi$ si y sólo si 
+            $\Gamma \cup \{ \varphi \} \models \psi$.
+            \item Insatisfacibilidad implica trivialidad: Si $\Gamma$ es 
+            insatisfacible entonces $\Gamma \models \varphi$ para toda 
+            $\varphi \in PROP$.
+            \item Si $\Gamma \models \bot$ entonces $\Gamma$ es insatisfacible.
+            \item $\varphi \equiv \psi$ si y sólo si $\varphi \models \psi$ y 
+            $\psi \models \varphi$.
+            \item $\models \varphi$ (es decir, si $\varphi$ es tautología)
+            si y sólo si $\varnothing \models \varphi$ (es decir, $\varphi$
+            es consecuencia lógica del conjunto vacío).
+        \end{itemize}
+    \end{prop}
+
+    % Sección 3. Deducción Natural.
+    \section{Deducción Natural}
+    Los sistemas de deducción natural, introducidos por G. Gentzen en $1934$,
+    son formalismos deductivos que modelan el razonamiento matemático ordinario
+    de manera más fiel que un sistema axiomático o que el método de tableaux.
+    \newline
+    Un sistema de deducción natural consiste de reglas de inferencia donde las
+    hipótesis se encuentran en la parte superior de una línea horizontal y la 
+    conclusión en la parte inferior. Las reglas describen las formas para 
+    \textbf{introducir} y \textbf{eliminar} cada uno de los conectivos lógicos.
+    Las pruebas o derivaciones que se construyen en estos sistemas son 
+    mediante la aplicación de dichas reglas en una sucesión adecuada que 
+    relaciona conclusiones con premisas de reglas posteriores. De igual forma
+    que en el razonamiento ordinario se pueden hacer hipótesis temporales 
+    durante la prueba, las cuales se pueden \textbf{descargar} al 
+    incorporarlas a la conclusión.
+
+    \begin{define}
+        Un contexto es un conjunto finito de fórmulas 
+        $\{ \varphi_{1},..., \varphi_{n}\}$. Usualmente denotaremos un contexto
+        con $\Gamma, \Delta$. En lugar de $\Gamma \cup \Delta$ escribimos 
+        $\Gamma, \Delta$. Análogamente, $\Gamma, \varphi$ denota al 
+        contexto $\Gamma \cup \{ \varphi \}$.
+    \end{define}
+
+    \justify
+    Así, siempre que un contexto sea de la forma $\Gamma, A$, suponemos que la 
+    fórmula $A$ no figura en $\Gamma$.
+
+    % 3.1 Reglas de inferencia.
+    \subsection{Reglas de inferencia}
+    La relación de derivabilidad o deducibilidad $\Gamma \vdash A$ se define
+    recursivamente a partir de la regla de inicio
+    \begin{prooftree}
+        \AxiomC{A}
+        \UnaryInfC{B}
+        \AxiomC{C}
+        \BinaryInfC{D}
+        \AxiomC{E}
+        \AxiomC{F}
+        \BinaryInfC{G}
+        \UnaryInfC{H}
+        \BinaryInfC{J}
+        \end{prooftree}
+
+
+    % Sección 4. Teorema de Gödel.
+
+    % Sección 5. El acertijo a resolver.
     \section{El acertijo a resolver.}
     Se ha cometido un asesinato (sólo hay un asesino). Se sospecha del esposo,
     del amante y del mayordomo. Durante los interrogatorios cada sospechoso 

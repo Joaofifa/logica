@@ -1,18 +1,25 @@
-Cuerpo del proyecto.
+Cuerpo del Proyecto:
+
+[Abstract (nos evita poner la parte de referencias ya que sólo utilicé las
+notas de clase). Explicación breve del propósito del proyecto.]
 
 1. Lógica proposicional
 1.1 Definición (con ejemplos).
 1.2 Sintaxis de la lógica proposicional (con ejemplos).
 1.3 Semántica de la lógica proposicional (con ejemplos).
 1.3.1 Conceptos semánticos básicos (con ejemplos).
-1.4 Especificación formal de propiedades y teoremas (teoremas, lemas, con 
-    ejemplos).
 
-2. El problema a resolver (el texto del acertijo lógico).
+2. Consecuencia lógica (definición y propiedades)
 
-3. Solución del problema lógico.
-3.2 Implementación de la solución (la explicación detallada del código).
-3.3 ¿Quién es el asesino? (una vez que el porgrama me arroja el modelo
+3. Deducción natural (definición)
+3.1 Reglas de inferencia (con ejemplos).
+3.2 Propiedades
+
+4. Teorema de Gödel
+
+5. El problema a resolver (el texto del acertijo lógico).
+
+6. Solución del problema lógico.
+6.1 Implementación de la solución (la explicación detallada del código).
+6.2 ¿Quién es el asesino? (una vez que el porgrama me arroja el modelo
    que cumple con la solución, podemos decidir quién es cada personaje).
-
-4. Referencias.    

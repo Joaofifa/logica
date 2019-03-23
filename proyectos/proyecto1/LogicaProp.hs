@@ -104,5 +104,5 @@ varCN phi = case phi of
    *Main> 'r' [('p', True), ('q', True), ('r', False)]
    False
 -}
-buscaBool :: (Eq p) => p -> [(p,b)] -> b 
+buscaBool :: (Eq p) => p -> [(p, Bool)] -> Bool
 buscaBool p e = head [b | (x,b) <- e, p == x]

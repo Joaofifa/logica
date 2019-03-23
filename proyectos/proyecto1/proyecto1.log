@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.14)  17 MAR 2019 15:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.22)  23 MAR 2019 11:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -178,133 +178,35 @@ File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
 File: listings.cfg 2018/09/02 1.7 listings configuration
 ))
 Package: listings 2018/09/02 1.7 (Carsten Heinz)
- (/usr/share/texmf-dist/tex/latex/qtree/qtree.sty
-Package: 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
-Package: qtree 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
-(/usr/share/texmf-dist/tex/latex/pict2e/pict2e.sty
-Package: pict2e 2016/02/05 v0.3b Improved picture commands (HjG,RN,JT)
- (/usr/share/texmf-dist/tex/latex/pict2e/pict2e.cfg
-File: pict2e.cfg 2016/02/05 v0.1u pict2e configuration for teTeX/TeXLive
-)
-Package pict2e Info: Driver file: pdftex.def on input line 119.
- (/usr/share/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
-)
-Package pict2e Info: Driver file for pict2e: p2e-pdftex.def on input line 121.
- (/usr/share/texmf-dist/tex/latex/pict2e/p2e-pdftex.def
-File: p2e-pdftex.def 2016/02/05 v0.1u Driver-dependant file (RN,HjG,JT)
-) (/usr/share/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-)
-\pIIe@GRAPH=\toks31
-\@arclen=\dimen118
-\@arcrad=\dimen119
-\@tempdimd=\dimen120
-)
-\c@treecount=\count112
-\c@branchcount=\count113
-\parentbox=\box31
-\treebox=\box32
-\treeboxone=\box33
-\treeboxtwo=\box34
-\treeboxthree=\box35
-\treeboxfour=\box36
-\treeboxfive=\box37
-\treeboxsix=\box38
-\treeboxseven=\box39
-\treeboxeight=\box40
-\treeboxnine=\box41
-\treeboxten=\box42
-\treeboxeleven=\box43
-\treeboxtwelve=\box44
-\treeboxthirteen=\box45
-\treeboxfourteen=\box46
-\treeboxfifteen=\box47
-\treeboxsixteen=\box48
-\treeboxseventeen=\box49
-\treeboxeighteen=\box50
-\treeboxnineteen=\box51
-\treeboxtwenty=\box52
-\treeoffsetone=\skip65
-\treeoffsettwo=\skip66
-\treeoffsetthree=\skip67
-\treeoffsetfour=\skip68
-\treeoffsetfive=\skip69
-\treeoffsetsix=\skip70
-\treeoffsetseven=\skip71
-\treeoffseteight=\skip72
-\treeoffsetnine=\skip73
-\treeoffsetten=\skip74
-\treeoffseteleven=\skip75
-\treeoffsettwelve=\skip76
-\treeoffsetthirteen=\skip77
-\treeoffsetfourteen=\skip78
-\treeoffsetfifteen=\skip79
-\treeoffsetsixteen=\skip80
-\treeoffsetseventeen=\skip81
-\treeoffseteighteen=\skip82
-\treeoffsetnineteen=\skip83
-\treeoffsettwenty=\skip84
-\treeshiftone=\skip85
-\treeshifttwo=\skip86
-\treeshiftthree=\skip87
-\treeshiftfour=\skip88
-\treeshiftfive=\skip89
-\treeshiftsix=\skip90
-\treeshiftseven=\skip91
-\treeshifteight=\skip92
-\treeshiftnine=\skip93
-\treeshiftten=\skip94
-\treeshifteleven=\skip95
-\treeshifttwelve=\skip96
-\treeshiftthirteen=\skip97
-\treeshiftfourteen=\skip98
-\treeshiftfifteen=\skip99
-\treeshiftsixteen=\skip100
-\treeshiftseventeen=\skip101
-\treeshifteighteen=\skip102
-\treeshiftnineteen=\skip103
-\treeshifttwenty=\skip104
-\treewidthone=\skip105
-\treewidthtwo=\skip106
-\treewidththree=\skip107
-\treewidthfour=\skip108
-\treewidthfive=\skip109
-\treewidthsix=\skip110
-\treewidthseven=\skip111
-\treewidtheight=\skip112
-\treewidthnine=\skip113
-\treewidthten=\skip114
-\treewidtheleven=\skip115
-\treewidthtwelve=\skip116
-\treewidththirteen=\skip117
-\treewidthfourteen=\skip118
-\treewidthfifteen=\skip119
-\treewidthsixteen=\skip120
-\treewidthseventeen=\skip121
-\treewidtheighteen=\skip122
-\treewidthnineteen=\skip123
-\treewidthtwenty=\skip124
-\daughteroffsetone=\skip125
-\daughteroffsettwo=\skip126
-\daughteroffsetthree=\skip127
-\daughteroffsetfour=\skip128
-\branchwidthone=\skip129
-\branchwidthtwo=\skip130
-\branchwidththree=\skip131
-\branchwidthfour=\skip132
-\parentoffset=\skip133
-\treeoffset=\skip134
-\daughteroffset=\skip135
-\branchwidth=\skip136
-\parentwidth=\skip137
-\treewidth=\skip138
-\qta=\toks32
-\qtb=\toks33
-\nbranches=\count114
-\qroofx=\count115
-\qroofy=\count116
-\@qrscratchbox=\box53
+\c@define=\count112
+\c@lema=\count113
+\c@prop=\count114
+ (/usr/share/texmf-dist/tex/latex/bussproofs/bussproofs.sty
+Proof Tree (bussproofs) style macros. Version 1.1.
+\theLevel=\count115
+\myMaxLevel=\count116
+\myBoxA=\box31
+\myBoxB=\box32
+\myBoxC=\box33
+\myBoxD=\box34
+\myBoxLL=\box35
+\myBoxRL=\box36
+\thisAboveSkip=\dimen118
+\thisBelowSkip=\dimen119
+\newScoreStart=\dimen120
+\newScoreEnd=\dimen121
+\newCenter=\dimen122
+\displace=\dimen123
+\leftLowerAmt=\dimen124
+\rightLowerAmt=\dimen125
+\scoreHeight=\dimen126
+\scoreDepth=\dimen127
+\htLbox=\dimen128
+\htRbox=\dimen129
+\htRRbox=\dimen130
+\htRRRbox=\dimen131
+\htAbox=\dimen132
+\htCbox=\dimen133
 ) (/usr/share/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2018/04/16 v5.8 Page Geometry
  (/usr/share/texmf-dist/tex/generic/oberdiek/ifpdf.sty
@@ -318,52 +220,39 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@cnth=\count117
 \Gm@cntv=\count118
 \c@Gm@tempcnt=\count119
-\Gm@bindingoffset=\dimen121
-\Gm@wd@mp=\dimen122
-\Gm@odd@mp=\dimen123
-\Gm@even@mp=\dimen124
-\Gm@layoutwidth=\dimen125
-\Gm@layoutheight=\dimen126
-\Gm@layouthoffset=\dimen127
-\Gm@layoutvoffset=\dimen128
-\Gm@dimlist=\toks34
+\Gm@bindingoffset=\dimen134
+\Gm@wd@mp=\dimen135
+\Gm@odd@mp=\dimen136
+\Gm@even@mp=\dimen137
+\Gm@layoutwidth=\dimen138
+\Gm@layoutheight=\dimen139
+\Gm@layouthoffset=\dimen140
+\Gm@layoutvoffset=\dimen141
+\Gm@dimlist=\toks31
 ) (/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.aux
 LaTeX Info: Redefining \. on input line 3.
 LaTeX Info: Redefining \% on input line 3.
 )
 \openout1 = `proyecto1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Info: Redefining \. on input line 31.
-LaTeX Info: Redefining \% on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Info: Redefining \. on input line 39.
+LaTeX Info: Redefining \% on input line 39.
  ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 31.
+LaTeX Info: Redefining \selectfont on input line 39.
 \c@lstlisting=\count120
- (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count121
-\scratchdimen=\dimen129
-\scratchbox=\box54
-\nofMPsegments=\count122
-\nofMParguments=\count123
-\everyMPshowfont=\toks35
-\MPscratchCnt=\count124
-\MPscratchDim=\dimen130
-\MPnumerator=\count125
-\makeMPintoPDFobject=\count126
-\everyMPtoPDFconversion=\toks36
-)
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -398,61 +287,80 @@ LaTeX Info: Redefining \selectfont on input line 31.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 32.
+LaTeX Font Info:    Try loading font information for U+msa on input line 40.
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 32.
+LaTeX Font Info:    Try loading font information for U+msb on input line 40.
  (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 32.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 40.
  (/usr/share/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-\c@teo=\count127
- [2]
-\c@theorem=\count128
- [3]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 293.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 213.
  (/usr/share/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [4]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 319.
+)
+Underfull \hbox (badness 10000) in paragraph at lines 211--214
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 229--234
+
+ []
+
+[3] [4] [5]
+\myBox1=\box37
+\myScoreStart1=\dimen142
+\myCenter1=\dimen143
+\myScoreEnd1=\dimen144
+\myBox2=\box38
+\myScoreStart2=\dimen145
+\myCenter2=\dimen146
+\myScoreEnd2=\dimen147
+\myBox3=\box39
+\myScoreStart3=\dimen148
+\myCenter3=\dimen149
+\myScoreEnd3=\dimen150
+ [6]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 576.
  (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 319.
- [5] [6]
-Overfull \hbox (8.27647pt too wide) in paragraph at lines 458--459
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 576.
+ [7] [8]
+Overfull \hbox (8.27647pt too wide) in paragraph at lines 715--716
 [][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (14.80927pt too wide) in paragraph at lines 489--490
+Overfull \hbox (14.80927pt too wide) in paragraph at lines 746--747
 [][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[7] [8] [9] [10] [11] (/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.aux
+[9] [10] [11] [12] [13] (/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.aux
 LaTeX Info: Redefining \. on input line 3.
 LaTeX Info: Redefining \% on input line 3.
 ) ) 
 Here is how much of TeX's memory you used:
- 5463 strings out of 492616
- 69966 string characters out of 6135177
- 173923 words of memory out of 5000000
- 9290 multiletter control sequences out of 15000+600000
- 17680 words of font info for 53 fonts, out of 8000000 for 9000
+ 4826 strings out of 492616
+ 61642 string characters out of 6135177
+ 162192 words of memory out of 5000000
+ 8667 multiletter control sequences out of 15000+600000
+ 21500 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 27i,6n,32p,280b,1668s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on /home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf (11 pages, 266669 bytes).
+ 27i,13n,32p,280b,1667s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on /home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf (13 pages, 311432 bytes).
 PDF statistics:
- 101 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 124 PDF objects out of 1000 (max. 8388607)
+ 89 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

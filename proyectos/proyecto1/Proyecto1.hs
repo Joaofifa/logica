@@ -23,6 +23,15 @@ damante = (Conj (Neg (Var q)) (Var p))
 -- Conjunción de la declaración de los tres sospechosos.
 argumento = (Conj desposo (Conj dmayordomo damante))
 
+{- |1. Función unAsesino| Recibe una fórmula (phi). 
+-}
+
+unAsesino :: Prop -> [Estado]
+unAsesino _ = 
+    [e | e <- estados argumento, (buscaBool p e == True && buscaBool q e == False && buscaBool r e == False)
+    || (buscaBool p e == False && buscaBool q e == True && buscaBool r e == False)
+    || (buscaBool p e == False && buscaBool q e == False && buscaBool r e == True)]
+
 {- |1. Función modelos| Recibe una fórmula (phi). Regresa la lista con todos 
    los modelos que satisfacen a la fórmula (phi).
    Ejemplo: 
@@ -51,7 +60,8 @@ argumento = (Conj desposo (Conj dmayordomo damante))
    [[('p',False),('r',True),('q',True)],[('p',False),('r',False),('q',True)]]
 -}
 modelos :: Prop -> [Estado]
-modelos phi = [e | e <- estados argumento, interp phi e == True]
+modelos phi = 
+    [e | e <- estados argumento, interp phi e == True]
 
 {- |2. Función noModelos| Recibe una fórmula (phi). Regresa la lista con todos
    los estados que no satisfacen a la fórmula (phi).
@@ -217,7 +227,7 @@ juicio _ =
 
 {- |1. Función auxiliar intersección| Recibe tres listas xs, ys, zs. 
    Regresa una lista con los elementos que tienen en común las tres listas.
-   Para nuestro caso particular, la utilizamos para obtener la intersección
+   Para nuestro ca--so particular, la utilizamos para obtener la intersección
    de tres listas de listas. Notemos que aquí utilizamos la función intersect,
    nos ahorra tener que hacer a pie la función de intersección. Nuestra función
    simplemente es un caso particular que necesitamos para el proyecto.
