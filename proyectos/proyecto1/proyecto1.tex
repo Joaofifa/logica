@@ -1,4 +1,4 @@
-\documentclass[letterpaper,11pt]{article}
+\documentclass[letterpaper,12pt]{article}
 
 % Soporte para los acentos.
 \usepackage[utf8]{inputenc}
@@ -22,6 +22,8 @@
 \newtheorem{define}{Definición}[]
 \newtheorem{lema}{Lema}[]
 \newtheorem{prop}{Proposición}[]
+\newtheorem{teo}{Teorema}[]
+\newtheorem{ejem}{Ejemplo}[]
 % Deducción natural.
 \usepackage{bussproofs}
 % Modificamos los márgenes del documento.
@@ -55,21 +57,25 @@ Proyecto 1: Implementación de la solución de un problema lógico}
     \subsection{Definición}
     La lógica proposicional es el sistema lógico más simple. Se encarga del 
     manejo de proposiciones mediante conectivos lógicos. Una proposición es
-    un enunciado que puede calificarse de verdadero o falso. \\
-    Ejemplos de proposiciones:
-    \begin{itemize}
-        \item Los números pares son divisibles por dos. 
-        \item Una ballena no es roja.
-        \item He pasado mis vacaciones en Grecia.
-    \end{itemize}
+    un enunciado que puede calificarse de verdadero o falso. 
+    % Ejemplos.
+    \begin{ejem} 
+        Enunciados que son proposiciones.
+        \begin{itemize}
+            \item Los números pares son divisibles por dos. 
+            \item Una ballena no es roja.
+            \item He pasado mis vacaciones en Grecia.
+        \end{itemize}
+    \end{ejem}
 
-    \justify
-    Ejemplos de enunciados que no son proposiciones.
-    \begin{itemize}
-        \item ¡Auxilio, me desmayo!
-        \item No sé si vendrán al viaje.
-        \item $x + y$
-    \end{itemize}
+    \begin{ejem} 
+        Enunciados que no son proposiciones.
+        \begin{itemize}
+            \item ¡Auxilio, me desmayo!
+            \item No sé si vendrán al viaje.
+            \item $x + y$
+        \end{itemize}
+    \end{ejem}
 
     % 1.2 Sintaxis de la lógica proposicional.
     \subsection{Sintaxis de la lógica proposicional}
@@ -102,25 +108,26 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         \item Son todas.
     \end{itemize}
 
-    \justify
-    Ahora veamos un par de ejemplos:
-    \begin{itemize}
-        % Ejemplo 1.
-        \item[i)] El enunciado \textbf{nuestra bandera es blanca y celeste} se
-        puede ver en lógica proposicional como 
-        \begin{center}
-            $p \land q$
-        \end{center}
-        donde $p =$ nuestra bandera es blanca, y $q =$ nuestra bandera es
-        celeste.
-        % Ejemplo 2.
-        \item[ii)] El enunciado \textbf{está nublado por lo que va a llover;
-        entonces no saldremos} se puede ver en lógica proposicional como 
-        \begin{center}
-            $(a \rightarrow b) \rightarrow \neg c$
-        \end{center}
-        donde $a =$ está nublado, $b =$ va a llover y $c =$ saldremos.
-    \end{itemize}
+    % Ejemplos.
+    \begin{ejem} 
+        Representación de enunciados en Lógica Proposicional.
+        \begin{itemize}
+            \item[i)] El enunciado \textbf{nuestra bandera es blanca y celeste} se
+            puede ver en lógica proposicional como 
+            \begin{center}
+                $p \land q$
+            \end{center}
+            donde $p =$ nuestra bandera es blanca, y $q =$ nuestra bandera es
+            celeste.
+            
+            \item[ii)] El enunciado \textbf{está nublado por lo que va a llover;
+            entonces no saldremos} se puede ver en lógica proposicional como 
+            \begin{center}
+                $(a \rightarrow b) \rightarrow \neg c$
+            \end{center}
+            donde $a =$ está nublado, $b =$ va a llover y $c =$ saldremos.
+        \end{itemize}
+    \end{ejem}
 
     % 1.3 Semántica de la lógica proposicional.
     \subsection{Semántica de la lógica proposicional}
@@ -167,37 +174,38 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         \end{itemize}
     \end{define}
 
-    \newpage
     Notemos que dado un estado de las variables $\mathcal{I}$, la 
     interpretación $\mathcal{I^{\star}}$ generada por $I$ está 
     determinada de manera única, por lo que de ahora en adelante
     escribiremos simplemente $\mathcal{I}$ en lugar de $\mathcal{I^{\star}}$.
-    \newline
-    Ahora veamos un par de ejemplos:
-    \begin{itemize}
-        % Ejemplo 1.
-        \item[i)] $(s \lor t) \leftrightarrow (s \land t)$ \\
-        Si $\mathcal{I}(s) = 1$, $\mathcal{I}(t) = 0$, por la definición 
-        de $\mathcal{I}$ tenemos que 
-        $\mathcal{I}(s \lor t) = 1$ y $\mathcal{I}(s \land t) = 0$,
-        por lo que 
-        \begin{center}
-            $\mathcal{I}((s \lor t \leftrightarrow (s \land t))) = 0$
-        \end{center}
-        % Ejemplo 2. 
-        \item[ii)] $(p \land q) \rightarrow \neg (r \land q)$ \\
-        Si $\mathcal{I}(p) = 1$, $\mathcal{I}(q) = 1$, $\mathcal{I}(r) = 0$,
-        por la definición de $\mathcal{I}$ tenemos que  
-        $\mathcal{I}(p \land q) = 1$, $\mathcal{I}(r \land q) = 0$ y
-        $\mathcal{I}(\neg (r \land q)) = 1$, por lo que
-        \begin{center}
-            $\mathcal{I}((p \land q) \rightarrow \neg (r \land q)) = 1$
-        \end{center}
-    \end{itemize}
+    % Ejemplos.
+    \begin{ejem} 
+        Interpretación de fórmulas con valores arbitrarios.
+        \begin{itemize}
+            \item[i)] $(s \lor t) \leftrightarrow (s \land t)$ \\
+            Si $\mathcal{I}(s) = 1$, $\mathcal{I}(t) = 0$, por la definición 
+            de $\mathcal{I}$ tenemos que 
+            $\mathcal{I}(s \lor t) = 1$ y $\mathcal{I}(s \land t) = 0$,
+            por lo que 
+            \begin{center}
+                $\mathcal{I}((s \lor t \leftrightarrow (s \land t))) = 0$
+            \end{center}
+        
+            \item[ii)] $(p \land q) \rightarrow \neg (r \land q)$ \\
+            Si $\mathcal{I}(p) = 1$, $\mathcal{I}(q) = 1$, $\mathcal{I}(r) = 0$,
+            por la definición de $\mathcal{I}$ tenemos que  
+            $\mathcal{I}(p \land q) = 1$, $\mathcal{I}(r \land q) = 0$ y
+            $\mathcal{I}(\neg (r \land q)) = 1$, por lo que
+            \begin{center}
+                $\mathcal{I}((p \land q) \rightarrow \neg (r \land q)) = 1$
+            \end{center}
+        \end{itemize}
+    \end{ejem}
 
-    \justify
     El siguiente lema es de importancia para restringir las interpretaciones
     de interés al analizar una fórmula.
+
+    \newpage
     % --- Primer lema que hay que demostrar ---
     \begin{lema} [\textbf{Coincidencia}]
         Sean $\mathcal{I}_{1}$, $\mathcal{I}_{2} : PROP \rightarrow Bool$ dos
@@ -365,41 +373,45 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         $\mathcal{I}(\varphi) = 1$ para toda $\varphi \in \Gamma$.
     \end{itemize}
 
-    \newpage
-    \justify
-    Ahora, veamos ejemplos de lo anterior: 
-    \begin{itemize}
-        % Ejemplo 1. Tautología.
-        \item[i)] $\varphi = p \lor \neg p$ \\
-        Notemos que si $\mathcal{I}(p) = 1$ entonces 
-        $\mathcal{I}(\varphi) = 1$ pero si $\mathcal{I}(p) = 0$ entonces 
-        también $\mathcal{I}(\varphi) = 1$. Como en ambos casos obtenemos 
-        que $\mathcal{I}(\varphi) = 1$, entonces $\varphi$ es una tautología.
-        % Ejemplo 2. Satisfacibilidad.
-        \item[ii)] $\Gamma = \{ p \rightarrow q, r \rightarrow s, \neg s\}$.\\
-        Si $\mathcal{I}(s) = \mathcal{I}(r) = \mathcal{I}(p) = 0$, entonces 
-        $\mathcal{I}(\Gamma) = 1$, por lo que $\Gamma$ es satisfacible en 
-        $\mathcal{I}$.
-        % Ejemplo 3. Insatisfacibilidad.
-        \item[iii)] $\varphi = p \rightarrow (q \lor r)$ \\
-        Si $\mathcal{I}(p) = 1$ y $\mathcal{I}(q) = \mathcal{I}(r) = 0$, 
-        entonces $\mathcal{I}(\varphi) = 0$, por lo que $\varphi$ es 
-        insatisfacible en $\mathcal{I}$
-        % Ejemplo 4. Contradicción.
-        \item[iv)] $\Gamma = \{ p \rightarrow q, \neg (q \lor s), s \lor p\}$\\
-        Notemos que $\Gamma$ es insatisfacible, pues supóngase que existe una 
-        interpretación $\mathcal{I}$ tal que $\mathcal{I}(\Gamma) = 1$. 
-        Entonces se tiene que $\mathcal{I}(\neg (q \lor s)) = 1$, por lo que 
-        $\mathcal{I}(\neg q) = \mathcal{I}(\neg s) = 1$. Además, como 
-        $\mathcal{I}(p \rightarrow q) = 1$, entonces $\mathcal{I}(p) = 0$,
-        puesto que el consecuente de la implicación es falso. De esto último 
-        se tiene que $\mathcal{I}(s) = 1$, dado que $\mathcal{I}(s \lor p) = 1$.
-        De manera que se tiene $\mathcal{I}(\neg s) = 1 = \mathcal{I}(s)$, lo 
-        cual es imposible. Por lo tanto, no puede existir una interpretación
-        $\mathcal{I}$ que satisfaga a $\Gamma$.
-    \end{itemize}
+    % Ejemplos.
+    \begin{ejem} 
+        Sean $\varphi$ una fórmula y $\Gamma$ un conjunto de fórmulas.
+        \begin{itemize}
+            % Ejemplo 1. Tautología.
+            \item[i)] $\varphi = p \lor \neg p$ \\
+            Notemos que si $\mathcal{I}(p) = 1$ entonces 
+            $\mathcal{I}(\varphi) = 1$ pero si $\mathcal{I}(p) = 0$ entonces 
+            también $\mathcal{I}(\varphi) = 1$. Como en ambos casos obtenemos 
+            que $\mathcal{I}(\varphi) = 1$, entonces $\varphi$ es una 
+            tautología.
+            % Ejemplo 2. Satisfacibilidad.
+            \item[ii)] $\Gamma = \{ p \rightarrow q, r \rightarrow s, \neg s\}$
+            \newline 
+            Si $\mathcal{I}(s) = \mathcal{I}(r) = \mathcal{I}(p) = 0$, entonces 
+            $\mathcal{I}(\Gamma) = 1$, por lo que $\Gamma$ es satisfacible en 
+            $\mathcal{I}$.
+            % Ejemplo 3. Insatisfacibilidad.
+            \item[iii)] $\varphi = p \rightarrow (q \lor r)$ \\
+            Si $\mathcal{I}(p) = 1$ y $\mathcal{I}(q) = \mathcal{I}(r) = 0$, 
+            entonces $\mathcal{I}(\varphi) = 0$, por lo que $\varphi$ es 
+            insatisfacible en $\mathcal{I}$
+            % Ejemplo 4. Contradicción.
+            \item[iv)] $\Gamma = \{ p \rightarrow q, \neg (q \lor s), 
+            s \lor p\}$ \\
+            Notemos que $\Gamma$ es insatisfacible, pues supóngase que existe 
+            una interpretación $\mathcal{I}$ tal que $\mathcal{I}(\Gamma) = 1$. 
+            Entonces se tiene que $\mathcal{I}(\neg (q \lor s)) = 1$, por lo 
+            que $\mathcal{I}(\neg q) = \mathcal{I}(\neg s) = 1$. Además, como 
+            $\mathcal{I}(p \rightarrow q) = 1$, entonces $\mathcal{I}(p) = 0$,
+            puesto que el consecuente de la implicación es falso. De esto 
+            último se tiene que $\mathcal{I}(s) = 1$, dado que 
+            $\mathcal{I}(s \lor p) = 1$. De manera que se tiene 
+            $\mathcal{I}(\neg s) = 1 = \mathcal{I}(s)$, lo cual es imposible. 
+            Por lo tanto, no puede existir una interpretación $\mathcal{I}$ 
+            que satisfaga a $\Gamma$.
+        \end{itemize}
+    \end{ejem}
 
-    \justify
     \begin{prop}
         Sea $\Gamma = \{ \varphi_{1},..., \varphi_{n}\}$ un conjunto de 
         fórmulas.
@@ -437,6 +449,52 @@ Proyecto 1: Implementación de la solución de un problema lógico}
     Obsérvese la sobrecarga del símbolo $\models$ que previamente utilizamos
     para denotar satisfacibilidad $\mathcal{I} \models \varphi$ y tautologías
     $\models \varphi$.
+
+    % Ejemplos.
+    \begin{ejem}
+        Considérese el siguiente conjunto 
+        $\Gamma = \{ q \rightarrow p, p \leftrightarrow t, t \rightarrow s,
+        s \rightarrow r\}$. Muestre que $\Gamma \models q \rightarrow r$. \\
+        \textit{Solución:} Sea $\mathcal{I}$ un modelo de $\Gamma$. Tenemos 
+        que demostrar que $\mathcal{I}(q \rightarrow r) = 1$. Si 
+        $\mathcal{I}(q) = 0$ entonces $\mathcal{I}(q \rightarrow r) = 1$ y 
+        terminamos. En otro caso se tiene que $\mathcal{I}(q) = 1$ de donde 
+        $\mathcal{I}(p) = 1$ pues $\mathcal{I}(q \rightarrow p) = 1$. Entonces
+        se tiene que $\mathcal{I}(t) = 1$, pues $\mathcal{I}$ es modelo de 
+        $p \leftrightarrow t$, de donde $\mathcal{I}(s) = 1$ dado que 
+        $\mathcal{I}$ también es modelo de $t \leftrightarrow s$. Finalmente,
+        como $\mathcal{I}(s \rightarrow r) = 1$ e $\mathcal{I}(s) = 1$, 
+        entonces $\mathcal{I}(r) = 1$. Por lo tanto, 
+        $\mathcal{I}(q \rightarrow r) = 1$. 
+    \end{ejem}
+    
+    \begin{ejem}
+        Considérese el siguiente conjunto 
+        $\Gamma = \{ (p \land q), (q \lor r), (\neg s) \}$. Muestre que 
+        $ \Gamma \models p \land s$. \\
+        \textit{Solución:} Debemos mostrar que $\mathcal{I}(p \land s) = 1$.
+        Entonces 
+        \begin{align*}
+            \mathcal{I}(p \land q) &= 1
+            && \text{Premisa (1)} \\
+            \mathcal{I}(q \lor r) &= 1
+            && \text{Premisa (2)} \\
+            \mathcal{I}(\neg s) &= 1 
+            && \text{Premisa (3)} \\
+            \mathcal{I}(p) &= 1
+            && \text{por (1)} \\
+            \mathcal{I}(q) &= 1
+            && \text{por (1)} \\
+            \mathcal{I}(s) &= 0
+            && \text{por (3)}
+        \end{align*}
+
+        De manera que la interpretación dada por 
+        $\mathcal{I}(p) = \mathcal{I}(q) = 1$ e $\mathcal{I}(s) = 0$ e 
+        $\mathcal{I}(r) =$ arbitrario, es un contraejemplo al argumento, pues 
+        con esta interpretación tenemos que $\mathcal{I}(p \land s) = 0$.
+        Por lo tanto, el argumento es falso.
+    \end{ejem}
 
     % Propiedades de la consecuencia lógica.
     \begin{prop}
@@ -478,9 +536,9 @@ Proyecto 1: Implementación de la solución de un problema lógico}
 
     \begin{define}
         Un contexto es un conjunto finito de fórmulas 
-        $\{ \varphi_{1},..., \varphi_{n}\}$. Usualmente denotaremos un contexto
-        con $\Gamma, \Delta$. En lugar de $\Gamma \cup \Delta$ escribimos 
-        $\Gamma, \Delta$. Análogamente, $\Gamma, \varphi$ denota al 
+        $\{ \varphi_{1},..., \varphi_{n}\}$. Usualmente denotaremos un 
+        contexto con $\Gamma, \Delta$. En lugar de $\Gamma \cup \Delta$ 
+        escribimos $\Gamma, \Delta$. Análogamente, $\Gamma, \varphi$ denota al 
         contexto $\Gamma \cup \{ \varphi \}$.
     \end{define}
 
@@ -493,21 +551,344 @@ Proyecto 1: Implementación de la solución de un problema lógico}
     La relación de derivabilidad o deducibilidad $\Gamma \vdash A$ se define
     recursivamente a partir de la regla de inicio
     \begin{prooftree}
-        \AxiomC{A}
-        \UnaryInfC{B}
-        \AxiomC{C}
-        \BinaryInfC{D}
-        \AxiomC{E}
-        \AxiomC{F}
-        \BinaryInfC{G}
-        \UnaryInfC{H}
-        \BinaryInfC{J}
+        \AxiomC{}
+        \RightLabel{(Hip)}
+        \UnaryInfC{$\Gamma, \varphi \vdash \varphi$}
+    \end{prooftree}
+
+    dando reglas de introducción y eliminación para cada conectivo que
+    queremos esté presente en el sistema:
+    \begin{itemize}
+        % Regla DN para la implicación.
+        \item Implicación:
+        \begin{prooftree}
+            \AxiomC{$\Gamma, \varphi \vdash \psi$}
+            \RightLabel{($\rightarrow$ I)}
+            \UnaryInfC{$\Gamma \vdash \varphi \rightarrow \psi$}
+            \DisplayProof
+            \quad \quad \quad \quad 
+            \AxiomC{$\Gamma \vdash \varphi \rightarrow \psi$}
+            \AxiomC{$\Gamma \vdash \varphi$}
+            \RightLabel{($\rightarrow$ E)}
+            \BinaryInfC{$\Gamma \vdash \psi$}
         \end{prooftree}
 
+        % Regla DN para la conjunción.
+        \item Conjunción:
+        \begin{prooftree}
+            \AxiomC{$\Gamma \vdash \varphi$}
+            \AxiomC{$\Gamma \vdash \psi$}
+            \RightLabel{($\land$ I)}
+            \BinaryInfC{$\Gamma \vdash \varphi \land \psi$}
+            \DisplayProof
+            \quad \quad
+            \AxiomC{$\Gamma \vdash \varphi \land \psi$}
+            \RightLabel{($\land$ E)}
+            \UnaryInfC{$\Gamma \vdash \psi$}
+            \DisplayProof
+            \quad \quad 
+            \AxiomC{$\Gamma \vdash \varphi \land \psi$}
+            \RightLabel{($\land$ E)}
+            \UnaryInfC{$\Gamma \vdash \varphi$}
+        \end{prooftree}
 
-    % Sección 4. Teorema de Gödel.
+        % Regla DN para la distunción.
+        \item Disyunción:
+        \begin{prooftree}
+            \AxiomC{$\Gamma \vdash \varphi$}
+            \RightLabel{($\lor$ I)}
+            \UnaryInfC{$\Gamma \vdash \varphi \lor \psi$}
+            \DisplayProof
+            \quad \quad 
+            \AxiomC{$\Gamma \vdash \psi$}
+            \RightLabel{($\lor$ I)}
+            \UnaryInfC{$\Gamma \vdash \varphi \lor \psi$}
+            \DisplayProof
+            \quad \quad 
+            \AxiomC{$\Gamma \vdash \varphi \lor \psi$}
+            \AxiomC{$\Gamma, \varphi \vdash \chi$}
+            \AxiomC{$\Gamma, \psi \vdash \chi$}
+            \RightLabel{($\lor$ E)}
+            \TrinaryInfC{$\Gamma \vdash \chi$}
+        \end{prooftree}
+    \end{itemize}
 
-    % Sección 5. El acertijo a resolver.
+    Notemos que mediante estas reglas de inferencia no estamos derivando 
+    fórmulas sino expresiones de la forma $\Gamma \vdash A$, conocidas como 
+    secuentes. En particular las reglas de inferencia son correctas con
+    respecto a la consecuencia lógica, es decir, transforman secuentes válidos
+    (respecto a $\models$) en secuentes válidos como lo asegura lo siguiente
+
+    % Consecuencia lógica y DN.
+    \begin{prop}
+        Sean $\Gamma$ un contexto y $A,B,C$ fórmulas. Se cumple lo siguiente
+        \begin{itemize}
+            \item Si $\Gamma, A \models B$ entonces 
+            $\Gamma \models A \rightarrow B$.
+            \item Si $\Gamma \models A$ y $\Gamma \models A \rightarrow B$
+            entonces $\Gamma \models B$.
+            \item $\Gamma \models A \land B$ si y sólo si $\Gamma \models A$
+            y $\Gamma \models B$.
+            \item Si $\Gamma \models A$ entonces $\Gamma \models A \lor B$.
+            \item Si $\Gamma \models B$ entonces $\Gamma \models A \lor B$.
+            \item Si $\Gamma \models A \lor B$, $\Gamma, A \models C$ y 
+            $\Gamma, B \models C$ entonces $\Gamma \models C$.
+        \end{itemize}
+    \end{prop}
+
+    % Definición de derivación del secuente.
+    \begin{define}
+        Una derivación del secuente $\Gamma \vdash A$ es una sucesión finita
+        de secuentes de la forma 
+        $\Gamma_{1} \vdash A_{1},..., \Gamma_{n} \vdash A_{n}$ tal que:
+        \begin{itemize}
+            \item $\Gamma_{i} \vdash A_{1}$ es una instancia de la regla 
+            (Hip) ó
+            \item $\Gamma_{i} \vdash A_{1}$ es conclusión de alguna regla de 
+            inferencia tal que las premisas necesarias figuran antes en la 
+            sucesión.
+            \item $\Gamma \vdash A$ es el último elemento de la sucesión.
+        \end{itemize}
+    \end{define}
+
+    % Más definiciones.
+    \begin{define}
+        Si $\vdash \varphi$ es derivable, es decir, si 
+        $\varnothing \vdash \varphi$ es derivable ($\varphi$ es derivable sin 
+        hipótesis) entonces decimos que $\varphi$ es un teorema.
+    \end{define}
+
+    % 3.2 La Negación.
+    \subsection{La Negación}
+    Un sistema de deducción natural puede clasificarse, de acuerdo a qué clase
+    de negación tenga, como minimal, intuicionista o clásico.
+
+    % 3.2.1 Lógica minimal.
+    \subsubsection{Lógica Minimal}
+    Se dice que la lógica es minimal si no hay reglas para la negación $\neg$
+    ni para lo falso $\bot$. En un sistema minimal, la constante $\bot$ está 
+    presente pero no tiene propiedades particulares. En la presencia de $\bot$,
+    el símbolo de negación se define como 
+    \begin{center}
+        $\neg A =_{def} A \rightarrow \bot$
+    \end{center}
+
+    \justify
+    En cuyo caso hablamos de la negación constructiva, cuyas reglas de
+    inferencia son:
+    \begin{prooftree}
+        \AxiomC{$\Gamma, A \vdash \bot$}\RightLabel{($\neg$ I)}
+        \UnaryInfC{$\Gamma \vdash \neg A$}
+        \DisplayProof
+        \quad \quad
+        \AxiomC{$\Gamma \vdash A$}
+        \AxiomC{$\Gamma \vdash \neg A$}
+        \RightLabel{($\neg$ E)}
+        \BinaryInfC{$\Gamma \vdash \bot$}
+    \end{prooftree}
+
+    % 3.2.2 Lógica intuicionista.
+    \subsubsection{Lógica Intuicionista}
+    La lógica intuicionista se obtiene al agregar a la lógica minimal la regla
+    de eliminación de lo falso ($\bot$ E) conocida también como 
+    ex-falso-quodlibet.
+    \begin{prooftree}
+        \AxiomC{$\Gamma \vdash \bot$}
+        \RightLabel{(EFQ)}
+        \UnaryInfC{$\Gamma \vdash \varphi$}
+    \end{prooftree}
+
+    Se observa que cualquier fórmula derivada en la lógica minimal sigue
+    siendo derivable en la lógica intuicionista.
+
+    % 3.2.3 Lógica clásica.
+    \subsubsection{Lógica Clásica}
+    Para recuperar a la lógica clásica tenemos que postular alguna de las 
+    siguientes reglas:
+    \begin{itemize}
+        \item Tercer excluido.
+        \begin{prooftree}
+            \AxiomC{}
+            \RightLabel{(TE)}
+            \UnaryInfC{$\Gamma \vdash A \lor \neg A$}
+        \end{prooftree}
+
+        \item Reducción al absurdo.
+        \begin{prooftree}
+            \AxiomC{$\Gamma, \neg A \vdash \bot$}
+            \RightLabel{(RAA)}
+            \UnaryInfC{$\Gamma \vdash A$}
+        \end{prooftree}
+
+        \item Eliminación de la doble negación.
+        \begin{prooftree}
+            \AxiomC{$\Gamma \vdash \neg \neg A$}
+            \RightLabel{($\neg \neg$ E)}
+            \UnaryInfC{$\Gamma \vdash A$}
+        \end{prooftree}
+    \end{itemize}
+
+    % 3.3 Ejemplos de derivaciones.
+    \subsection{Ejemplos de derivaciones}
+    \begin{ejem}
+        Demuestra que el siguiente secuente es válido usando deducción 
+        natural. 
+        \begin{center}
+            $\{ p \rightarrow (q \lor r) \} \vdash
+            (p \rightarrow q) \lor (p \rightarrow r)$
+        \end{center}
+        
+        \begin{proof}
+            Por el principio de refutación basta mostrar que
+            \begin{center}
+                $\Gamma = \{ p \rightarrow (q \lor r), 
+                (p \land \neg q) \land (p \land \neg r) \} \vdash \bot$.
+            \end{center}
+            
+            \justify
+            Entonces 
+            \begin{align*}
+                1. \Gamma &\vdash p \rightarrow (q \lor r)
+                && \text{Hip} \\
+                2. \Gamma &\vdash (p \land \neg q) \land (p \land \neg r)
+                && \text{Hip} \\
+                3. \Gamma &\vdash p \land \neg q
+                && \text{($\land$ E) 2} \\
+                4. \Gamma &\vdash p \land \neg r
+                && \text{($\land$ E) 2} \\
+                5. \Gamma &\vdash p
+                && \text{($\land$ E) 3} \\
+                6. \Gamma &\vdash \neg q
+                && \text{($\land$ E) 3} \\
+                7. \Gamma &\vdash \neg r
+                && \text{($\land$ E) 4} \\
+                8. \Gamma &\vdash q \lor r
+                && \text{($\rightarrow$ E) 1 y 5} \\
+                9. \Gamma, q &\vdash q
+                && \text{Hip} \\
+                10. \Gamma, q &\vdash \bot 
+                && \text{($\neg$ E) 6 y 9} \\
+                11. \Gamma, r &\vdash r
+                && \text{Hip} \\
+                12. \Gamma, r &\vdash \bot 
+                && \text{($\neg$ E) 7 y 11}
+            \end{align*}
+            
+            \justify
+            Así, como en ambos casos obtenemos $\bot$ podemos concluir que 
+            $\{ p \rightarrow (q \lor r) \} \vdash 
+            (p \rightarrow q) \lor (p \rightarrow r)$. 
+
+        \end{proof}
+    \end{ejem}
+
+    \begin{ejem}
+        Demuestra que el siguiente secuente es válido usando deducción 
+        natural.
+        \begin{center}
+            $\vdash (p \land q \rightarrow r) \rightarrow p \rightarrow q
+            \rightarrow r$
+        \end{center}
+
+        \begin{proof}
+            Aplicando varias veces el Teorema de Deducción natural basta
+            mostrar que 
+            \begin{center}
+                $\Gamma = \{(p \land q) \rightarrow r, p, q \} \vdash r$
+            \end{center}
+
+            \justify
+            Entonces 
+            \begin{align*}
+                1. \Gamma &\vdash (p \land q) \rightarrow r
+                && \text{Hip} \\
+                2. \Gamma &\vdash p
+                && \text{Hip} \\
+                3. \Gamma &\vdash q 
+                && \text{Hip} \\
+                4. \Gamma &\vdash p \land q
+                && \text{($\land$ I) 2 y 3} \\
+                5. \Gamma &\vdash r
+                && \text{($\rightarrow$ E) 1 y 4}
+            \end{align*}
+            
+            \justify
+            Por lo tanto, podemos concluir que
+            $\vdash (p \land q \rightarrow r) \rightarrow p 
+            \rightarrow q \rightarrow r$.
+            
+        \end{proof}
+    \end{ejem}
+
+    \newpage
+    \begin{ejem}
+        Demuestra que el siguiente secuente es válido usando deducción 
+        natural.
+        \begin{center}
+            $\Gamma = \{p, p \rightarrow q,
+            p \rightarrow (q \rightarrow r) \} \vdash r$
+        \end{center}
+
+        \begin{proof}
+            \begin{align*}
+                1. \Gamma &\vdash p
+                && \text{Hip} \\
+                2. \Gamma &\vdash p \rightarrow q
+                && \text{Hip} \\
+                3. \Gamma &\vdash p \rightarrow (q \rightarrow r)
+                && \text{Hip} \\
+                4. \Gamma &\vdash q
+                && \text{($\rightarrow$ E) 1 y 2} \\
+                5. \Gamma &\vdash q \rightarrow r
+                && \text{($\rightarrow$ E) 1 y 3} \\
+                6. \Gamma &\vdash r
+                && \text{($\rightarrow$ E) 4 y 5} 
+            \end{align*}
+
+            \justify
+            Por lo tanto, podemos concluir que 
+            $\{p, p \rightarrow q, p \rightarrow (q \rightarrow r) \} 
+            \vdash r$
+
+        \end{proof}
+    \end{ejem}
+
+    % Sección 3.4 Teorema de Gödel.
+    \subsection{Teorema de completud y correctud para la lógica clásica}
+    El siguiente teorema vincula el mundo de la semántica con el de la 
+    sintáxis de manera biunívoca. Estrictamente hablando, se conoce como
+    \textbf{completud} a la implicación directa, mientras que al regreso 
+    se le conoce como \textbf{correcctud}, ya que asegura que no se 
+    pueden deducir cosas falsas.
+    % --- Segundo Teorema que tengo que demostrar. ---
+    \begin{teo}
+        Sean $\Gamma$ un conjunto de fórmulas y $\varphi$ una fórmula.
+        \begin{center}
+            $\Gamma \models \varphi$ si y sólo si $\Gamma \vdash \varphi$
+        \end{center}
+    \end{teo}
+
+    \begin{proof}
+        Sean $\Gamma$ un conjunto de fórmulas y $\varphi$ una fórmula.
+        \begin{itemize}
+            \item[$\Rightarrow )$] Supongamos que $\Gamma \models \varphi$.
+            Luego, para toda interpretación $\mathcal{I}$ tal que 
+            $\mathcal{I}(\psi) = 1$ para toda $\psi \in \Gamma$, se da
+            $\mathcal{I}(\varphi) = 1$. Esto equivale a decir que no hay 
+            interpretación tal que $\mathcal{I}(\psi) = 1$ para toda 
+            $\psi \in \Gamma$ y $\mathcal{I}(\varphi) = 0$, lo cual 
+            implica que no se puede dar $\Gamma \not \vdash \varphi$, 
+            es decir, obtenemos que $\Gamma \vdash \varphi$.
+
+            \item[$\Leftarrow )$] Supongamos que $\Gamma \vdash \varphi$.
+            Haremos inducción sobre $\Gamma \vdash \varphi$. Lo cual 
+            equivale a probar que todas las reglas del sistema de lógica 
+            clásica preservan la noción $\models$. \\ \\
+            \texttt{Base de inducción:}
+        \end{itemize}
+    \end{proof}
+
+    % Sección 4. El problema a resolver.
     \section{El acertijo a resolver.}
     Se ha cometido un asesinato (sólo hay un asesino). Se sospecha del esposo,
     del amante y del mayordomo. Durante los interrogatorios cada sospechoso 
@@ -516,7 +897,7 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         \item Esposo.
         \begin{enumerate}
             \item Yo no lo hice.
-            \item EL mayordomo tampoco lo hizo.
+            \item El mayordomo tampoco lo hizo.
         \end{enumerate}
         \item Mayordomo.
         \begin{enumerate}
