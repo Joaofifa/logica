@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.22)  23 MAR 2019 18:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.22)  23 MAR 2019 21:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -209,6 +209,18 @@ Proof Tree (bussproofs) style macros. Version 1.1.
 \htRRRbox=\dimen131
 \htAbox=\dimen132
 \htCbox=\dimen133
+) (/usr/share/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+ (/usr/share/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+ (/usr/share/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+)) (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2018/09/02 1.7 listings language file
+) (/usr/share/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2018/09/02 1.7 listings language file
 ) (/usr/share/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2018/04/16 v5.8 Page Geometry
  (/usr/share/texmf-dist/tex/generic/oberdiek/ifpdf.sty
@@ -237,24 +249,37 @@ LaTeX Info: Redefining \% on input line 3.
 )
 \openout1 = `proyecto1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Info: Redefining \. on input line 41.
-LaTeX Info: Redefining \% on input line 41.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Info: Redefining \. on input line 62.
+LaTeX Info: Redefining \% on input line 62.
  ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 41.
+LaTeX Info: Redefining \selectfont on input line 62.
 \c@lstlisting=\count122
-
+ (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count123
+\scratchdimen=\dimen142
+\scratchbox=\box37
+\nofMPsegments=\count124
+\nofMParguments=\count125
+\everyMPshowfont=\toks32
+\MPscratchCnt=\count126
+\MPscratchDim=\dimen143
+\MPnumerator=\count127
+\makeMPintoPDFobject=\count128
+\everyMPtoPDFconversion=\toks33
+)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -289,101 +314,94 @@ LaTeX Info: Redefining \selectfont on input line 41.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 42.
+LaTeX Font Info:    Try loading font information for U+msa on input line 63.
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 42.
+LaTeX Font Info:    Try loading font information for U+msb on input line 63.
  (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 42.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 63.
  (/usr/share/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 221.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 242.
  (/usr/share/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 219--222
+Underfull \hbox (badness 10000) in paragraph at lines 240--243
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 237--242
+Underfull \hbox (badness 10000) in paragraph at lines 258--263
 
  []
 
 [4] [5] [6]
-\myBox1=\box37
-\myScoreStart1=\dimen142
-\myCenter1=\dimen143
-\myScoreEnd1=\dimen144
-\myBox2=\box38
-\myScoreStart2=\dimen145
-\myCenter2=\dimen146
-\myScoreEnd2=\dimen147
+\myBox1=\box38
+\myScoreStart1=\dimen144
+\myCenter1=\dimen145
+\myScoreEnd1=\dimen146
+\myBox2=\box39
+\myScoreStart2=\dimen147
+\myCenter2=\dimen148
+\myScoreEnd2=\dimen149
  [7]
-\myBox3=\box39
-\myScoreStart3=\dimen148
-\myCenter3=\dimen149
-\myScoreEnd3=\dimen150
+\myBox3=\box40
+\myScoreStart3=\dimen150
+\myCenter3=\dimen151
+\myScoreEnd3=\dimen152
  [8] [9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 883--888
+Underfull \hbox (badness 10000) in paragraph at lines 904--909
 
  []
 
 [11]
-Overfull \hbox (36.37117pt too wide) in paragraph at lines 942--943
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 957.
-(/usr/share/texmf-dist/tex/latex/base/omscmr.fd
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 963.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 978.
+ (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 957.
- [12]
-Overfull \hbox (19.93082pt too wide) in paragraph at lines 968--969
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 978.
+ [12] [13] [14]
+Underfull \hbox (badness 10000) in paragraph at lines 1132--1152
+
  []
 
-[13]
-Overfull \hbox (48.12418pt too wide) in paragraph at lines 1096--1097
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
 
-[14]
-Overfull \hbox (55.17252pt too wide) in paragraph at lines 1127--1128
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Underfull \hbox (badness 10000) in paragraph at lines 1169--1187
+
  []
 
 [15]
-Overfull \hbox (19.93082pt too wide) in paragraph at lines 1172--1173
-[][][][][][][][][][][][][][][][][][][][][] 
+Underfull \hbox (badness 10000) in paragraph at lines 1209--1227
+
  []
 
 
-Overfull \hbox (5.83414pt too wide) in paragraph at lines 1210--1211
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Underfull \hbox (badness 10000) in paragraph at lines 1257--1281
+
  []
 
-[16] [17]
-Overfull \hbox (11.10701pt too wide) in paragraph at lines 1295--1321
+[16]
+Overfull \hbox (11.10701pt too wide) in paragraph at lines 1332--1361
 []\T1/cmr/m/n/12 Expliquemos có-mo fun-cio-na jui-cio. To-ma-mos los es-ta-do que ob-tu-vi-mos de la fun-ción \T1/cmtt/m/n/12 unaVerdad\T1/cmr/m/n/12 ,
  []
 
 
-Overfull \hbox (21.09315pt too wide) in paragraph at lines 1339--1340
-[][][][][][][][][][][][][][][][][][][][][][][][][] 
+Underfull \hbox (badness 10000) in paragraph at lines 1332--1361
+
  []
 
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 1362--1367
 
-Overfull \hbox (14.04482pt too wide) in paragraph at lines 1340--1341
-[][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [18] [19] (/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.aux
@@ -391,18 +409,18 @@ LaTeX Info: Redefining \. on input line 3.
 LaTeX Info: Redefining \% on input line 3.
 ) ) 
 Here is how much of TeX's memory you used:
- 4850 strings out of 492616
- 61826 string characters out of 6135177
- 161264 words of memory out of 5000000
- 8688 multiletter control sequences out of 15000+600000
- 24137 words of font info for 70 fonts, out of 8000000 for 9000
+ 5929 strings out of 492616
+ 75448 string characters out of 6135177
+ 343699 words of memory out of 5000000
+ 9745 multiletter control sequences out of 15000+600000
+ 24911 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 27i,13n,32p,280b,1667s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfit1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on /home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf (19 pages, 345833 bytes).
+ 27i,13n,40p,280b,1753s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on /home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf (19 pages, 401338 bytes).
 PDF statistics:
- 139 PDF objects out of 1000 (max. 8388607)
- 99 compressed objects within 1 object stream
+ 144 PDF objects out of 1000 (max. 8388607)
+ 102 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

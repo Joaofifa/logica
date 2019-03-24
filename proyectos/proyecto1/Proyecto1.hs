@@ -12,13 +12,20 @@ q = 'q'
 -- Variable r = Lo hizo el mayordonmo.
 r = 'r'
 
+{- Por la proposición 1 del reporte sabemos que el conjunto de
+   declaraciones de los sospechosos puede escribirse de la 
+   siguiente forma:
+   1. Esposo -> {¬p. ¬r} = ¬p∧¬r.
+   2. Mayordomo -> {¬p,q} = ¬p∧q.
+   3. Amante -> {¬q, p} = ¬q∧p.
+-}
 -- Las fórmulas de las declaraciones de los sospechosos.
 desposo, damante, dmayordomo, argumento :: Prop
 -- Proposición desposo: Lo que dijo el esposo, es decir, ¬p∧¬r.
 desposo = (Conj (Neg (Var p)) (Neg (Var r))) 
 -- Proposición damante: Lo que dijo el mayordomo, es decir, ¬p∧q.
 dmayordomo = (Conj (Neg (Var p)) (Var q))
--- Proposición psi: Lo que dijo el amante, es decir, ¬q∧p.
+-- Proposición damante: Lo que dijo el amante, es decir, ¬q∧p.
 damante = (Conj (Neg (Var q)) (Var p))
 
 -- Conjunción de la declaración de los tres sospechosos.
@@ -72,10 +79,10 @@ unAsesino _ =
    una de las declaraciones de los sospechosos, y como los únicos estados que
    nos interesan son los de unAsesino, entonces utilizamos éstos. 
 
-   Esta función será de mucha utilidad en unaVerdad ya que ahí empezamos a 
-   descartar estados que no cumplan la propiedad de que sólo una persona dice
-   la verdad. Los estados que queden implican que existe al menos el
-   personaje lógico.
+   Esta función será de mucha utilidad en la función unaVerdad ya que ahí 
+   empezamos a descartar estados que no cumplan la propiedad de que sólo una 
+   persona dice la verdad. Los estados que queden implican que existe al menos
+   el personaje lógico.
    
    Salida de la función:
    *Main> modelos desposo
@@ -151,6 +158,9 @@ noModelos phi = [e | e <- unAsesino argumento, interp phi e == False]
    Salida de la función:
    *Main> unaVerdad argumento
    [[('p',True),('r',False),('q',False)]]
+
+   Este resultado se puede corroborar con los resultados dados en las funciones
+   anteriores de modelos y noModelos.
 -}
 unaVerdad :: Prop -> [Estado]
 unaVerdad _ = 
@@ -182,7 +192,7 @@ unaVerdad _ =
 
    Supongamos que la interpretación de las variables de la declaracion del
    esposo con el estado de 'unaVerdad' es diferente y la interpretación
-   de las variables de la declaración del mayordomo con algún estado de 
+   de las variables de la declaración del mayordomo con el estado de 
    'unaVerdad' es igual. Entonces sabemos que el esposo es el loco (ya que 
    dice una verdad y una mentira) y el mayordomo puede ser el estafador o el
    lógico. Pero si además, la interpretación de las variables proposicionales
@@ -198,7 +208,7 @@ unaVerdad _ =
    argumento por simplicidad), la función siempre nos arrojará el mismo 
    resultado (que es lo que queremos).
    
-   Evaluación de la función:
+   Salida de la función:
    *Main> juicio argumento
    [[('p',True),('r',False),('q',False)]]
 -}
