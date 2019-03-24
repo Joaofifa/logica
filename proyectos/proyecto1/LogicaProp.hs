@@ -95,6 +95,58 @@ varCN phi = case phi of
     Impl p q -> varCN p `union` varCN q
     Syss p q -> varCN p `union` varCN q
 
+{- |5. Función sonDiferentes| Recibe una fórmula (phi) con únicamente dos
+   variables proposicionales y un estado e. Nos dice si la interpretación de
+   cada una de sus variables con el estado e son diferentes.
+   En esta función es donde 'varCN' cobra mucha importancia. Sabemos que las 
+   variables proposicionales de (phi) pueden estar solas o negadas, por lo que
+   no nos sirve usar la función 'vars' ya que no estaríamos considerando el 
+   caso en que las variables están negadas. Así, utilizamos la función 'varCN' 
+   para evaluar ambas variables de la fórmula (phi) y verificar si la 
+   interpretación de éstas es diferente o no.
+   Ejemplos:
+   *Main> sonDiferentes (Conj (Var 'p') (Neg (Var 'q'))) 
+    [('p', True), ('q', False)]
+   False
+
+   *Main> sonDiferentes (Impl (Var 'r') (Neg (Var 's'))) 
+   [('r', True), ('s', False)]
+   False
+
+   *Main> sonDiferentes (Syss (Var 'q') (Var 'p')) 
+   [('p', False), ('q', True)]
+   True
+-}
+sonDiferentes :: Prop -> Estado -> Bool
+sonDiferentes phi e = 
+    (interp (head (varCN phi)) e) /= (interp (last (varCN phi)) e)
+
+{- |5. Función sonIguales| Recibe una fórmula (phi) con únicamente dos 
+   variables proposicionales y un estado e. Nos dice si la interpretación de
+   cada una de sus variables con el estado e son iguales.
+   En esta función es donde 'varCN' cobra mucha importancia. Sabemos que las 
+   variables proposicionales de (phi) pueden estar solas o negadas, por lo que
+   no nos sirve usar la función 'vars' ya que no estaríamos considerando el 
+   caso en que las variables están negadas. Así, utilizamos la función 'varCN' 
+   para evaluar ambas variables de la fórmula (phi) y verificar si la 
+   interpretación de éstas es igual o no.
+   Ejemplos:
+   *Main> sonIguales (Conj (Var 'p') (Neg (Var 'q'))) 
+   [('p', True), ('q', False)]
+   True
+
+   *Main> sonIguales (Impl (Var 'r') (Neg (Var 's'))) 
+   [('r', True), ('s', False)]
+   True
+
+   *Main> sonIguales (Syss (Var 'q') (Var 'p')) 
+   [('p', False), ('q', True)]
+   False
+-}
+sonIguales :: Prop -> Estado -> Bool
+sonIguales beta e = 
+    (interp (head (varCN beta)) e) == (interp (last (varCN beta)) e)
+
 -- Funciones auxiliares. --
 
 {- |1. Función auxiliar buscaBool| Recibe una variable proposicional p, y un

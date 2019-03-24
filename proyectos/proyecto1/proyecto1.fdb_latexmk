@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1553381334 "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.tex" "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf" "proyecto1" 1553381335
-  "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.aux" 1553381335 2426 694f64fd597e4630926da0a8adf4d221 ""
-  "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.tex" 1553381334 61868 9f2b957224abd9b7a78986641aa0d717 ""
+["pdflatex"] 1553386157 "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.tex" "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf" "proyecto1" 1553386157
+  "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.aux" 1553386157 2328 a42d2e8f27cc8156de210151e799615f ""
+  "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.tex" 1553386156 63316 1607c3e5dc335570f03db490ff6c665e ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1550406775 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1550406775 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm" 1550406775 3072 ccae1a240ab272417e4399fe942df546 ""
@@ -102,11 +102,11 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1550406775 33301 a3134070eacafb10b1f371612ce2650d ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1553261143 3233842 1a92d1d21a91d82fa70913e968179e54 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1553261120 7919196 aa37940067e4115677212ebdb042dd58 ""
-  "proyecto1.aux" 1553381335 2426 694f64fd597e4630926da0a8adf4d221 ""
-  "proyecto1.tex" 1553381334 61868 9f2b957224abd9b7a78986641aa0d717 ""
+  "proyecto1.aux" 1553386157 2328 a42d2e8f27cc8156de210151e799615f ""
+  "proyecto1.tex" 1553386156 63316 1607c3e5dc335570f03db490ff6c665e ""
   (generated)
+  "proyecto1.log"
   "proyecto1.pdf"
   "proyecto1.aux"
-  "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf"
-  "proyecto1.log"
   "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.log"
+  "/home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf"

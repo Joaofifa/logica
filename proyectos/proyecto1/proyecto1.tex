@@ -884,7 +884,7 @@ Proyecto 1: Implementación de la solución de un problema lógico}
             Haremos inducción sobre $\Gamma \vdash \varphi$. Lo cual 
             equivale a probar que todas las reglas del sistema de lógica 
             clásica preservan la noción $\models$. \\ \\
-            \texttt{Base de inducción:}
+            \texttt{Base de inducción.} Var 
         \end{itemize}
     \end{proof}
 
@@ -1320,40 +1320,65 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         y revisar manualmente quién es nuestro lógico y nuestro estafador. 
     \end{itemize}
 
+    % 5.2 ¿Quién es el asesino?
     \subsection{¿Quién es el asesino?}
-    Una vez que estamos dentro de la capeta \textbf{proyecto1}, compilamos el 
-    programa. 
+    Abrimos nuestra terminal y nos movemos al directorio donde se encuentren 
+    los archivos \textbf{LogicaProp.hs} y \textbf{Proyecto1.hs}. Una vez que 
+    estemos en el directorio deseado, ejecutamos el comando \texttt{ghci}, 
+    con el cual obtenemos el siguiente resultado:
     \begin{lstlisting}
-        *Main> :l Proyecto1
+        GHCi, version 8.6.3: http://www.haskell.org/ghc/  :? for help
+        Prelude> 
+    \end{lstlisting}
+
+    \justify
+    Luego, compilamos el programa principal \textbf{Proyecto1.hs} con el 
+    comando \texttt{:l Proyecto1}
+    \begin{lstlisting}
+        Prelude> :l Proyecto1
         [1 of 2] Compiling LogicaProp       ( LogicaProp.hs, interpreted )
         [2 of 2] Compiling Main             ( Proyecto1.hs, interpreted )
         Ok, two modules loaded.
     \end{lstlisting}
 
-    Luego, ejecutamos el programa con el siguiente comando
+    Para conocer quién es el asesino, ejecutamos la función \textbf{juicio} 
+    del programa \textit{Proyecto1.hs} con el parámetro \textbf{argumento}
     \begin{lstlisting}
         *Main> juicio argumento
     \end{lstlisting}
 
-    donde \textit{argumento} es la conjunción de la declaración de los 
+    donde \textit{argumento} es la conjunción de las declaraciones de los 
     tres sospechosos. Dicha ejecución nos arroja el siguiente resultado
     \begin{lstlisting}
-        [[('p',False),('r',True),('q',True)],
-        [('p',True),('r',False),('q',False)]]
+        [[('p',True),('r',False),('q',False)]]
     \end{lstlisting}
 
-    Este es el estado donde un sospechoso dice dos verdades, otro dice una 
-    verdad y el último dice dos mentiras. 
+    \justify
+    Este es el estado donde sólo hay un asesino, un lógico, un estafador 
+    y un loco. Con el simple estado sabemos que \texttt{p = True}, y 
+    recordando nuestra implementación, sabemos que $p$ corresponde a la 
+    proposición \textit{Lo hizo el esposo}. Por lo tanto, 
+    \textbf{el esposo es el asesino}. \\
+    Finalmente, para saber quién es el loco, quién es el estafador y 
+    quién es el lógico, basta realizar manualmente la interpretación de 
+    cada una de las declaraciones de los sospechosos con el estado que 
+    obtuvimos anteriormente. Así, 
     \begin{itemize}
-        \item El amante es el lógico.
-        \item El esposo es el loco.
-        \item El mayordomo es el estafador.
+        \item Declaración del esposo: $\{ \neg p, \neg r \}$. \\
+        Como $\mathcal{I}(p) = 1$ y $\mathcal{I}(r) = 0$, entonces 
+        $\mathcal{I}(\neg p) = 0$ y $\mathcal{I}(\neg r) = 1$. Por lo tanto,
+        el esposo es el \textbf{loco}.
+        \item Declaración del mayordomo: $\{\neg p, q \}$. \\
+        Como $\mathcal{I}(p) = 1$ y $\mathcal{I}(q) = 0$, entonces 
+        $\mathcal{I}(\neg p) = 0$. Por lo tanto, el mayordomo es el
+        \textbf{estafador}.
+        \item Declaración del amante: $\{\neg q, p \}$. \\
+        Como $\mathcal{I}(q) = 0$ y $\mathcal{I}(p) = 1$, entonces 
+        $\mathcal{I}(\neg q) = 1$. Por lo tanto, el amante es el 
+        \textbf{lógico}. 
     \end{itemize}
 
-    Y como el amante es el lógico, entonces sabemos que sus dos declaraciones
-    son verdaderas. Por lo tanto, \textbf{el esposo es el asesino}.
-
-    % Sección 6: Referencias.
-    \section{Referencias}
+    \justify
+    Con esto, hemos resuelto por completo el acertijo.
     
 \end{document}
