@@ -14,11 +14,11 @@ notas de clase). Explicación breve del propósito del proyecto.]
 3. Deducción natural (definición)
 3.1 Reglas de inferencia.
 3.2 La negación.
-3.3 Teorema de Gödel
+3.3 Teorema de completud y correctud.
 
-5. El problema a resolver (el texto del acertijo lógico).
+4. El problema a resolver (el texto del acertijo lógico).
 
-6. Solución del problema lógico.
-6.1 Implementación de la solución (la explicación detallada del código).
-6.2 ¿Quién es el asesino? (una vez que el porgrama me arroja el modelo
+5. Solución del problema lógico.
+5.1 Implementación de la solución (la explicación detallada del código).
+5.2 ¿Quién es el asesino? (una vez que el porgrama me arroja el modelo
    que cumple con la solución, podemos decidir quién es cada personaje).

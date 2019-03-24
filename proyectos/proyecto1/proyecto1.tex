@@ -958,16 +958,18 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         \texttt{VarP} como sinónimo de \texttt{Char}, y \texttt{Estado} como 
         sinónimo de \texttt{[(VarP, Bool)]}. Creamos el tipo de dato para las 
         fórmulas proposicionales, el cual definimos de la siguiente forma:
-
         \begin{lstlisting}
-            data Prop = Top | Bot | Var VarP | Neg Prop | Conj Prop Prop 
-            | Disy Prop Prop | Impl Prop Prop | Syss Prop Prop 
-            deriving (Eq, Ord, Show)
+            data Prop = Var VarP  -- Var 'p'
+                      | Neg Prop   -- ~P
+                      | Conj Prop Prop -- P ^ Q
+                      | Disy Prop Prop -- P v Q
+                      | Impl Prop Prop -- P -> Q
+                      | Syss Prop Prop -- P <-> Q
+                      deriving (Eq, Ord, Show)
         \end{lstlisting}
 
-        donde \texttt{Top = True}, \texttt{Bot = False}, 
-        \texttt{Var VarP = Var Char}, y los demás son los conectivos lógicos
-        (binarios y unarios) que ya definimos anteriormente. \\
+        donde \texttt{Var VarP = Var Char}, y los demás son los conectivos 
+        lógicos (binarios y unarios) que ya definimos anteriormente. \\
         También se dan ejemplos de variables proposicionales y fórmulas 
         como referencias al lector de cómo se deben escribir y pueda utilizar 
         el programa con mayor claridad en un futuro. \\ 
@@ -975,8 +977,9 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         cuales son:
 
         \begin{itemize}
+            % Función interp.
             \item \textbf{Función interp}. Recibe una fórmula $\varphi$ y un 
-            estado e. Regresa la interpretación de $\varphi$ con el estado 
+            estado $e$. Regresa la interpretación de $\varphi$ con el estado 
             dado.\\
             La función está implementada de la siguiente forma:
             \begin{lstlisting}
@@ -989,23 +992,28 @@ Proyecto 1: Implementación de la solución de un problema lógico}
                     Impl p q -> (not (interp p e)) || (interp q e)
                     Syss p q -> (interp p e) == (interp q e)
             \end{lstlisting}
+
             la cual es una aplicación directa de nuestra definición de 
             semántica. Aquí podemos notar dos cosas: la primera, que se 
             utilizó una equivalencia lógica para obtener la interpretación 
             de la implicación; y la segunda, que utilizamos una función 
-            auxiliar \texttt{buscaBool}. Ésta recibe una variable proposicional
-            $p$, y un estado $[(p,b)]$, y regresa la segunda componente del 
-            primer par ordenado de la lista de estados I, cuyo primer 
-            componente sea igual a la variable p.
+            auxiliar \texttt{buscaBool}. Ésta recibe una variable 
+            proposicional \texttt{varP}, y un estado \texttt{[(varP,Bool)]}.
+            Regresa la segunda componente del primer par ordenado de la 
+            lista de estados $l$, cuyo primer componente sea igual a la
+            variable \texttt{varP}. Es decir, regresa el valor booleano 
+            asociado a la primer aparición de la variable proposicional 
+            \texttt{varP}  que se le pase como parámetro. \\
             La función auxiliar está implementada de la siguiente forma:
             \begin{lstlisting}
-                buscaBool :: (Eq p) => p -> [(p,b)] -> b 
-                buscaBool p e = head [b | (x,b) <- e, p == x]
+                buscaBool :: (Eq varP) => varP -> [(varP, Bool)] -> Bool
+                buscaBool varP e = head [b | (x,b) <- e, varP == x]
             \end{lstlisting}
             
             Esta función en particular se encuentra hasta abajo del código, en
             el apartado de \textit{Funciones auxiliares}.
 
+            % Función vars.
             \item \textbf{Función vars}. Recibe una formula $\varphi$. Regresa
             la lista de variables proposicionales que figuran en $\varphi$, 
             sin repetición. \\
@@ -1021,14 +1029,13 @@ Proyecto 1: Implementación de la solución de un problema lógico}
                     Syss p q -> vars p `union` vars q
             \end{lstlisting}
 
-            En un inicio se utilizó \texttt{++} para concatenar las variables,
-            pero hacía que fallara la función \texttt{estados} pues al parecer
-            no concatenada de la forma que nosotros necesitabamos, y así se 
-            consideraban más de $2^{n}$ casos. Buscando una solución al
-            problema nos encontramos con que la función \texttt{union} era la 
-            ideal para tener todos los elementos que necesitabamos y así no 
-            irnos a Disneylandia.
+            Aquí simplemente utilizamos la función \texttt{union} para unir 
+            las listas finales que contienen las variables proposicionales 
+            de cada una de las fórmulas. Por cómo está definida 
+            \texttt{union}, nos regresa la lista que contiene todos los 
+            elementos de las listas que recibe, sin repetición.
 
+            % Función estados.
             \item \textbf{Función estados}. Recibe una fórmula $\varphi$ con 
             $n-$variables proposicionales. Regresa la lista con los $2^{n}$
             estados distintos para $\varphi$. \\
@@ -1038,23 +1045,24 @@ Proyecto 1: Implementación de la solución de un problema lógico}
                 estados phi = subconj (vars phi)
                     where subconj [] = [[]]
                           subconj (x:xs) = 
-                            [(x,True):i | i <- subconj xs] 
-                            ++ [(x,False):i | i <- subconj xs] 
+                            [(x,True):i | i <- subconj xs] ++ [(x,False):i | i <- subconj xs] 
+
             \end{lstlisting}
 
-            Notemos que para obtener los $2^{n}$ estados posibles, debemos 
+            Notemos que para obtener los $2^{n}$ estados posibles, debemos
             obtener el subconjunto de listas de la lista de variables 
-            proposicionales de $\varphi$, y hacer las combinaciones posibles
-            entre los estados y los valores booleanos (que es justo lo que 
-            hacemos en la sub-función \texttt{subconj}). Así, estamos
-            regresando una lista con las listas de estados posibles para la 
-            fórmula $\varphi$.  
+            proposicionales de $\varphi$, hacer las combinaciones posibles 
+            entre los estados y los valores booleanos e ir concatenando las 
+            parejas de tuplas para formar una lista (que es justo lo que 
+            hacemos en la función \text{subconj}). Y como \text{subconj} 
+            trabaja con una lista de comprensión, al final obtendremos una 
+            lista de listas (ya que los estados son listas) con los
+            $2^{n}$ estados.
 
+            % Función varsCN.
             \item \textbf{Función varCN}. Recibe una fórmula $\varphi$. Regresa
-            la lista de variables proposicionales que figuran en $\varphi$. La 
-            diferencia con la función vars es que si la variable porposicional 
-            tiene una negación, la manda a la lista junto con su conectivo 
-            unario. \\
+            la lista de variables proposicionales que figuran en $\varphi$
+            junto con su conectivo unario (si es que lo tiene). \\
             La función está implementada de la siguiente forma:
             \begin{lstlisting}
                 varCN :: Prop -> [Prop]
@@ -1068,7 +1076,59 @@ Proyecto 1: Implementación de la solución de un problema lógico}
                 Syss p q -> varCN p `union` varCN q
             \end{lstlisting}
 
-            La gran utilidad de esta función será explicada más adelante.
+            La diferencia con la función vars es que si la variable 
+            porposicional tiene una negación, la manda a la lista junto con
+            su conectivo unario. \\
+            Aquí simplemente utilizamos la función \texttt{union} para unir 
+            las listas finales que contienen las variables proposicionales 
+            de cada una de las fórmulas. Por cómo está definida 
+            \texttt{union}, nos regresa la lista que contiene todos los 
+            elementos de las listas que recibe, sin repetición.
+
+            % Función sonDiferentes.
+            \item \textbf{Función sonDiferentes}. Recibe una fórmula $\varphi$ 
+            con únicamente dos variables proposicionales y un estado $e$. Nos 
+            dice si la interpretación de cada una de sus variables con el 
+            estado $e$ son diferentes.\\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                sonDiferentes :: Prop -> Estado -> Bool
+                sonDiferentes phi e = (interp (head (varCN phi)) e) /= (interp (last (varCN phi)) e)
+            \end{lstlisting}
+
+            En esta función es donde \texttt{varCN} cobra mucha importancia. 
+            Sabemos que las variables proposicionales de $\varphi$ 
+            pueden estar solas o negadas, por lo que no nos sirve usar la 
+            función \texttt{vars} ya que no estaríamos considerando el
+            caso en que las variables están negadas. Así, utilizamos la 
+            función \texttt{varCN} para evaluar ambas variables de la 
+            fórmula $\varphi$ y verificar si la interpretación de éstas es 
+            diferente o no. Esta función es fácil de realizar ya que 
+            únicamente hay que checar si la interpretación de la primer 
+            variable de $\varphi$ es diferente a la interpretación de la 
+            segunda variable de $\varphi$, con el estado dado.
+
+            \item \textbf{Función sonIguales} Recibe una fórmula $\varphi$
+            con únicamente dos variables proposicionales y un estado $e$. Nos 
+            dice si la interpretación de cada una de sus variables con el 
+            estado $e$ son iguales. \\
+            La función está implementada de la siguiente forma:
+            \begin{lstlisting}
+                sonIguales :: Prop -> Estado -> Bool
+                sonIguales beta e = (interp (head (varCN beta)) e) == (interp (last (varCN beta)) e)
+            \end{lstlisting}
+
+            En esta función es donde \texttt{varCN} cobra mucha importancia. 
+            Sabemos que las variables proposicionales de $\varphi$ 
+            pueden estar solas o negadas, por lo que no nos sirve usar la 
+            función \texttt{vars} ya que no estaríamos considerando el
+            caso en que las variables están negadas. Así, utilizamos la 
+            función \texttt{varCN} para evaluar ambas variables de la 
+            fórmula $\varphi$ y verificar si la interpretación de éstas es 
+            igual o no. Esta función es fácil de realizar ya que 
+            únicamente hay que checar si la interpretación de la primer 
+            variable de $\varphi$ es igual a la interpretación de la 
+            segunda variable de $\varphi$, con el estado dado.
         \end{itemize}
 
         \item[2)] \textbf{Proyecto1.hs} \\
