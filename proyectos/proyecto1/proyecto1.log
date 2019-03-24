@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.22)  23 MAR 2019 23:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.22)  24 MAR 2019 00:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -355,52 +355,48 @@ Underfull \hbox (badness 10000) in paragraph at lines 258--263
 \myScoreStart3=\dimen150
 \myCenter3=\dimen151
 \myScoreEnd3=\dimen152
- [8] [9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 904--909
-
- []
-
-[11]
+ [8] [9] [10] [11]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 962.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 981.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 964.
+ [12]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 984.
  (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 981.
- [12] [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 1192--1212
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 984.
+ [13] [14]
+Underfull \hbox (badness 10000) in paragraph at lines 1195--1215
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 1229--1247
+Underfull \hbox (badness 10000) in paragraph at lines 1232--1250
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1269--1287
+Underfull \hbox (badness 10000) in paragraph at lines 1272--1290
 
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 1317--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1320--1344
 
  []
 
 [17]
-Overfull \hbox (11.10701pt too wide) in paragraph at lines 1392--1421
+Overfull \hbox (11.10701pt too wide) in paragraph at lines 1395--1424
 []\T1/cmr/m/n/12 Expliquemos có-mo fun-cio-na jui-cio. To-ma-mos los es-ta-do que ob-tu-vi-mos de la fun-ción \T1/cmtt/m/n/12 unaVerdad\T1/cmr/m/n/12 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1392--1421
+Underfull \hbox (badness 10000) in paragraph at lines 1395--1424
 
  []
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 1422--1427
+Underfull \hbox (badness 10000) in paragraph at lines 1425--1430
 
  []
 
@@ -411,13 +407,13 @@ LaTeX Info: Redefining \% on input line 3.
 Here is how much of TeX's memory you used:
  5929 strings out of 492616
  75450 string characters out of 6135177
- 344699 words of memory out of 5000000
+ 343699 words of memory out of 5000000
  9745 multiletter control sequences out of 15000+600000
  24911 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 27i,13n,40p,280b,1751s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,13n,40p,280b,1633s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on /home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf (20 pages, 424462 bytes).
+Output written on /home/taniarubi/Documenti/logica/proyectos/proyecto1/proyecto1.pdf (20 pages, 424403 bytes).
 PDF statistics:
  151 PDF objects out of 1000 (max. 8388607)
  107 compressed objects within 2 object streams

@@ -679,6 +679,7 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         hipótesis) entonces decimos que $\varphi$ es un teorema.
     \end{define}
 
+    \newpage
     % 3.2 La Negación.
     \subsection{La Negación}
     Un sistema de deducción natural puede clasificarse, de acuerdo a qué clase
@@ -901,16 +902,15 @@ Proyecto 1: Implementación de la solución de un problema lógico}
             implica que no se puede dar $\Gamma \not \vdash \varphi$, 
             es decir, obtenemos que $\Gamma \vdash \varphi$.
 
-            \item[$\Leftarrow )$] Supongamos que $\Gamma \vdash \varphi$.
-            Haremos inducción sobre $\Gamma \vdash \varphi$. Lo cual 
-            equivale a probar que todas las reglas del sistema de lógica 
-            clásica preservan la noción $\models$. \\ \\
-            \texttt{Base de inducción.} Var 
+            \item[$\Leftarrow )$] Inducción sobre $\Gamma \vdash \varphi$. 
+            Lo cual equivale a probar todas las reglas del sistema de lógica
+            clásica preservan la noción $\models$, pero esto es justo lo que
+            dice la proposición 3.
         \end{itemize}
     \end{proof}
 
     % Sección 4. El problema a resolver.
-    \section{El acertijo a resolver.}
+    \section{El problema a resolver.}
     Se ha cometido un asesinato (sólo hay un asesino). Se sospecha del esposo,
     del amante y del mayordomo. Durante los interrogatorios cada sospechoso 
     hizo 2 declaraciones clave:
@@ -920,6 +920,8 @@ Proyecto 1: Implementación de la solución de un problema lógico}
             \item Yo no lo hice.
             \item El mayordomo tampoco lo hizo.
         \end{enumerate}
+
+        \newpage
         \item Mayordomo.
         \begin{enumerate}
             \item El esposo no lo hizo.
@@ -976,6 +978,7 @@ Proyecto 1: Implementación de la solución de un problema lógico}
         En seguida se encuentran las funciones de lógica proposicional, las
         cuales son:
 
+        \newpage
         \begin{itemize}
             % Función interp.
             \item \textbf{Función interp}. Recibe una fórmula $\varphi$ y un 
@@ -1489,6 +1492,6 @@ Proyecto 1: Implementación de la solución de un problema lógico}
     \end{itemize}
 
     \justify
-    Con esto, hemos resuelto por completo el acertijo.
+    Con esto, hemos resuelto por completo el problema.
     
 \end{document}
