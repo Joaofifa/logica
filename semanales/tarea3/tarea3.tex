@@ -1,0 +1,168 @@
+\documentclass[letterpaper,11pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}  
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Código
+\usepackage{listings}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Lógica Computacional \\ Tarea Semanal 3}
+\author{Rubí Rojas Tania Michelle}
+\date{\today}
+
+\begin{document}
+    \maketitle
+
+    \begin{enumerate}
+
+        % Ejercicio 1.
+        \item Da la especificación formal del siguiente argumento, definiendo
+        previamente un glosario adecuado. \\
+        \textit{Los alumnos de la Facultad de Ciencias y los programadores 
+        sólo alcanzan su máximo nivel cuando la luna es azul.} \\  \\
+        \textsc{Solución:} El universo de discurso serán todas las personas y
+        los satélites naturales. Los predicados que utilizaremos serán los 
+        siguientes:
+        \begin{itemize}
+            \item $E(x):$ $x$ es alumno de la Facultad de Ciencias.
+            \item $P(x):$ $x$ es programador.
+            \item $M(x):$ $x$ alcanza su máximo nivel.
+            \item $A(x):$ $x$ es azul.
+        \end{itemize}
+
+        Además, utilizaremos un término:
+        \begin{itemize}
+            \item l: Luna
+        \end{itemize}
+
+        Por lo que el argumento queda de la siguiente forma:
+        \begin{center}
+            $\forall x \forall y ((E(x) \land P(y) \land 
+            M(x) \land M(y)) \rightarrow A(l))$
+        \end{center}
+
+        % Ejercicio 2.
+        \item Considera las siguientes expresiones:
+        \begin{itemize}
+            \item[(a)] $\forall x \forall u$ $(M(a,x) \rightarrow M(a,u))$
+            \item[(b)] $\forall xu$ $M(a,x) \rightarrow M(a,u)$
+            \item[(c)] $\forall xu$ $(M(a,u) \rightarrow M(a,x))$  
+
+            \begin{enumerate}
+                % Ejercicio 2.1
+                \item[2.1] Indica qué relaciones se cumplen de $\alpha-$
+                equivalencia entre los argumentos. \\
+                $((a) \sim_{\alpha} (b), (a) \sim_{\alpha} (c)$ ó 
+                $(b) \sim_{\alpha} (c))$. Justifica adecuadamente. \\ \\
+                \textit{Solución:} Notemos que $(b)$ es equivalente a escribir 
+                $(\forall x \forall u M(a,x)) \rightarrow M(a,u)$ y que $(c)$
+                es equivalente a escribir $\forall x \forall u (M(a,u) 
+                \rightarrow M(a,x))$. Entonces
+                \begin{itemize}
+                    % Caso 1.
+                    \item $(a) \sim_{\alpha} (b)$ \\
+                    Este caso no se cumple. Como el alcance de los 
+                    cuantificadores de $(a)$ es diferente al alcance de los
+                    cuantificadores de $(b)$ entonces no tienen la misma 
+                    'estructura', por lo que $(a)$ y $(b)$ no difieren a lo
+                    más en los nombres de sus variables ligadas. Así, 
+                    $(a) \not \sim_{\alpha} (b)$.
+
+                    % Caso 2.
+                    \item $(a) \sim_{\alpha} (c)$ \\
+                    Este caso sí se cumple. Como $(a)$ y $(b)$ difieren a lo 
+                    más en los nombres de sus variables ligadas (es decir,
+                    tienen la misma 'estructura' y sólo sus variables 
+                    ligadas cambian) entonces $(a) \sim_{\alpha} (c)$.
+
+                    % Caso 3.
+                    \item $(b) \sim_{\alpha} (c)$ \\
+                    Este caso no se cumple.  Como el alcance de los 
+                    cuantificadores de $(b)$ es diferente al alcance de los
+                    cuantificadores de $(c)$ entonces no tienen la misma 
+                    'estructura', por lo que $(b)$ y $(c)$ no difieren a lo
+                    más en los nombres de sus variables ligadas. Así, 
+                    $(b) \not \sim_{\alpha} (c)$.
+                \end{itemize}
+
+                % Ejercicio 2.2
+                \item[2.2] Aplica ls siguiente sustitución 
+                $\sigma = [x, u := L(a,n,d,r,o),$ $C(i,z,o)]$ a cada una 
+                de las expresiones. \\ \\
+                \textit{Solución:}
+                \begin{itemize}
+                    % Primera sustitución.
+                    \item[(a)] $\forall x \forall u (M(a,x)$ 
+                    $\rightarrow M(a,u))$ \\
+                    Aplicando la sustitución obtenemos 
+                    \begin{align*}
+                        (\forall x \forall u ((M(a,x) 
+                        \rightarrow M(a,u)))) \sigma
+                        &= \forall x \forall u ((M(a,x) 
+                        \rightarrow M(a,u)) \sigma_{xu}) \\
+                        &= \forall x \forall u (M(a,x) \sigma_{xu} 
+                        \rightarrow M(a,u) \sigma_{xu}) \\
+                        &= \forall x \forall u (M(a,x) \rightarrow M(a,u))
+                    \end{align*}
+
+                    Notemos que en este ejercicio no cambió nada con la 
+                    sustitución ya que todas las variables a sustituir son 
+                    ligadas. 
+
+                    % Segunda sustitución.
+                    \item[(b)] $\forall xu$ $M(a,x) \rightarrow M(a,u)$ \\
+                    Notemos que esta expresión es equivalente a escribir 
+                    $(\forall x \forall u \; M(a,x)) \rightarrow M(a,u)$. Así,
+                    aplicando la sustitución obtenemos 
+                    \begin{align*}
+                        ((\forall x \forall u \; M(a,x)) 
+                        \rightarrow M(a,u)) \sigma
+                        &= (\forall x \forall u \; M(a,x)) \sigma
+                        \rightarrow M(a,u) \sigma \\
+                        &= (\forall x \forall u \; M(a,x) \sigma_{xu})
+                        \rightarrow M(a, \; C(i,z,o)) \\
+                        &= (\forall x \forall u \; M(a,x))
+                        \rightarrow M(a, \; C(i,z,o))
+                    \end{align*}
+
+                    % Tercera sustitución.
+                    \item[(c)] $\forall xu$ $(M(a,u) \rightarrow M(a,x))$ \\
+                    Notemos que esta expresión es equivalente a escribir 
+                    $\forall x \forall u (M(a,u) \rightarrow M(a,x))$. Así, 
+                    aplicando la sustitución obtenemos   
+                    \begin{align*}
+                        (\forall x \forall u (M(a,u) 
+                        \rightarrow M(a,x))) \sigma
+                        &= \forall x \forall u ((M(a,u) 
+                        \rightarrow M(a,x)) \sigma_{xu}) \\
+                        &= \forall x \forall u (M(a,u) \sigma_{xu} 
+                        \rightarrow M(a,x) \sigma_{xu}) \\
+                        &= \forall x \forall u (M(a,u) \rightarrow M(a,x))
+                    \end{align*}
+
+                    Notemos que en este ejercicio no cambió nada con la 
+                    sustitución ya que todas las variables a sustituir son 
+                    ligadas. 
+
+                \end{itemize}
+
+            \end{enumerate}
+
+        \end{itemize}
+        
+    \end{enumerate}
+
+\end{document}
