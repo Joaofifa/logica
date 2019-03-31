@@ -33,9 +33,9 @@
         previamente un glosario adecuado. \\
         \textit{Los alumnos de la Facultad de Ciencias y los programadores 
         sólo alcanzan su máximo nivel cuando la luna es azul.} \\  \\
-        \textsc{Solución:} El universo de discurso serán todas las personas y
-        los satélites naturales. Los predicados que utilizaremos serán los 
-        siguientes:
+        \textsc{Solución:} El universo de discurso serán todas las personas,
+        los programadores y los satélites naturales. Los predicados que 
+        utilizaremos serán los siguientes:
         \begin{itemize}
             \item $E(x):$ $x$ es alumno de la Facultad de Ciencias.
             \item $P(x):$ $x$ es programador.
@@ -50,8 +50,8 @@
 
         Por lo que el argumento queda de la siguiente forma:
         \begin{center}
-            $\forall x \forall y ((E(x) \land P(y) \land 
-            M(x) \land M(y)) \rightarrow A(l))$
+            $\forall x(A(l) \rightarrow (E(x) \land P(x) \land 
+            M(x)))$
         \end{center}
 
         % Ejercicio 2.
@@ -128,14 +128,10 @@
                     $(\forall x \forall u \; M(a,x)) \rightarrow M(a,u)$. Así,
                     aplicando la sustitución obtenemos 
                     \begin{align*}
-                        ((\forall x \forall u \; M(a,x)) 
-                        \rightarrow M(a,u)) \sigma
-                        &= (\forall x \forall u \; M(a,x)) \sigma
-                        \rightarrow M(a,u) \sigma \\
-                        &= (\forall x \forall u \; M(a,x) \sigma_{xu})
-                        \rightarrow M(a, \; C(i,z,o)) \\
+                        (\forall x \forall u \; M(a,x)) 
+                        \rightarrow (M(a,u)) \sigma
                         &= (\forall x \forall u \; M(a,x))
-                        \rightarrow M(a, \; C(i,z,o))
+                        \rightarrow M(a, \; C(i,z,o)) 
                     \end{align*}
 
                     % Tercera sustitución.
