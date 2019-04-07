@@ -55,8 +55,21 @@ getIndex(E, L, N) :- getnth(E, N, L).
  * La regla se satisface si el elemento E ocurre R veces en la lista L.
  *
  * Descripción: 
+ * Si la lista esta vacia, entonces se regresa un cero.
+ * Si la cabeza de una lista es igual al elemtno, se incrementa el
+ * contador por 1 en el recursion. En otro caso, solo se hace recursion
+ * sin incrementar.
  * Ejemplos:
+ * ?- num_ocurr(a,[a,b,a],R).
+      R = 2.
+ 
+ * ?- num_ocurr(A, [a,b,a], 2).
+      A = a.
  */
+num_ocurr(_,[],0).
+num_ocurr(X,[X|XS],N) :- num_ocurr(X,XS,M), N is M + 1.
+num_ocurr(X,[Y|XS],N) :- X \= Y, num_ocurr(X,XS,N).
+
 
 /**
  * |4| Regla concatena. Recibe tres parámetros: L1, L2 y LF.
@@ -86,8 +99,24 @@ concatena([X|XS], L2, [X|YS]) :- concatena(XS, L2, YS).
  * |5| Regla deleteL. Recibe tres parámetros: I, L y R.
  * La regla se satisface si el elemento de la I-ésima posición es eliminado de
  * la lista L. La lista resultante será guardada en la variable R.
+ *
+ * Descripcion.
+ * (a) Si I es cero, siginifica que llegamos al elemento a eliminar en la lista L,
+ * entonces solamente regresamos la lista, excluiendo la cabeza.
+ * (b)Regla Recursiva: Recorimos la lista hasta que I es cero.
  * 
+ * Ejemplos de entrada:
+ * ?- deleteL(5, [a,b,c,d,e,f], R).
+   R = [a,b,c,d,e] 
+
+ * ?- deleteL(I, [a,b,c], [b,c]).
+   I = 0.
+
+ * ?- deleteL(2, R, [a,b,c,d,e]).
+   R = [a,b,_,c,d,e].
  */
+deleteL(0,[_|XS], XS).
+deleteL(N,[X|XS], [X|YS]) :- N>0, M is N-1, deleteL(M,XS,YS).
 
 /**
  * |6| Regla sumaLista. Recibe dos parámetros: L y R.
@@ -118,7 +147,23 @@ sumaLista([X|XS], R) :- sumaLista(XS, R1), R is X + R1.
  * La regla se satisface si K contiene el resultado de sumar los elementos
  * anteriores al i-ésimo índice.
  *
- */
+ * Descripcion: Si hacemos reversa sobre la lista, entonces podemos
+ * usar el funcion auxiliar sum para ver que la suma de la lista
+ * L1 es igual al cabeza de la lista reversa de L2.
+ *
+*/
+acumulador(XS,YS) :- reverseL(XSR,YSR),reverse(XS,XSR),reverse(YS,YSR)
+.
+reverseL([X|XS],[Y|YS]) :- reverseL(XS,YS), Y is SUM, sum([X|XS],SUM).
+
+sum([],0).
+sum([X|XS],total) :- sum(XS,total1), total is X + total1.
+
+/*
+acumulador([_,X1],[Y,Y1]) :- Y1 is X1+Y.
+acumulador([X|XS],[Y|YS]) :- Y is acuAux(X,Y,YS), acumulador(XS,YS).
+
+acuAux(X,Y,[Z|_]) :- Z is X+Y.*/
 
 /**
  * |8| Regla update. Recibe cuatro parámetros: N, E, XS y R.
@@ -158,7 +203,35 @@ update(N, E, [X|XS], [X|YS]) :- N>0, M is N-1, update(M, E, XS, YS).
  * |9| Regla subset. Recibe dos parámetros: L y K.
  * La regla se satisface si K es subconjunto de L.
  *
+ * Descripción:
+ * Si la segunda lista es vacia, entonces no hay elementos para compara
+ * y por lo tanto es un subset.
+ * 
+ * En otro caso, buscamos si:
+ * (a) La cabeza de las listas son diferentes, si son diferentes,
+ *     solamente hacemos recursion con el resto de la lista del
+ *     primero, y la lista con cabeza del segundo.
+ * (b) Si son iguales, entonces simplemente hacemos recursion sobre
+ *     el resto de la lista.
+ * Ejemplos de entrada:
+ * ?- subset([1,2,3,4,5,6,7,8,9], [2,4,6,8]).
+   true.
+
+ * ?- subset([1,2,3], [3,2,1]).
+   no.
+
+ * ?- subset([1,2,3],R).
+   R = [];
+   R = [1];
+   R = [1,2];
+   R = [1,2,3];
+   R = [1,3];
+   R = [2];
+   R = [2,3];
+   R = [3].
  */
+subset([X|XS],[X|YS]) :- subset(XS,YS).
+subset([_|XS],[Y|YS]) :- subset(XS,[Y|YS]).
 
 /**
  * |10| Regla union. Recibe tres parámetros: A, B y C.
@@ -184,11 +257,24 @@ update(N, E, [X|XS], [X|YS]) :- N>0, M is N-1, update(M, E, XS, YS).
 union(A, B, C) :- concatena(A, B ,C).
 
 /**
- * |11| Regla splitL. Recibe tres parámetros: L, N, L1 y L2.
+ * |11| Regla splitL. Recibe cuatro parámetros: L, N, L1 y L2.
  * La regla se satisface si la lista L fue dividida en dos listas (L1 y L2),
  * partiéndola en el índice N.
  *
+ * Descripción:
+ * En una manera similar a concatena, tendremos que si N es cero, llegamos al
+ * punto donde se van a separar, entonces solo regresamos la cabeza de la lista
+ * en L1 y el resto en L2.
+ *
+ * En otro caso, hacemos recursion pasando la cabeza de la lista a L1 hasta que
+ * se llega a N = 0.
+ * ésta regla para nuestra implementación de union.
+ * 
+ * Ejemplos de entrada:
  */
+
+splitL([X|XS],0,[X],XS).
+splitL([X|XS],N,[X|YS],L2) :- M is N-1, splitL(XS,M,YS,L2).
 
 /*
  * |12| Regla drop. Recibe tres parámetros: N, L y R.
