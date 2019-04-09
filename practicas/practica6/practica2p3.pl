@@ -123,9 +123,9 @@ compress([X, X|XS], LC) :- compress([X|XS], LC).
    t(11, nil, nil)), t(14, t(13, nil, nil), t(15, nil, nil)))), 
    [8,4,2,1,3,6,5,7,12,10,9,11,14,13,15]).
    true.
-  
+
  */
-preorder(t(nil,nil,nil), []) :- !.
+preorder(nil, []).
 preorder(t(E, nil, nil), [E]) :- !.
 preorder(t(E, TI, TD), P) :- 
   preorder(TI, R1), preorder(TD, R2), concatena([E|R1], R2, P).

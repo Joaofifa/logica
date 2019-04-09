@@ -14,8 +14,6 @@
 \usepackage{latexsym}
 \usepackage{enumerate}
 \usepackage{ragged2e}
-% Código
-\usepackage{listings}
 %Tableaux
 \usepackage{prooftrees}
 % Modificamos los márgenes del documento.
@@ -23,14 +21,14 @@
 
 \title{Lógica Computacional \\ Tarea Semanal 4}
 \author{Rubí Rojas Tania Michelle}
-\date{\today}
+\date{5 de abril de 2019}
 
 \begin{document}
 \maketitle
 
 \begin{enumerate}
     \item Sea $\Gamma = \{\forall x(P xy \rightarrow \exists y Qy), $
-    $\exists x \forall y(Qy \rightarrow Pyx \lor Rx), $
+    $\exists x \forall y (Qy \rightarrow Pyx \lor Rx), $
     $\forall y(Ry \rightarrow \exists x \neg Qa)\}$.
     Utilizando Tableaux demuestra lo siguiente.
     \begin{center}
@@ -38,9 +36,54 @@
     \end{center}
 
     \begin{proof}
-        Construimos el Tableaux para 
+        Utilizando equivalencias lógicas y eliminando cuantificadores vacuos
+        debemos construir el Tableaux para el conjunto
+        \begin{center}
+            $\{\exists x Pxy \rightarrow \exists y Qy, $
+            $\exists x \forall y(Qy \rightarrow Pyx \lor Rx), $
+            $\forall y(Ry \rightarrow \neg Qa)\}$ $\cup$ 
+            $\{\neg (Qfa \rightarrow Qa)\}$
+        \end{center}
+        Entonces tenemos que: \\ \\
+        % Tableaux.
+        \begin{prooftree}{}
+            [\exists x Pxy \rightarrow \exists y Qy, checked
+                [\exists x \forall y(Qy \rightarrow Pyx \lor Rx), checked
+                    [\forall y(Ry \rightarrow \neg Qa), 
+                        [\neg (Qfa \rightarrow Qa), checked
+                            [Qfa, checked, just={$\alpha$ en 4}
+                                [\neg Qa, just={$\alpha$ en 4}
+                                    [\forall y(Qy \rightarrow Pyb \lor Rb), just={$\delta$ en 2}
+                                        [\neg \exists x Pxy, just={$\beta$ en 1}
+                                            [Pay, just={$\gamma$ en 8}
+                                                [Qfa \rightarrow Pfab \lor Rb, just={$\gamma$ en 7}
+                                                    [\neg Qfa, checked, close={5,11}, just={$\beta$ en 10}]
+                                                        [Pfab \lor Rb, just={$\beta$ en 10}
+                                                            [Pfab, just={$\beta$ en 11}]
+                                                                [Rb, checked, just={$\beta$ en 11}
+                                                                    [Rb \rightarrow \neg Qa, just={$\gamma$ en 3}
+                                                                        [\neg Rb, checked, close={12,14}, just={$\beta$ en 13}]
+                                                                            [\neg Qa, just={$\beta$ en 13}]]]]]]]
+                                                                                [\exists y Qy, just={$\beta$ en 1}
+                                                                                    [Qc, checked, just={$\delta$ en 8}
+                                                                                        [Qc \rightarrow Pcb \lor Rb, just={$\gamma$ en 7}
+                                                                                            [\neg Qc, checked, close={9,11}, just={$\beta$ en 10}]
+                                                                                                [Pcb \lor Rb, just={$\beta$ en 10}
+                                                                                                    [Pcb, just={$\beta$ en 11}]
+                                                                                                        [Rb, checked, just={$\beta$ en 11}
+                                                                                                            [Rb \rightarrow \neg Qa, just={$\gamma$ en 3}
+                                                                                                                [\neg Rb, checked, close={12,14}]
+                                                                                                                    [\neg Qa, just={$\beta$ en 13}]]]]]]]]]]]]]]
+        \end{prooftree}
 
+        Notemos que ya hemos utilizado todas nuestras hipótesis y fórmulas, 
+        y si tratamos de volver a utilizar alguna otra que podamos 
+        reutilizar, sigue pasando que queda alguna rama abierta. Por lo 
+        tanto, el Tableaux es abierto. \\
+        Por lo tanto, $\Gamma \not \models \forall x (Qfa \rightarrow Qa)$.
+    
     \end{proof}
+
 \end{enumerate}
     
 \end{document}
