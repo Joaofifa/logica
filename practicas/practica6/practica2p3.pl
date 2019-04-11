@@ -91,6 +91,40 @@ compress([X, Y|YS], [X|ZS]) :- compress([Y|YS], ZS), X \== Y, !.
 compress([X, X|XS], LC) :- compress([X|XS], LC).
 
 /**
+ * |7| Regla neighbors. Recibe tres parámetros: G, N, NL.
+ * La regla se satisface si NL es la lista de vecinos del nodo N en la 
+ * gráfica G.
+ *
+ * Descripción.
+ * (a) Si la gráfica es vacía, entonces la lista de vecinos debe ser la lista
+ * vacía.
+ * (b) Regla recursiva. Consideramos tres posibles casos.
+ * 1. Si el elemento N es igual al primer componente del primer elemento de la 
+ * gráfica G, entonces concatenamos su segundo componente a la lista NL, y 
+ * hacemos recursión sobre el resto de la gráfica.
+ * 2. Si el elemento N es igual al segundo componente del primer elemento de la
+ * gráfica G, entonces concatenamos el primer componente a la lista NL, y 
+ * hacemos recursión sobre el resto de la gráfica.
+ * 3. Si el elemento N no figura en el primer par ordenado de la gráfica G, 
+ * entonces lo ignoramos y hacemos recursión sobre el resto de la gráfica.
+ *
+ * Ejemplos de entrada:
+ * ?- neighbors([(a,b), (c,d), (d,a)], a, NL).
+   NL = [b, d].
+
+ * ?- neighbors([(1,1), (1,2), (1,5), (2,3), (2,5), (3, 4), (4, 5), (4,5)], 1, NL).
+   NL = [1, 2, 5].
+
+ * ?- neighbors([(5,1)], 0, []).
+   true.
+
+ */
+neighbors([], _, []).
+neighbors([(A,B)|XS], E, [B|L]) :- E == A -> neighbors(XS, E, L), !.
+neighbors([(A,B)|XS], E, [A|L]) :- E == B -> neighbors(XS, E, L), !.
+neighbors([(A,B)|XS], E, L) :- E \== A, E \== B -> neighbors(XS, E, L), !.
+
+/**
  * |9| Regla preorder. Recibe dos parámetros: T y P.
  * La regla se satisface si P es el recorrido en pre-orden en el árbol T.
  *

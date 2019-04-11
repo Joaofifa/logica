@@ -1,0 +1,94 @@
+\documentclass[letterpaper,12pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Lógica Computacional \\ Tarea Semanal 5}
+\author{Rubí Rojas Tania Michelle}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Sea $\varphi = \{ \forall x \forall y \forall z(Pxy \land Pyz
+\rightarrow Rxz), $ $\forall x \exists y Pxy, $ $\neg \forall x Pxx\}$
+\begin{enumerate}
+    % Ejercicio 1.
+    \item Obtener la Forma Normal Prenex de $\varphi$. \\
+    \textit{Solución:} \\
+    Reescribimos a $\varphi$ de la siguiente forma:
+    \begin{center}
+        $\varphi = $
+        $\forall x \forall y \forall z(Pxy \land Pyz \rightarrow Rxz) \land 
+        \forall x \exists y Pxy \land \neg \forall x Pxx$
+    \end{center}
+
+    Primero, rectificamos a $\varphi$. 
+    \begin{align*}
+        rec(\varphi) &= 
+        \forall x \forall y \forall z(Pxy \land Pyz \rightarrow Rxz) \land 
+        \forall u \exists v Puv \land \neg \forall w Pww
+        && \text{$\alpha$-equivalencia}
+    \end{align*}
+    
+    Ahora, usando $rec(\varphi)$ procedemos a encontrar $fnn(\varphi)$.
+    \begin{align*}
+        fnn(\varphi) 
+        &= \forall x \forall y \forall z(\neg (Pxy \land Pyz) \lor Rxz) \land
+        \forall u \exists v Puv \land \exists w \neg Pww
+        && \text{eqv. lógicas} \\
+        &= \forall x \forall y \forall z((\neg Pxy \lor \neg Pyz) \lor Rxz)
+        \land \forall u \exists v Puv \land \exists w \neg Pww
+        && \text{De Morgan}
+    \end{align*}
+
+    Finalmente, usando $fnn(\varphi)$,  procedemos a encontrar $fnp(\varphi)$.
+    \begin{align*}
+        fnp(\varphi)
+        &= \forall x \forall y \forall z \forall u \exists v \exists w
+        (\neg (Pxy \land Pyz) \lor Rxz \land Puv \land \neg Pww)
+        && \text{eqv. lógicas}
+    \end{align*}
+
+    Por lo tanto, la Forma Normal Prenex de $\varphi$ es 
+    \begin{center}
+        $fnp(\varphi) = 
+        \forall x \forall y \forall z \forall u \exists v \exists w
+        (\neg (Pxy \land Pyz) \lor Rxz \land Puv \land \neg Pww)$
+    \end{center}
+
+    % Ejercicio 2.
+    \item Obtener la Forma Normal de Skolem de $\varphi$. \\
+    \textit{Solución:} \\
+    Usando $fnp(\varphi)$, procedemos a encontrar $fns(\varphi)$.
+    \begin{align*}
+        fns(\varphi) 
+        &= \forall x \forall y \forall z \forall u \exists w
+        (\neg (Pxy \land Pyz) \lor Rxz \land Pufxyzu \land \neg Pww) \\
+        &= \forall x \forall y \forall z \forall u
+        (\neg (Pxy \land Pyz) \lor Rxz \land Pufxyzu \land \neg Pgxyzugxyzu)
+    \end{align*}
+
+    Por lo tanto, la Forma Normal de Skolem de $\varphi$ es 
+    \begin{center}
+        $¿\forall x \forall y \forall z \forall u
+        (\neg (Pxy \land Pyz) \lor Rxz \land Pufxyzu \land \neg Pgxyzugxyzu)$
+    \end{center}
+
+\end{enumerate}
+
+\end{document}
