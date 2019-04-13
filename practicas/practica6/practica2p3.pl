@@ -124,6 +124,10 @@ neighbors([(A,B)|XS], E, [B|L]) :- E == A -> neighbors(XS, E, L), !.
 neighbors([(A,B)|XS], E, [A|L]) :- E == B -> neighbors(XS, E, L), !.
 neighbors([(A,B)|XS], E, L) :- E \== A, E \== B -> neighbors(XS, E, L), !.
 
+/* Recibe dos nodos y una gráfica. Regresa True en caso de que exista un 
+camino entre ambos nodos. */
+path(_, O, O, [O]).
+
 /**
  * |9| Regla preorder. Recibe dos parámetros: T y P.
  * La regla se satisface si P es el recorrido en pre-orden en el árbol T.
