@@ -6,8 +6,8 @@ import Data.List
 type VarP = Char
 
 {- Los estados son listas de tuplas donde la primer componente de la tupla es 
-   una variable proposicional y su segundo componente será el valor asociado a 
-   dicha variable.
+   una variable proposicional y su segundo componente será el valor booleano 
+   asociado a dicha variable.
 -}
 type Estado = [(VarP, Bool)]
 
