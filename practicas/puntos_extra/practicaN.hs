@@ -1,47 +1,23 @@
 module PracticaN where
 import Data.List
 
--- Las variables proposicionales son del tipo String.
-data VarP = String
+-- Las variables proposicionales son del tipo String
+type VarP = String
 
 {- Los estados son listas de tuplas donde la primer componente de la tupla es 
    una variable proposicional y su segundo componente será el valor booleano 
    asociado a dicha variable.
 -}
-type Estado = [(VarP, Prop)]
+type Estado = [(VarP, Bool)]
 
 -- El tipo de dato para representar las fórmulas proposicionales.
-data Prop = Top -- True
-           | Bot -- False 
-           | Var VarP -- Var "P"
-           | Neg Prop -- neg P
-           | Conj Prop Prop -- (P ∧ Q)
-           | Disy Prop Prop -- (P ∨ Q)
-           | Impl Prop Prop -- (P → Q)
-           | Syss Prop Prop -- (P ↔ Q)
-
--- Ejemplos de variables proposicionales:
-x, y, z :: VarP 
-x = x
-y = y
-z = z
-
--- Ejemplos de fórmulas:
-k, m, n :: Prop
-k = (Conj (Var x) (Var y))
-m = (Impl (Conj (Var z) (Var y)) (Disy (Var y) (Var z)))
-n = (Disy (Neg (Var x)) (Neg (Var y)))
-
--- Instancia Show para mostrar las fórmulas proposicionales.
-instance Show Prop where
-    show Top = "True"
-    show Bot = "False"
-    show (Var v) = "Var " ++ show v
-    show (Neg p) = "~ " ++ show p
-    show (Conj p q) = "(" ++ (show p) ++ " ^ " ++ (show q) ++ ")"
-    show (Disy p q) = "(" ++ (show p) ++ " v " ++ (show q) ++ ")"
-    show (Impl p q) = "(" ++ (show p) ++ " -> " ++ (show q) ++ ")"
-    show (Syss p q) = "(" ++ (show p) ++ "<-> " ++ (show q) ++ ")"
+data Prop = Var VarP  -- Var "R"
+          | Neg Prop   -- ~P
+          | Conj Prop Prop -- P ^ Q
+          | Disy Prop Prop -- P v Q
+          | Impl Prop Prop -- P -> Q
+          | Syss Prop Prop -- P <-> Q
+          deriving (Eq,  Ord, Show)
 
 {- Función correcto. Recibe una lista de fórmulas proposicionales y una 
    conclusión. La función nos dice si el argumento es lógicamente correcto 
@@ -64,7 +40,7 @@ correcto gamma conclusion = consecuencia gamma conclusion
 -- Funciones auxiliares --
 
 {- |Aux. 1 | Función buscaBool. Recibe una variable proposicional varP, y 
-   un estado [(varP, Prop)]. Regresa la segunda componente del primer par 
+   un estado [(VarP, Bool)]. Regresa la segunda componente del primer par 
    ordenado de la lista de estados I, cuyo primer componente sea igual a la
    variable varP. Es decir, regresa el valor booleano asociado a la primer 
    variable proposicional varP que encuentre.
@@ -99,8 +75,6 @@ buscaBool c t = head [v | (c',v) <- t, c == c']
 -}
 interp :: Prop -> Estado -> Bool
 interp phi e = case phi of 
-    Top -> True
-    Bot -> False
     Var i -> buscaBool i e
     Neg p -> not (interp p e)
     Conj p q -> (interp p e) && (interp q e)
@@ -126,8 +100,6 @@ interp phi e = case phi of
 -}
 vars :: Prop -> [VarP]
 vars phi = case phi of
-    Top -> []
-    Bot -> []
     Var i -> [i]
     Neg p -> vars p
     Conj p q -> vars p `union` vars q
@@ -135,7 +107,7 @@ vars phi = case phi of
     Impl p q -> vars p `union` vars q
     Syss p q -> vars p `union` vars q
 
-varsConj :: [Prop] ->[String]
+varsConj :: [Prop] ->[VarP]
 varsConj phi = concat [vars psi | psi <- phi]
 
 estadosConj :: [Prop] -> [Estado]
