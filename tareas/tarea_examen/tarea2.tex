@@ -1,0 +1,516 @@
+\documentclass[letterpaper,11pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+\newtheorem{teo}{Definición}[]
+% Código
+\usepackage{listings}
+%Tableaux
+\usepackage{prooftrees}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Lógica Computacional \\ Tarea-Examen Semanal}
+\author{Rubí Rojas Tania Michelle}
+\date{30 de abril de 2019}
+
+\begin{document}
+    \maketitle
+
+    \begin{enumerate}
+        % Ejercicio 1.
+        \item Enuncia la sintaxis y semnántica de la lógica de predicados. \\
+        \textsc{Solución:}
+        \begin{itemize}
+            % Sixtaxis.
+            \item[a)] Sintaxis de la lógica de predicados. \\
+            Dependiendo de la estructura semnántica que tengamos en mente será
+            necesario agregar símbolos particulares para denotar objetos y
+            relaciones entre objetos. De esta manera, el alfabeto consta de 
+            dos partes ajenas entre sí, la parte común a todos los lenguajes
+            determinada por los símbolos lógicos y auxiliares y la parte 
+            particular, llamada tipo de semejanza o signatura del lenguaje.
+            \begin{itemize}
+                \item La parte común a todos los lenguajes consta de:
+                \begin{itemize}
+                    \item Un conjunto finito de variables 
+                    \texttt{$Var \{x_{1}, ..., x_{n},...\}$}
+                    \item Constantes lógicas: $\top, \bot$
+                    \item Conectivos u operadores lógicos: 
+                    $\neg, \land, \lor, \rightarrow, \leftrightarrow$
+                    \item Cuantificadores: $\forall, \exists$
+                    \item Símbolos auxiliares: $(, )$ y $,$ (coma).
+                    \item Si se agrega el símbolo de igualdad $=$, decimos
+                    que el lenguaje tiene igualdad.
+                \end{itemize}
+
+                \item La signatura de un lenguaje en particular está dada por:
+                \begin{itemize}
+                    \item Un conjunto $\mathcal{P}$, posiblemente vacío, de
+                    símbolos o letras de predicado:
+                    \begin{center}
+                        $P_{1}, ..., P_{n}, ...$
+                    \end{center}
+                    A cada símbolo se le asigna un índice o número de argumentos 
+                    $m$, el cual se hace explícito escribiendo $P_{n}^{(m)}$ lo 
+                    cual significará que el símbolo $P_{n}$ necesita de $m$ 
+                    argumentos.
+                    \item Un conjunto $\mathcal{F}$, posiblemente vacío, de
+                    símbolos o letras de función:
+                    \begin{center}
+                        $f_{1},..., f_{n},...$
+                    \end{center}
+                    Análogamente a los símbolos de predicado cada símbolo de 
+                    función tiene un índice asignado, $f_{n}^{(m)}$ significará 
+                    que el símbolo $f_{n}$ necesita de $m$ argumentos.       
+                    \item Un conjunto $\mathcal{C}$, posiblemente vacío, de 
+                    símbolos de constante:
+                    \begin{center}
+                        $c_{1}, ..., c_{n}, ...$
+                    \end{center}      
+                    En algunos libros los símbolos de constante se consideran 
+                    como parte del conjunto de símbolos de función, puesto que 
+                    pueden verse como funciones de índice cero, es decir, 
+                    funciones que no reciben argumentos.
+                \end{itemize}
+
+                Dado que un lenguaje de primer órden queda determinado de manera única
+                por su signatura, abusaremos de la notación y escribiremos
+                \begin{center}
+                    $\mathcal{L} = \mathcal{P} \cup \mathcal{F} \cup \mathcal{C}$
+                \end{center}
+                para denotar al lenguaje dado por tal signarura.
+            \end{itemize}
+
+            Los términos del lenguaje son variables, constantes y funciones aplicados
+            a estos.
+            \begin{teo}[\textbf{Términos}]
+                Los términos son definidos como sigue:
+                \begin{itemize}
+                    \item Una variable es un término.
+                    \item Si $c \in F$ es una función nula, entonces $c$ es un término.
+                    \item Si $t_{1}, t_{2}, ..., t_{n}$ son términos y $f \in F$ tiene
+                    índice $n > 0$, entonces $f(t_{1}, t_{2}, ..., t_{n})$ es un término.
+                    \item Son todos.
+                \end{itemize}
+            \end{teo}
+
+            En forma de Backus Naur se escribe:
+            \begin{center}
+                $t :: x$ $|$ $c$ $|$ $f(t_{1},...,t_{n})$
+            \end{center}
+
+            \begin{teo}
+                Sean $P$ el conjunto de predicados y $F$ el conjunto de símbolos de 
+                función. Se define el conjunto de fórmulas sobre $(F, P)$
+                inductivamente usando la definición de Términos sobre F.
+                \begin{itemize}
+                    \item Si $p \in \mathcal{P}$ (símbolo de predicado) con 
+                    índice $n \geq 1$ y si $t_{1}, t_{2}, ..., t_{n}$ son términos
+                    sobre $\mathcal{F}$ entonces $P(t_{1}, t_{2},..., t_{n})$ es 
+                    una fórmula. 
+                    \item Si $\varphi$ es una fórmula, entonces $\neg \varphi$ 
+                    $\varphi$ también lo es.
+                    \item $\varphi, \psi$ son fórmulas, entonces 
+                    $\varphi \star \psi$ también lo son; donde 
+                    $\star \in \{ \land, \lor, \rightarrow, \leftrightarrow \}$ 
+                    \item Si $\varphi$ es una fórmula y $x$ es una variable, 
+                    entonces $\forall x \varphi$ es una fórmula.
+                    \item Si $\varphi$ es una fórmula y $x$ es una variable,
+                    entonces $\exists x \varphi$ es una fórmula.
+                    \item No hay más.
+                \end{itemize}
+
+            \end{teo}
+
+            Es decir, la sintaxis de la lógica de predicados en forma de Backus 
+            Naur se define como:
+            \begin{center}
+                $\varphi :: P(t_{1}, ..., t_{n})$ $|$ $\neg \varphi$ $|$ 
+                $\varphi \land \varphi$ $|$ $\varphi \lor \varphi$ $|$ 
+                $\varphi \rightarrow \varphi$ $|$ $\varphi \leftrightarrow 
+                \varphi$ $|$ $\forall x \varphi$ $|$ $\exists x \varphi$ $|$
+                $t_{1} = t_{2}$ $|$ $\bot$ $|$ $\top$
+            \end{center}
+
+            % Semántica.
+            \item[b)] Semántica de la lógica de predicados.
+            \begin{teo}
+                Sea $\mathcal{L} = \mathcal{P} \cup \mathcal{F} \cup 
+                \mathcal{C}$ un lenguaje de primer órden. Una estructura o 
+                interpretación para $\mathcal{L}$ es un par 
+                $\mathcal{M} = \langle M, \mathcal{I} \rangle$ donde 
+                $M \neq \varnothing$ es un conjunto no vacío llamado el 
+                universo de la estructura e $\mathcal{I}$ es una función con
+                dominio $\mathcal{L}$ tal que 
+                \begin{itemize}
+                    \item Si $P^{(n)} \in \mathcal{P}$ entonces 
+                    $\mathcal{I}(P)$ es una relación de $m$-argumentos sobre 
+                    $M$, es decir, $\mathcal{I}(\mathcal{P}) \subseteq M^{n}$.
+                    Alternativamente podemos definir la interpretación de 
+                    $\mathcal{P}$ como una función booleana que decide si una 
+                    tupla está o no en la relación deseada, es decir, 
+                    $\mathcal{I}(\mathcal{P}): M^{n} \rightarrow Bool$.
+
+                    \item Si $f^{(n)} \in \mathcal{F}$ entonces 
+                    $\mathcal{I}(f)$ es una función con dominio 
+                    $M^{n}$ y contradominio $M$, es decir, 
+                    $\mathcal{I}(f): M^{n} \rightarrow M$.
+                    \item Si $c \in \mathcal{C}$ entonces $\mathcal{I}(c)$
+                    es un elemento de $M$, es decir, $\mathcal{I}(c) \in M$
+                \end{itemize}
+                
+                Dada una interpretación $\mathcal{M} = \langle M, 
+                \mathcal{I} \rangle$, la siguiente notación es de utilidad:
+                \begin{center}
+                    $|\mathcal{M}| =_{def} M$ \\
+                    $P^{\mathcal{I}} =_{def} \mathcal{I}(P)$ \\
+                    $f^{\mathcal{I}} =_{def} \mathcal{I}(f)$ \\
+                    $c^{\mathcal{I}} =_{def} \mathcal{I}(c)$
+                \end{center}
+            \end{teo}
+
+            \begin{teo}[\textbf{Estado o Asignación}]
+                Un estado, asignación o evaluación de las variables es una
+                función $\sigma: Var \rightarrow M$
+            \end{teo}
+
+            \begin{teo}[\textbf{Interpretación de Términos}]
+                Sea $\sigma$ un estado de las variables. Definimos la función
+                de interpretación o significado de los términos con respecto a
+                $\sigma, \mathcal{I_{\sigma}}: TERM \rightarrow |\mathcal{M}|$
+                como sigue:
+                \begin{center}
+                    $\mathcal{I_{\sigma}}(x) = \sigma(x)$ \\
+                    $\mathcal{I_{\sigma}}(c) = \mathcal{I}(c)$ \\
+                    $\mathcal{I_{\sigma}}(f(t_{1},...,t_{n})) =
+                    f^{\mathcal{I}}(\mathcal{I_{\sigma}}(t_{1}),...,
+                    \mathcal{I_{\sigma}}(t_{n}))$                
+                \end{center}
+            \end{teo}
+
+            \begin{teo}[\textbf{Interpretación de fórmulas}]
+                Sea $\sigma$ un estado de las variables. Definimos la
+                función de interpretación o significado de las fórmulas con 
+                respecto a $\sigma, \mathcal{I_{\sigma}}: FORM \rightarrow
+                \{ 0,1 \}$ como sigue:
+                \begin{center}
+                    $\mathcal{I_{\sigma}}(\bot) = 0$ \\
+                    $\mathcal{I_{\sigma}}(\top) = 1$ \\
+                    $\mathcal{I_{\sigma}}(P(t_{1},...,t_{m})) = 1$ si y 
+                    sólo si $(\mathcal{I_{\sigma}}(t_{1}), ...,
+                    \mathcal{I_{\sigma}}(t_{m})) \in P^{\mathcal{I}}$ \\
+                    $\mathcal{I_{\sigma}}(t_{1}=t_{2}) = 1$ si y sólo si 
+                    $\mathcal{I_{\sigma}}(t_{1}) = 
+                    \mathcal{I_{\sigma}}(t_{2})$ \\
+                    $\mathcal{I_{\sigma}}(\neg \varphi) = 1$ si y sólo si 
+                    $\mathcal{I_{\sigma}}(\varphi) = 0$ \\
+                    $\mathcal{I_{\sigma}}(\varphi \land \psi) = 1$ si y sólo 
+                    si $\mathcal{I_{\sigma}}(\varphi) = 
+                    \mathcal{I_{\sigma}}(\psi) = 1$ \\
+                    $\mathcal{I_{\sigma}}(\varphi \lor \psi) = 0$ si y sólo 
+                    si $\mathcal{I_{\sigma}}(\varphi) = 
+                    \mathcal{I_{\sigma}}(\psi) = 0$ \\
+                    $\mathcal{I_{\sigma}}(\varphi \rightarrow \psi) = 0$ si 
+                    y sólo si $\mathcal{I_{\sigma}}(\varphi) = 1$ e 
+                    $\mathcal{I_{\sigma}}(\psi) = 0$ \\
+                    $\mathcal{I_{\sigma}}(\varphi \leftrightarrow \psi) = 1$
+                    si y sólo si $\mathcal{I_{\sigma}}(\varphi) = 
+                    \mathcal{I_{\sigma}}(\psi)$ \\
+                    $\mathcal{I_{\sigma}}(\forall x \varphi) = 1$ si y sólo si 
+                    $\mathcal{I_{\sigma}}_{[x/m]}(\varphi) = 1$ para todo 
+                    $m \in M$ \\
+                    $\mathcal{I_{\sigma}}(\exists x \varphi) = 1$ si y sólo si
+                    $\mathcal{I_{\sigma}}_{[x/m]}(\varphi) = 1$ para algún 
+                    $m \in M$.
+                \end{center}
+            \end{teo}
+        
+        \end{itemize}
+        % Ejercicio 2.
+        \item Obtén la Forma Normal Prenex de la siguiente fórmula:
+        \begin{center}
+            $\forall x \forall y[\exists z (A(x,z) \land B(y,z)) 
+            \rightarrow \exists u C(x,y,z)]$
+        \end{center}
+        \textsc{Solución:}\\
+        Sea $\varphi = \forall x \forall y[\exists z (A(x,z) \land B(y,z)) 
+        \rightarrow \exists u C(x,y,z)]$. Primero, rectificamos a $\varphi$:
+        \begin{align*}
+            rec(\varphi) 
+            &= \forall x \forall y[\exists z (A(x,z) \land B(y,z)) \rightarrow 
+            C(x,y,z)]
+            && \text{eliminamos cuantificadores vacuos} \\
+            &= \forall x \forall y[\exists w (A(x,w) \land B(y,w)) \rightarrow 
+            C(x,y,z)]
+            && \text{$\alpha - equivalencia$}
+        \end{align*}
+        Ahora, obtenemos $fnn(\varphi)$:
+        \begin{align*}
+            fnn(\varphi) 
+            =& \forall x \forall y[\neg \exists w (A(x,w) \land B(y,w)) \lor
+            C(x,y,z)]
+            && \text{eq. lógica} \\
+            =& \forall x \forall y[\forall w \neg (A(x,w) \land B(y,w)) \lor
+            C(x,y,z)]
+            && \text{eq. lógica} \\
+            =& \forall x \forall y[\forall w (\neg A(x,w) \lor \neg B(y,w)) \
+            lor C(x,y,z)]
+            && \text{eq. lógica}
+        \end{align*}
+        Finalmente, obtenemos $fnp(\varphi)$:
+        \begin{align*}
+            fnp(\varphi) 
+            =& \forall x \forall y \forall w [(\neg A(x,w) \lor \neg B(y,w)) 
+            \lor C(x,y,z)] 
+        \end{align*}
+        Por lo tanto, la Forma Normal Prenex de $\varphi$ es $fnp(\varphi)$, 
+        definido anteriormente.
+
+        % Ejercicio 3.
+        \item Obtén la Forma Normal de Skolem de la siguiente fórmula:
+        \begin{center}
+            $\forall x[(A(x,y) \rightarrow \exists y P(x,y,z)) 
+            \rightarrow \neg \forall z Q(x,z)]$
+        \end{center}
+        \textsc{Solución:} \\
+        Sea $\varphi = \forall x[(A(x,y) \rightarrow \exists y P(x,y,z)) 
+        \rightarrow \neg \forall z Q(x,z)]$. Primero, rectificamos $\varphi$:
+        \begin{align*}
+            rec(\varphi)
+            =& \forall x[(A(x,y) \rightarrow \exists u P(x,u,z)) 
+            \rightarrow \neg \forall w Q(x,w)]
+            && \text{$\alpha$ - equivalencia}
+        \end{align*}
+        Ahora, obtenemos $fnn(\varphi)$:
+        \begin{align*}
+            fnn(\varphi) 
+            =& \forall x[\neg (\neg A(x,y) \lor \exists u P(x,u,z)) \lor \neg 
+            \forall w Q(x,w)]
+            && \text{eq. lógica} \\
+            =& \forall x[(A(x,y) \land \neg \exists u P(x,u,z)) \lor \neg 
+            \forall w Q(x,w)] 
+            && \text{eq. lógica} \\
+            =& \forall x[(A(x,y) \land \forall u \neg P(x,u,z)) \lor 
+            \exists w \neg Q(x,w)]
+            && \text{eq. lógica} 
+        \end{align*}
+        Luego, obtenemos $fnp(\varphi)$:
+        \begin{align*}
+            fnp(\varphi)
+            =& \forall x \forall u \exists w[(A(x,y) \land \neg P(x,u,z)) \lor 
+            \neg Q(x,w)] 
+        \end{align*}
+        Finalmente, obtenemos $fns(\varphi)$:
+        \begin{align*}
+            fns(\varphi) 
+            =& \forall x \forall u[(A(x,y) \land \neg P(x,u,z)) \lor 
+            \neg Q(x,f(x,u))] 
+        \end{align*}
+
+        \newpage
+        % Ejercicio 4.
+        \item Obtén la Forma Normal Clausular de la siguiente fórmula:
+        \begin{center}
+            $\{ \forall x (P(x,y) \rightarrow \exists y Q(y)), \exists x 
+            \forall y (Q(y) \rightarrow P(y,x) \lor R(x)), \forall y(R(y) 
+            \rightarrow \exists x \neg Q(a))\}$ \\
+            $\models \forall x (Q(fa) \rightarrow Q(a))$
+        \end{center}
+        \textsc{Solución:} \\
+        Primero, reorganizamos nuestro conjunto de fórmulas:
+        \begin{center}
+            $\{ \forall x (P(x,y) \rightarrow \exists y Q(y)), \exists x 
+            \forall y (Q(y) \rightarrow P(y,x) \lor R(x)), \forall y(R(y) 
+            \rightarrow \exists x \neg Q(a)), \neg \forall x (Q(fa) 
+            \rightarrow Q(a)) \}$
+        \end{center}
+        de donde
+        \begin{align*}
+            \varphi =& \forall x (P(x,y) \rightarrow \exists y Q(y)) \land  
+            \exists x \forall y (Q(y) \rightarrow P(y,x) \lor R(x)) \land 
+            \forall y(R(y) \rightarrow \exists x \neg Q(a)) \land 
+            \neg \forall x (Q(fa) \rightarrow Q(a))
+        \end{align*}
+
+        Así, primero rectificamos a $\varphi$:
+        \begin{align*}
+            rec(\varphi) 
+            =& \forall x (P(x,y) \rightarrow \exists y Q(y)) \land  
+            \exists x \forall y (Q(y) \rightarrow P(y,x) \lor R(x)) \land 
+            \forall y(R(y) \rightarrow \neg Q(a)) \land \neg (Q(fa) 
+            \rightarrow Q(a)) \\
+            =& \forall x (P(x,y) \rightarrow \exists s Q(s)) \land  
+            \exists w \forall u (Q(u) \rightarrow P(u,w) \lor R(w)) \land 
+            \forall z(R(z) \rightarrow \neg Q(a)) \land \neg (Q(fa) 
+            \rightarrow Q(a))
+        \end{align*}
+        donde eliminamos los cuantificadores vacuos y aplicamos $\alpha$-
+        equivalencia. \\
+        Ahora, obtenemos $fnn(\varphi)$:
+        \begin{align*}
+            fnn(\varphi) 
+            =& \forall x (\neg P(x,y) \lor \exists s Q(s)) \land  
+            \exists w \forall u (\neg Q(u) \lor P(u,w) \lor R(w)) \land 
+            \forall z(\neg R(z) \lor \neg Q(a)) \land \neg 
+            (\neg Q(fa) \lor Q(a)) \\
+            =& \forall x (\neg P(x,y) \lor \exists s Q(s)) \land  
+            \exists w \forall u (\neg Q(u) \lor P(u,w) \lor R(w)) \land 
+            \forall z(\neg R(z) \lor \neg Q(a)) \land (Q(fa) \land \neg Q(a)) 
+        \end{align*}
+
+        Luego, obtenemos $fnp(\varphi)$:
+        \begin{align*}
+            fnp(\varphi) 
+            =& \forall x \exists s(\neg P(x,y) \lor Q(s)) \land  
+            \exists w \forall u (\neg Q(u) \lor P(u,w) \lor R(w)) \land 
+            \forall z(\neg R(z) \lor \neg Q(a)) \land (Q(fa) \land \neg Q(a))\\
+            =& \forall x \exists s \exists w \forall u \forall z[(\neg P(x,y) 
+            \lor Q(s)) \land  (\neg Q(u) \lor P(u,w) \lor R(w)) \land 
+            (\neg R(z) \lor \neg Q(a)) \land (Q(fa) \land \neg Q(a))]
+        \end{align*}
+
+        Después, obtenemos $fns(\varphi)$:
+        \begin{align*}
+            fns(\varphi)
+            =& \forall x \exists w \forall u \forall z[(\neg P(x,y) \lor 
+            Q(f(x))) \land  (\neg Q(u) \lor P(u,w) \lor R(w)) \land 
+            (\neg R(z) \lor \neg Q(a)) \land (Q(fa) \land \neg Q(a))] \\
+            =& \forall x \forall u \forall z[(\neg P(x,y) \lor Q(f(x))) 
+            \land  (\neg Q(u) \lor P(u, h(x)) \lor R(h(x))) \land 
+            (\neg R(z) \lor \neg Q(a)) \land (Q(fa) \land \neg Q(a))]
+        \end{align*}
+
+        Finalmente, obtenemos $Cl(\varphi)$:
+        \begin{align*}
+            Cl(\varphi)
+            =& (\neg P(x,y) \lor Q(f(x))) \land  (\neg Q(u) \lor P(u, h(x)) 
+            \lor R(h(x))) \land (\neg R(z) \lor \neg Q(a)) \land Q(fa) 
+            \land \neg Q(a)
+        \end{align*}
+
+        \newpage
+        % Ejercicio 5.
+        \item Demuestra mediante deducción natural lo siguiente:
+        \begin{itemize}
+            % Ejercicio 5.1
+            \item $\forall x (Hx \rightarrow Gx \land Kx), 
+            \neg \exists z(Fz \land Gz) \vdash \forall w \neg (Fw \land Hw)$
+            \begin{proof}
+                Utilizando equivalencias lógicas, basta mostrar que 
+                \begin{center}
+                    $\Gamma = \{\forall x (Hx \rightarrow Gx \land Kx), 
+                    \forall z (\neg Fz \lor \neg Gz)\} \vdash \forall w 
+                    \neg (Fw \land Hw)$
+                \end{center}
+                Entonces 
+                \begin{align*}
+                    1.\; \; &\Gamma \vdash \forall x (Hx \rightarrow Gx \land Kx)
+                    && \text{Hip} \\
+                    2. \; \; &\Gamma \vdash \forall z (\neg Fz \lor \neg Gz)
+                    && \text{Hip} \\
+                    3. \; \; &\Gamma \vdash Hw \rightarrow Gw \land Kw
+                    && \text{$(\forall E) 1$} \\
+                    4. \; \; &\Gamma \vdash \neg Fw \lor \neg Gw
+                    && \text{$(\forall E) 2$}  
+                \end{align*}
+
+                de donde, tenemos dos casos:
+                \begin{align*}
+                    5. \; \; &\Gamma, \neg Fw \vdash \neg Fw
+                    && \text{Hip} \\
+                    6. \; \; &\Gamma, \neg Fw \vdash \neg Fw \lor \neg Hw
+                    && \text{$(\lor I) 5$} \\ 
+                    7. \; \; &\Gamma, \neg Fw \vdash \neg (Fw \land Hw)
+                    && \text{De Morgan, 6} \\
+                    8. \; \; &\Gamma, \neg Fw \vdash \forall w \neg (Fw \land Hw)
+                    && \text{$(\forall I) 7$} \\
+                    9. \; \; &\Gamma, \neg Gw \vdash \neg Gw
+                    && \text{Hip} \\
+                    10. \; \; &\Gamma, \neg Gw \vdash \neg Gw \lor \neg Kw
+                    && \text{$(\lor I) 9$} \\ 
+                    11. \; \; &\Gamma, \neg Gw \vdash \neg (Gw \land Kw)
+                    && \text{De Morgan, 10} \\
+                    12. \; \; &\Gamma, \neg Gw \vdash \neg Hw
+                    && \text{MT 11, 3} \\
+                    13.\; \; &\Gamma, \neg Gw \vdash \neg Fw \lor \neg Hw
+                    && \text{$(\lor I) 12$} \\
+                    14. \; \; &\Gamma, \neg Gw \vdash \neg (Fw \land Hw)
+                    && \text{De Morgan, 13} \\
+                    15. \; \; &\Gamma, \neg Fw \vdash \forall w \neg (Fw \land Hw)
+                    && \text{$(\forall I) 14$} 
+                \end{align*}
+
+                Por $(\lor E)$ podemos concluir que $\Gamma \vdash \forall w 
+                \neg (Fw \land Hw)$.
+                
+            \end{proof}
+
+            % Ejercicio 5.2
+            \item $\exists x Fx \rightarrow \forall y(Gy \rightarrow Hy),
+            \exists z Jz \rightarrow \exists w Gw \vdash \exists z(Fz \land Jz)
+            \rightarrow \exists v Hv$
+            \begin{proof}
+                Por el Teo. de DN basta mostrar
+                \begin{center}
+                    $\Gamma = \{ \exists x Fx \rightarrow 
+                    \forall y(Gy \rightarrow Hy), \exists z Jz \rightarrow 
+                    \exists w Gw, \exists z(Fz \land Jz) \} \vdash\exists v Hv$
+                \end{center}
+                
+                Entonces
+                \begin{align*}
+                    1. \; \; &\Gamma \vdash \exists x Fx \rightarrow 
+                    \forall y(Gy \rightarrow Hy)
+                    && \text{Hip} \\
+                    2. \; \; &\Gamma \vdash \exists z Jz \rightarrow 
+                    \exists w Gw
+                    && \text{Hip} \\
+                    3. \; \; &\Gamma \vdash \exists z(Fz \land Jz)
+                    && \text{Hip} \\
+                    4. \; \; &\Gamma, Fz \land Jz \vdash Fz \land Jz
+                    && \text{Hip} \\
+                    5. \; \; &\Gamma, Fz \land Jz \vdash Fz 
+                    && \text{$(\land E) 4$} \\
+                    6. \; \; &\Gamma, Fz \land Jz \vdash Jz
+                    && \text{$(\land E) 4$} \\
+                    7. \; \; &\Gamma, Fz \land Jz \vdash \exists x Fx
+                    && \text{$(\exists I) 4$} \\
+                    8. \; \; &\Gamma, Fz \land Jz \vdash \forall y(Gy 
+                    \rightarrow Hy)
+                    && \text{$(\rightarrow E) 6,1$} \\
+                    9. \; \; &\Gamma, Fz \land Jz \vdash \exists z Jz
+                    && \text{$(\exists I) 5$} \\
+                    10. \; \; &\Gamma, Fz \land Jz \vdash \exists Gw
+                    && \text{$(\rightarrow E) 8, 2$} \\
+                    11. \; \;  &\Gamma, Fz \land Jz, Gw \vdash Gw 
+                    && \text{Hip} \\
+                    12. \; \; &\Gamma, Fz \land Jz, Gw \vdash Gw \rightarrow Hw
+                    && \text{$(\forall E) 7$} \\
+                    13. \; \; &\Gamma Fz \land Jz, Gw \vdash Hw 
+                    && \text{$(\rightarrow E) 11,10$} \\
+                    14. \; \; &\Gamma, Fz \land Jz, Gw \vdash \exists u Hu
+                    && \text{$(\exists I) 12$} \\
+                    15. \; \; &\Gamma, Fz \land Jz \vdash \exists u Hu
+                    && \text{$(\exists E) 9, 12$} \\
+                    16. \; \; &\Gamma \vdash \exists u Hu 
+                    && \text{$(\exists E) 3, 15$}
+                \end{align*}
+                Por lo tanto, podemos concluir que $\Gamma \vdash \exists u Hu$.
+            \end{proof}
+
+        \end{itemize}
+    \end{enumerate}
+\end{document}
