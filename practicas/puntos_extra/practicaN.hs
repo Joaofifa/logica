@@ -1,8 +1,8 @@
 module PracticaN where
 import Data.List
 
--- Las variables proposicionales son del tipo String
-type VarP = String
+-- Las variables proposicionales son del tipo Char.
+type VarP = Char
 
 {- Los estados son listas de tuplas donde la primer componente de la tupla es 
    una variable proposicional y su segundo componente será el valor booleano 
@@ -11,7 +11,9 @@ type VarP = String
 type Estado = [(VarP, Bool)]
 
 -- El tipo de dato para representar las fórmulas proposicionales.
-data Prop = Var VarP  -- Var "R"
+data Prop = Top -- True
+          | Bot -- False
+          | Var VarP  -- Var "R"
           | Neg Prop   -- ~P
           | Conj Prop Prop -- P ^ Q
           | Disy Prop Prop -- P v Q
@@ -40,7 +42,7 @@ correcto gamma conclusion = consecuencia gamma conclusion
 -- Funciones auxiliares --
 
 {- |Aux. 1 | Función buscaBool. Recibe una variable proposicional varP, y 
-   un estado [(VarP, Bool)]. Regresa la segunda componente del primer par 
+   un estado e = [(VarP, Bool)]. Regresa la segunda componente del primer par 
    ordenado de la lista de estados I, cuyo primer componente sea igual a la
    variable varP. Es decir, regresa el valor booleano asociado a la primer 
    variable proposicional varP que encuentre.
@@ -53,37 +55,46 @@ correcto gamma conclusion = consecuencia gamma conclusion
    True
 -}
 buscaBool :: (Eq varP) => varP -> [(varP, Bool)] -> Bool
-buscaBool c t = head [v | (c',v) <- t, c == c']
+buscaBool v e = head [b | (v',b) <- e, v == v']
 
-{- |1. Función interp|  Recibe una fórmula (phi) y un estado e. Regresa la 
+{- |Aux. 2| Función interp. Recibe una fórmula (phi) y un estado e. Regresa la 
    interpretación de phi con el estado dado.
 
    Descripción:
-   Las definiciones que usamos para cada una es la aplicación directa de
-   nuestra definición de semántica. Notemos dos cosas, la primera, que se 
-   utilizó una equivalencia lógica para la interpretación de la implicación,
-   y segundo, que se hace uso de una función auxiliar 'buscaBool' cuyo
-   objetivo es regresar el valor booleano asociado a la primer aparición de
-   la variable proposicional varP que se le pase como parámetro.
+   Siguiendo nuestra definición de interpretación, sabemos que
+   - I(v) = v, donde v es una variable proposicional. 
+   - I(Top) = 1
+   - I(Bot) = 0
+   - I(~P) = 1 <-> I(P) = 0
+   - I(P ^ Q) = 1 <-> I(P) = I(Q) = 1
+   - I(P v Q) = 0 <-> I(P) = I(Q) = 0
+   - I(P -> Q) = 0 <-> I(P) = 1 e I(Q) = 0
+   - I(P <-> Q) = 1 <-> I(P) = I(Q)
+   
+   donde la única modificación que hacemos en nuestra implementación es para 
+   el operador Impl, ya que utilizamos una equivalencia lógica para facilitar
+   el cálculo de la interpretación de dicho operador.
 
    Ejemplos de entrada:
    *Main> interp (Conj (Var 'p') (Var 'q')) [('p', True), ('q', False)]
    False
 
-   *Main> interp (Disy (Neg (Var x)) (Neg (Var y))) [('x', False), ('y', True)]
+   *Main> interp (Disy (Neg (Var 'x')) (Neg (Var 'y'))) [('x', False), ('y', True)]
    True
 -}
 interp :: Prop -> Estado -> Bool
 interp phi e = case phi of 
-    Var i -> buscaBool i e
+    Top -> True
+    Bot -> False 
+    Var v -> buscaBool v e
     Neg p -> not (interp p e)
     Conj p q -> (interp p e) && (interp q e)
     Disy p q -> (interp p e) || (interp q e)
     Impl p q -> not (interp p e) || (interp q e)
     Syss p q -> (interp p e) == (interp q e)
 
-{- |2. Función vars| Recibe una formula (phi). Regresa la lista de variables 
-   proposicionales que figuran en (phi), sin repetición.
+{- |Aux. 3| Función vars. Recibe una formula (phi). Regresa la lista de 
+   variables proposicionales que figuran en (phi), sin repetición.
 
    Descripción: 
    Simplemente utilizamos la función 'union' para unir las listas finales
@@ -95,11 +106,13 @@ interp phi e = case phi of
    *Main> vars (Syss (Impl (Var 'p') (Var 'r')) (Conj (Var 'q') (Var 's')))
    "prqs"
 
-   *Main vars (Disy (Neg (Var x)) (Neg (Var y)))
+   *Main vars (Disy (Neg (Var 'x')) (Neg (Var 'y')))
    "xy"
 -}
 vars :: Prop -> [VarP]
 vars phi = case phi of
+    Top -> []
+    Bot -> []
     Var i -> [i]
     Neg p -> vars p
     Conj p q -> vars p `union` vars q
@@ -107,21 +120,31 @@ vars phi = case phi of
     Impl p q -> vars p `union` vars q
     Syss p q -> vars p `union` vars q
 
+{- |Aux. 4| Función varsConj.
+-}
 varsConj :: [Prop] ->[VarP]
 varsConj phi = concat [vars psi | psi <- phi]
 
+{- |Aux. 5|
+-}
 estadosConj :: [Prop] -> [Estado]
 estadosConj phi = subconj (varsConj phi)
     where subconj [] = [[]]
           subconj (x:xs) = 
             [(x,True):i | i <- subconj xs] ++ [(x,False):i | i <- subconj xs] 
 
+{- |Aux. 6|
+-}
 satisfenConj :: Estado -> [Prop] -> Bool
 satisfenConj e phi = and [satisfen e psi | psi <- phi]
 
+{- |Aux. 7|
+-}
 satisfen :: Estado -> Prop -> Bool
 satisfen i phi = interp phi i == True
 
+{- |Aux. 8|
+-}
 consecuencia :: [Prop] -> Prop -> Bool
 consecuencia gamma phi = null [i | i <- estadosConj (phi: gamma), 
                                satisfenConj i gamma, not (satisfen i phi)]

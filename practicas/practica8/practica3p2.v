@@ -92,7 +92,8 @@ Theorem theorem_elem : forall (a:A) (l:list A), elem a (a::l).
 Proof.
 intros.
 simpl.
-intuition.
+left.
+reflexivity.
 Qed.
 
 (*Ejercicio 5*)
@@ -109,11 +110,8 @@ Theorem theorem_elem3 : forall (a b:A) (l:list A), elem b l -> elem b (a::l).
 Proof.
 intros.
 simpl.
-induction l.
-simpl.
-intuition.
-simpl.
-intuition.
+right.
+exact H.
 Qed.
 
 (*Ejercicio 7*)
@@ -121,7 +119,9 @@ Lemma nil_or_not : forall l:list A, l = [] \/ l <> [].
 Proof.
 intros.
 case l.
-intuition.
+unfold not.
+left.
+reflexivity.
 intros.
 unfold not.
 right.
@@ -137,7 +137,8 @@ destruct l.
 intuition.
 exists a.
 exists l.
-rewrite H.
+exists (a :: l).
+contradiction H.
 
 Qed.
 
@@ -145,16 +146,16 @@ Qed.
 Lemma equal_lists : forall (a:A) (xs ys:list A), a::xs = a::ys <-> xs = ys.
 Proof.
 intros.
-induction xs.
+destruct xs.
 intuition.
 inversion H.
 reflexivity.
 inversion H.
 reflexivity.
 intuition.
-inversion H1.
+inversion H.
 reflexivity.
-inversion H1.
+inversion H.
 reflexivity.
 Qed.
 
@@ -169,7 +170,7 @@ intros.
 symmetry in H1.
 rewrite H1 in H0.
 rewrite H in H0.
-intuition.
+discriminate H0.
 Qed.
 
 Inductive bit: Type := 
