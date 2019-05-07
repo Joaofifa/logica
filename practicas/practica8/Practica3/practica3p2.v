@@ -136,10 +136,10 @@ intros.
 destruct l.
 intuition.
 exists a.
+exists [].
 exists l.
-exists (a :: l).
-contradiction H.
-
+simpl.
+reflexivity.
 Qed.
 
 (*Ejercicio 9*)
@@ -182,12 +182,17 @@ Definition bin := list bit.
 Check bit_ind.
 Print bin.
 
-(*Ejercicio 11*
+(*Ejercicio 11*)
 Fixpoint increment_one (b:bin):bin :=
-AQUI VA SU CÓDIGO
-*)
+match b with
+  | [] => [one]
+  | zero::xs => one::xs
+  | one::xs => zero::(increment_one xs)
+end.
 
-(*Ejercicio 12*
+(*Ejercicio 12*)
 Fixpoint to_binary (n:nat):bin :=
-AQUI VA SU CÓDIGO
-*)
+match n with
+  | 0 => []
+  | S m => increment_one(to_binary m)
+end.
