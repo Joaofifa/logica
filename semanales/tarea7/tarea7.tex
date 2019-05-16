@@ -1,0 +1,111 @@
+\documentclass[letterpaper,12pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Lógica Computacional \\ Tarea Semanal 7}
+\author{Rubí Rojas Tania Michelle}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Encuentra un programa $t$ que tenga el tipo indicado:
+
+\begin{enumerate}
+    % Ejercicio 1.
+    \item[a)] $\vdash t: (A \rightarrow B \rightarrow C) \rightarrow$ 
+    $(A \rightarrow B) \rightarrow (A \rightarrow C)$ \\
+    \textsc{Solución:}
+    \begin{enumerate}
+        \item[1.] $f: A \rightarrow B \rightarrow C, x: A \rightarrow B, y: A
+        \vdash f: A \rightarrow B \rightarrow C$ \; \; \; $(Hip)$
+        \item[2.] $f: A \rightarrow B \rightarrow C, x: A \rightarrow B, y: A
+        \vdash x: A \rightarrow B$ \; \; \;  \; \; \; \; $(Hip)$
+        \item[3.] $f: A \rightarrow B \rightarrow C, x: A \rightarrow B, y: A
+        \vdash y: A$ \; \; \; \; \; \; \; \; \; \;  \; $(Hip)$ 
+        \item[4.] $f: A \rightarrow B \rightarrow C, x: A \rightarrow B, y: A
+        \vdash fx: C$ \; \; \; \; \; \; \; \; \; \; $(\rightarrow E) \; 1,2$
+        \item[5.] $f: A \rightarrow B \rightarrow C, x: A \rightarrow B
+        \vdash fun(y: A.fx) : A \rightarrow C$ \; \; \;$(\rightarrow I) \; 4$
+        \item[6.] $f: A \rightarrow B \rightarrow C \vdash fun(x: A \rightarrow B.fun(y: A.fx)) : 
+        (A \rightarrow B) \rightarrow (A \rightarrow C)$ \; \; $(\rightarrow I) \; 5$
+        \item[9.] $\vdash fun(f: A \rightarrow B \rightarrow C.
+        fun(x: A \rightarrow B.fun(y: A.fx)) : \\
+        (A \rightarrow B \rightarrow C) \rightarrow (A \rightarrow B) \rightarrow (A \rightarrow C)$ 
+        \; \; \; \; \; \; \; \; \; \; \; \; \; $(\rightarrow I) \; 6$ 
+    \end{enumerate}
+
+    % Ejercicio 2.
+    \item[b)] $x: (A \rightarrow C) \land (B \rightarrow C) \vdash$
+    $t: A \lor B \rightarrow C$ \\
+    \textsc{Solución:}
+    \begin{enumerate}
+        \item[1.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B \vdash x: (A \rightarrow C) \land (B \rightarrow C)$
+        \; \; \; \; \; $(Hip)$
+        \item[2.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B \vdash y: A \lor B$ \; \; \; \; \; \; \; \; \; \; \; \; \; \; \; \;$(Hip)$
+        \item[3.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B \vdash snd \; x: B \rightarrow C$ \; \; \; \; \; \; \; \; \; \; \; \; $(\land E) \; 1$
+        \item[4.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B \vdash fst \; x: A \rightarrow C$ \; \; \; \; \; \; \; \; \; \; \; \; \;($\land E) \; 1$
+        \item[5.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B, r: A \vdash r: A$ \; \; \; \; \; \; \; \; \; \; \; \; \; \; \; $(Hip)$
+        \item[6.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B, r: A \vdash fstxr: C$ \; \; \; \; \; \; \; \; \; \; \; \; $(\rightarrow E) \; 4,5$ 
+        \item[7.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B, s: B \vdash s: B$ \; \; \; \; \; \; \; \; \; \; \; \; \; \; \; \;$(Hip)$ 
+        \item[8.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B, s: B \vdash sndxs: C$ \; \; \; \; \; \; \; \; \; \; \; \; $(\rightarrow E) \; 3,7$
+        \item[9.] $x: (A \rightarrow C) \land (B \rightarrow C), 
+        y: A \lor B \vdash \\ 
+        case \; y \; of \; inl r \Rightarrow fstx r\; | \; inr s \Rightarrow snd xs : C$ \; \; \; \;\; \; \; \; \; \; \; \; \; \; \; \; \; \; \; \;$(\lor E) \; 2, 6, 8$
+        \item[10.] $x: (A \rightarrow C) \land (B \rightarrow C) \vdash \\ 
+        fun(y: A \lor B.(case \; y \; of \; inl r \Rightarrow fstxr\; | \; inrs \Rightarrow sndxs)) : A \lor B \rightarrow C$ \; \;$(\rightarrow I)\; 9$
+    \end{enumerate}
+
+    % Ejercicio 3.
+    \item[c)] $x: P \rightarrow Q \land R \vdash t: (P \rightarrow Q) \land$
+    $(P \rightarrow R)$ \\
+    \textsc{Solución:} Sabemos que $\Gamma \vdash A \land B \Leftrightarrow 
+    \Gamma \vdash A$ y $\Gamma \vdash B$. Así, basta probar cada uno de los
+    lados de la conjunción por separado. Entonces 
+    \begin{enumerate}
+        \item PD. $x: P \rightarrow Q \land R \vdash P \rightarrow Q$
+        \begin{enumerate}
+            \item[1.] $x: P \rightarrow Q \land R, y: P \vdash x: P \rightarrow Q \land R$ \; \; \; \; \; $(Hip)$
+            \item[2.] $x: P \rightarrow Q \land R, y: P \vdash y: P$ \; \; \; \; \; \; \;  \; \; \; \; \; $(Hip)$
+            \item[3.] $x: P \rightarrow Q \land R, y: P \vdash xy: Q \land R$ \; \; \; \; \; \; \; \; $(\rightarrow E) \; 1,2$ 
+            \item[4.] $x: P \rightarrow Q \land R, y: P \vdash fst xy: Q$ \; \; \; \; \; \; \; \; \; $(\land E) \; 3$ 
+            \item[5.] $x: P \rightarrow Q \land R \vdash fun(y: P.fst xy): P \rightarrow Q$ \; \;$(\rightarrow I) \; 4$   
+        \end{enumerate}
+
+        \item PD. $x: P \rightarrow Q \land R \vdash P \rightarrow R$
+        \begin{enumerate}
+            \item[6.] $x: P \rightarrow Q \land R, y: P \vdash x: P \rightarrow Q \land R$ \; \; \; \; \; $(Hip)$
+            \item[7.] $x: P \rightarrow Q \land R, y: P \vdash y: P$ \; \; \; \; \; \; \;  \; \; \; \; \; $(Hip)$
+            \item[8.] $x: P \rightarrow Q \land R, y: P \vdash xy: Q \land R$ \; \; \; \; \; \; \; \; $(\rightarrow E) \; 1,2$
+            \item[9.] $x: P \rightarrow Q \land R, y: P \vdash snd xy: R$  \; \; \; \; \; \; \; \; \; $(\land E) \; 3$ 
+            \item[10.] $x: P \rightarrow Q \land R \vdash fun(y: P.snd xy): P \rightarrow R$ \; \;$(\rightarrow I) \; 4$
+        \end{enumerate}
+    \end{enumerate}
+    Por lo tanto, $x: P \rightarrow Q \land R \vdash \langle fun(y: P.fst xy): P \rightarrow Q, \; 
+    fun(y: P.snd xy): P \rightarrow R \rangle : (P \rightarrow Q) \land (P \rightarrow R)$ por $(\land I) \; 5, 10$
+\end{enumerate}
+
+\end{document}

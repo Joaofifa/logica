@@ -1,0 +1,581 @@
+\documentclass[letterpaper,12pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Soporte para el código.
+\usepackage{listings}
+% Eliminamos el título del abstract.
+\AtBeginDocument{\renewcommand{\abstractname}{}}
+% Definiciones, teoremas y lemas.
+\newtheorem{define}{Definición}[]
+\newtheorem{lema}{Lema}[]
+\newtheorem{prop}{Proposición}[]
+\newtheorem{teo}{Teorema}[]
+\newtheorem{ejem}{Ejemplo}[]
+\newtheorem{cor}{Corolario}[]
+% Deducción natural.
+\usepackage{bussproofs}
+% Haskell
+\usepackage{color}
+\lstset{
+  frame=single,
+  xleftmargin=2pt,
+  belowcaptionskip=\bigskipamount,
+  captionpos=b,
+  escapeinside={*'}{'*},
+  language=prolog,
+  tabsize=2,
+  emphstyle={\bf},
+  commentstyle=\it,
+  stringstyle=\mdseries\rmfamily,
+  showspaces=false,
+  keywordstyle=\bfseries\rmfamily,
+  columns=flexible,
+  basicstyle=\scriptsize\ttfamily,
+  showstringspaces=false,
+  morecomment=[l]\%,
+}
+
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+
+% Datos del título.
+\title{Lógica Computacional \\ 
+Proyecto 2: Implementación de un laberinto en PROLOG}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        $\#$ de cuenta: 315121719}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    \newpage
+    % Sección: Lógica de Predicados.
+    \section{Lógica de Primer Órden}
+    % Subsección: Sixtaxis. 
+    \subsection{Sintaxis de la Lógica de Predicados}
+    En contraposición al lenguaje de la Lógica Proposicional que está 
+    determinado de manera única, no es posible hablar de un sólo lenguaje para
+    la Lógica de Predicados. Dependiendo de la estructura semántica que tengamos
+    en mente será necesario agregar símbolos particulares para denotar objetos
+    y relaciones entre objetos. De esta manera, el alfabeto consta de dos partes  
+    ajenas entre sí, la parte común a todos los lenguajes determinada por los 
+    símbolos lógicos y auxiliares y la parte particular, llamada tipo de 
+    semejanza o signatura del lenguaje.
+    \begin{itemize}
+      \item La parte común a todos los lenguajes consta de:
+      \begin{itemize}
+        \item Un conjunto finito de variables 
+        \texttt{$Var \{x_{1}, ..., x_{n},...\}$}
+        \item Constantes lógicas: $\top, \bot$
+        \item Conectivos u operadores lógicos: 
+        $\neg, \land, \lor, \rightarrow, \leftrightarrow$
+        \item Cuantificadores: $\forall, \exists$
+        \item Símbolos auxiliares: $(, )$ y $,$ (coma).
+        \item Si se agrega el símbolo de igualdad $=$, decimos
+        que el lenguaje tiene igualdad.
+      \end{itemize}
+      
+      \item La signatura de un lenguaje en particular está dada por:
+      \begin{itemize}
+        \item Un conjunto $\mathcal{P}$, posiblemente vacío, de símbolos o 
+        letras de predicado:
+        \begin{center}
+          $P_{1}, ..., P_{n}, ...$
+        \end{center}
+        A cada símbolo se le asigna un índice o número de argumentos $m$, el 
+        cual se hace explícito escribiendo $P_{n}^{(m)}$ lo cual significará 
+        que el símbolo $P_{n}$ necesita de $m$ argumentos.
+        \item Un conjunto $\mathcal{F}$, posiblemente vacío, de símbolos o 
+        letras de función:
+        \begin{center}
+          $f_{1},..., f_{n},...$
+        \end{center}
+        Análogamente a los símbolos de predicado cada símbolo de función tiene 
+        un índice asignado, $f_{n}^{(m)}$ significará que el símbolo $f_{n}$ 
+        necesita de $m$ argumentos.       
+        \item Un conjunto $\mathcal{C}$, posiblemente vacío, de símbolos de 
+        constante:
+        \begin{center}
+          $c_{1}, ..., c_{n}, ...$
+        \end{center}      
+        En algunos libros los símbolos de constante se consideran como parte 
+        del conjunto de símbolos de función, puesto que pueden verse como 
+        funciones de índice cero, es decir, funciones que no reciben 
+        argumentos.
+      \end{itemize}
+      
+      Dado que un lenguaje de primer órden queda determinado de manera única
+      por su signatura, abusaremos de la notación y escribiremos
+      \begin{center}
+        $\mathcal{L} = \mathcal{P} \cup \mathcal{F} \cup \mathcal{C}$
+      \end{center}
+      para denotar al lenguaje dado por tal signarura.
+    \end{itemize}
+    
+    Los términos del lenguaje son variables, constantes y funciones aplicados a 
+    estos.
+    \begin{define}[\textbf{Términos}]
+      Los términos son definidos como sigue:
+      \begin{itemize}
+        \item Una variable es un término.
+        \item Si $c \in F$ es una función nula, entonces $c$ es un término.
+        \item Si $t_{1}, t_{2}, ..., t_{n}$ son términos y $f \in F$ tiene
+        índice $n > 0$, entonces $f(t_{1}, t_{2}, ..., t_{n})$ es un término.
+        \item Son todos.
+      \end{itemize}
+    \end{define}
+    
+    En forma de Backus Naur se escribe:
+    \begin{center}
+      $t :: x$ $|$ $c$ $|$ $f(t_{1},...,t_{n})$
+    \end{center}
+    
+    donde $x$ son variables, $c$ constantes y $f$ funciones sobre términos con 
+    índice $n > 0$.
+    
+    \begin{define}
+      Sean $P$ el conjunto de predicados y $F$ el conjunto de símbolos de
+      función. Se define el conjunto de fórmulas sobre $(F, P)$ inductivamente 
+      usando la definición de Términos sobre $F$.
+      \begin{itemize}
+        \item Si $p \in \mathcal{P}$ (símbolo de predicado) con índice 
+        $n \geq 1$ y si $t_{1}, t_{2}, ..., t_{n}$ son términos sobre 
+        $\mathcal{F}$ entonces $P(t_{1}, t_{2},..., t_{n})$ es una fórmula. 
+        \item Si $\varphi$ es una fórmula, entonces $\neg \varphi$ también 
+        lo es.
+        \item $\varphi, \psi$ son fórmulas, entonces $\varphi \star \psi$ 
+        también lo son; donde 
+        $\star \in \{ \land, \lor, \rightarrow, \leftrightarrow \}$ 
+        \item Si $\varphi$ es una fórmula y $x$ es una variable, entonces 
+        $\forall x \varphi$ es una fórmula.
+        \item Si $\varphi$ es una fórmula y $x$ es una variable, entonces 
+        $\exists x \varphi$ es una fórmula.
+        \item No hay más.
+      \end{itemize}
+    
+    \end{define}
+    
+    Es decir, la sintaxis de la lógica de predicados en forma de Backus Naur se 
+    define como:
+    \begin{center}
+      $\varphi :: P(t_{1}, ..., t_{n})$ $|$ $\neg \varphi$ $|$ 
+      $\varphi \land \varphi$ $|$ $\varphi \lor \varphi$ $|$ 
+      $\varphi \rightarrow \varphi$ $|$ $\varphi \leftrightarrow 
+      \varphi$ $|$ $\forall x \varphi$ $|$ $\exists x \varphi$ $|$
+      $t_{1} = t_{2}$ $|$ $\bot$ $|$ $\top$
+    \end{center}
+
+    % Ejemplos.
+    \begin{ejem}
+      Supongamos que el universo del discurso consta de los países del mundo y 
+      sus ciudades.
+      \begin{itemize}
+        \item Las variables $x$ e $y$ denotan países cualesquiera.
+        \item La constante $a$ denota a Alemania y la constante $i$ a Italia.
+        \item El símbolo funcional $f$ de índice 1 denota a la operación que 
+        recibe un país y devuelve su ciudad capital. Es decir, $f(x)$ es la 
+        capital de $x$. Esto es posible dado que cada país tiene una única 
+        capital, en particular $f(a)$ es Berlín y $f(i)$ es Roma.
+      \end{itemize}
+    \end{ejem}
+
+    \begin{ejem}
+      Si el universo consta de números naturales, entonces:
+      \begin{itemize}
+        \item La constante $a$ denota al individuo $0$ y la constante $b$ al 
+        individuo $1$.
+        \item Los términos $f^{2}(x,y)$ y $g^{2}(x,y)$ denotan a los individuos 
+        $x + y$ y $x*y$, respectivamente.
+        \item En tal caso, los individuos $2$ y $4$ se representan mediante 
+        $f(b,b)$ y $g(f(b,b), f(b,b))$, respectivamente.
+      \end{itemize}
+    \end{ejem}
+    
+    % Subsección: Especificación Formal.
+    \subsection{Especificación Formal}
+    El proceso de especificación o traducción del español a la Lógica Formal no 
+    es siempre sencillo. Algunas frases del español no se pueden traducir o
+    especificar de una manera completamente fiel a la lógica de predicados,
+    como veremos en algunos ejemplos.
+
+    \subsubsection{Algunos consejos}
+    \begin{itemize}
+      \item Únicamente podemos especificar afirmaciones o porposiciones, no es 
+      posible traducir preguntas, exclamaciones, órdenes, invitaciones, etc.
+      \item La idea básica es extraer predicados a partir de los enunciados
+      dados en español de manera que el enunciado completo se construya al 
+      combinar dichos predicados mediante conectivos y cuantificadores. Por 
+      ejemplo, la frase \textit{me gustan las alitas y el color rosa} debe
+      entenderse como \textit{me gustan las alitas} y \textit{me gusta el 
+      color rosa}. 
+      \item La conjunción $y$ se traduce como $\land$. La palabra $pero$ también 
+      corresponde a una conjunción aunque el sentido original del español se 
+      pierde. Por ejemplo, \textit{te doy mis audífonos pero me los devuelves}
+      sólo puede especificarse como \textit{te doy mis audifonos y me los 
+      devuelves}. Lo cual es diferente en español.
+      \item La disyunción es incluyente: \textit{iremos al parque o al cine},
+      incluye el caso en que se vayan a ambos lados.
+      \item Con la implicación hay que ser cautelosos, sobre todo en el caso de 
+      frases de la forma $A$ sólo si $B$, lo cual es equivalente a 
+      \textit{Si no $B$ entonces no $A$}, que a su vez es equivalente con 
+      \textit{Si $A$ entonces $B$}. Es un error común intentar especificar dicha
+      frase inicial mediante $B \rightarrow A$.
+      \item Si en el español aparecen frases como \textit{para todos, para 
+      cualquier, todos, cualesquiera, los, las}, etc; debe usarse el 
+      cuantificador universal $\forall$.
+      \item Si en el español aparecen frases como \textit{para algún, existe un,
+      alguno, alguna, uno, una}, etc; debe usarse el cuantificador existencial
+      $\exists$.
+      \item Cualquier especificación compuesta que involucre cuantificadores
+      puede formarse identificando en ella alguno de los cuatro juicios
+      aristotélicos:
+      \begin{itemize}
+        \item Universal Afirmativo: Todo $S$ es $P$ traducido mediante 
+        $\forall x(S(x) \rightarrow P(x))$.
+        \item Existencial afirmativo: Algún $S$ es $P$ traducido mediante 
+        $\exists x (S(x) \land P(X))$.
+        \item Universal negativo: Ningún $S$ es $P$ traducido mediante 
+        $\forall x (S(x) \rightarrow \neg P(x))$
+        \item Existencial negativo: Algún $S$ no es $P$ traducido mediante 
+        $\exists x (S(x) \land \neg P(x))$
+      \end{itemize}
+
+      Por supuesto que en especificaciones complicadas, $S$y $P$ no serán 
+      predicados sino fórmulas compuestas.
+
+      \item Pronombres como \textit{él, ella, eso} no se refieren a un 
+      individuo particular, sino que se usan como referencia a algo o alguien
+      mencionado previamente, por lo que obtienen significado del contexto
+      particular. Cuando un pronombre aparezca en un enunciado, hay que 
+      averiguar a quién o qué se refiere. \\
+      Por ejemplo, en el enunciado \textit{Hércules es mascota de Sebastián
+      pero él no es mascota de Mía} debe traducirse como \textit{Hércules es
+      mascota de Sebastián y Hércules no es mascota de Mía}.
+      \item Las variables no se mencionan en español, son sólo un formalismo
+      para representar individuos, por ejemplo la fórmula 
+      $\forall x(G(x) \rightarrow P(x))$ puede escribirse  en español como 
+      \textit{Todo gato es pequeño} y no como \textit{Para todo x, si x es 
+      gato entonces x es pequeño}. 
+      \item Los esquemas $\forall x (A \rightarrow B)$ y $\exists x (A \land B)$
+      son de gran utilidad y bastante comúnes. Menos comúnes, aunque también 
+      adecuados, son los esquemas $\forall x (A \land B)$, $\forall x (A \lor B)$
+      y $\exists x (A \lor B)$.
+      \item El esquema $\exists x (A \rightarrow B)$, si bien es una fórmula 
+      sintácticamente correcta, es extremadamente raro que figure en una 
+      traducción del español.
+      \item El hecho de que se usen dos o más variables distintas no implica que
+      éstas representen a elementos distintos del universo, de manera que para 
+      especificar dos individuos distintos no es suficiente contar simplemente 
+      con variables distintas. \\
+      Las fórmulas $\exists x P(x)$ y $\exists x \exists y(P(x) \land P(y))$
+      expresan ambas lo mismo, a saber que un objeto del universo cumple $P$.
+      Se debe agregar explícitamente que $x$ e $y$ tienen la propiedad de ser 
+      distintos, es decir $x \neq y$.
+    \end{itemize}
+
+    % Ejemplos.
+    \begin{ejem}
+      Tenemos los siguientes predicados en el universo de discurso de los 
+      habitantes de la Ciudad de México: \\ \\
+      $I(x) : x$ es inteligente. \\
+      $E(x) : x$ es estudiante de la Facultad de Ciencias. \\
+      $M(x) : $a $x$ le gusta la música. \\ \\
+      Especificar con cuantificadores los siguientes enunciados:
+      \begin{itemize}
+        \item Todos los estudiantes de la Facultad de Ciencias son inteligentes.
+        \begin{center}
+          $\forall x (E(x) \rightarrow I(x))$
+        \end{center}
+        \item A algunos estudiantes inteligentes les gusta la música.
+        \begin{center}
+          $\exists x (E(x) \land I(x) \land M(x))$
+        \end{center}
+        \item Todo aquel a quien le gusta la música es un estudiante que no es 
+        inteligente.
+        \begin{center}
+          $\forall x (M(x) \rightarrow E(x) \land \neg I(x))$
+        \end{center}
+      \end{itemize}
+    \end{ejem}
+
+    \begin{ejem}
+      En este ejemplo observamos el significado de las distintas combinaciones
+      de dos cuantificadores. Sea $Q(x, y)$ el predicado $x$ quiere a $y$.
+      \begin{itemize}
+        \item Todos quieren a alguien.
+        \begin{center}
+          $\forall x \exists y Q(x,y)$
+        \end{center}
+        \item Alguien quiere a todos.
+        \begin{center}
+          $\exists x \forall y Q(x,y)$
+        \end{center}
+        \item Todos se quieren, o bien, todos quieren a todos.
+        \begin{center}
+          $\forall x \forall y (Q(x,y))$
+        \end{center}
+        \item Algunos se quieren entre sí, o bien, alguien quiere a alguien.
+        \begin{center}
+          $\exists x \exists y Q(x,y)$
+        \end{center}
+        \item Alguno no es querido por nadie.
+        \begin{center}
+          $\exists x \forall y \neg Q(y,x)$
+        \end{center}
+        \item Alguien no quiere a nadie.
+        \begin{center}
+          $\exists x \forall y \neg Q(x,y)$
+        \end{center}
+        \item Todos no quieren a alguien.
+        \begin{center}
+          $\forall x \exists y \neg Q(x,y)$
+        \end{center}
+        \item Nadie quiere a todos.
+        \begin{center}
+          $\neg \exists x \forall y Q(x,y)$
+        \end{center}
+        \item Nadie quiere a nadie.
+        \begin{center}
+          $\forall x \forall y \neg Q(x,y)$
+        \end{center}
+      \end{itemize}
+    \end{ejem}
+
+    % Sebsección: Semántica.
+    \subsection{Semántica de la Lógica de Predicados}
+    \begin{define}
+      Sea $\mathcal{L} = \mathcal{P} \cup \mathcal{F} \cup \mathcal{C}$ un 
+      lenguaje de primer órden. Una estructura o interpretación para 
+      $\mathcal{L}$ es un par $\mathcal{M} = \langle M, \mathcal{I} \rangle$ 
+      donde $M \neq \varnothing$ es un conjunto no vacío llamado el universo 
+      de la estructura e $\mathcal{I}$ es una función con dominio $\mathcal{L}$ 
+      tal que 
+      \begin{itemize}
+        \item Si $P^{(n)} \in \mathcal{P}$ entonces $\mathcal{I}(P)$ es una 
+        relación de $m$-argumentos sobre $M$, es decir, 
+        $\mathcal{I}(\mathcal{P}) \subseteq M^{n}$. Alternativamente podemos 
+        definir la interpretación de $\mathcal{P}$ como una función booleana 
+        que decide si una tupla está o no en la relación deseada, es decir, 
+        $\mathcal{I}(\mathcal{P}): M^{n} \rightarrow Bool$.
+        
+        \item Si $f^{(n)} \in \mathcal{F}$ entonces $\mathcal{I}(f)$ es una 
+        función con dominio $M^{n}$ y contradominio $M$, es decir, 
+        $\mathcal{I}(f): M^{n} \rightarrow M$.
+        
+        \item Si $c \in \mathcal{C}$ entonces $\mathcal{I}(c)$ es un elemento 
+        de $M$, es decir, $\mathcal{I}(c) \in M$
+      
+      \end{itemize}
+      
+      Dada una interpretación $\mathcal{M} = \langle M,  \mathcal{I} \rangle$, 
+      la siguiente notación es de utilidad:
+      \begin{center}
+        $|\mathcal{M}| =_{def} M$ \\
+        $P^{\mathcal{I}} =_{def} \mathcal{I}(P)$ \\
+        $f^{\mathcal{I}} =_{def} \mathcal{I}(f)$ \\
+        $c^{\mathcal{I}} =_{def} \mathcal{I}(c)$
+      \end{center}
+    \end{define}
+
+    % Subsección: Interpretación de términos.
+    \subsection{Interpretación de términos}
+    \begin{define}[\textbf{Estado o Asignación}]
+      Un estado, asignación o evaluación de las variables es una función 
+      $\sigma: Var \rightarrow M$
+    \end{define}
+
+    \begin{define}[\textbf{Interpretación de Términos}]
+      Sea $\sigma$ un estado de las variables. Definimos la función de 
+      interpretación o significado de los términos con respecto a
+      $\sigma, \mathcal{I_{\sigma}}: TERM \rightarrow |\mathcal{M}|$
+      como sigue:
+      \begin{center}
+          $\mathcal{I_{\sigma}}(x) = \sigma(x)$ \\
+          $\mathcal{I_{\sigma}}(c) = \mathcal{I}(c)$ \\
+          $\mathcal{I_{\sigma}}(f(t_{1},...,t_{n})) =
+          f^{\mathcal{I}}(\mathcal{I_{\sigma}}(t_{1}),...,
+          \mathcal{I_{\sigma}}(t_{n}))$                
+      \end{center}
+      
+    \end{define}
+
+    \begin{lema}[\textbf{Lema de coincidencia para términos}]
+      Sean $t \in TERM$ y $\sigma_{1}, \sigma_{2}$ dos estados de las variables
+      tales que $\sigma_{1}(x) = \sigma_{2}(x)$ para toda variable $x$ que 
+      figura en $t$. Entonces $\mathcal{I}_{\sigma_{1}}(t) =$
+      $\mathcal{I}_{\sigma_{2}}(t)$.
+    \end{lema}
+
+    % Subsección: Interpretación de fórmulas.
+    \subsection{Interpretación de fórmulas}
+    \begin{define}[\textbf{Interpretación de fórmulas}]
+      Sea $\sigma$ un estado de las variables. Definimos la función de 
+      interpretación o significado de las fórmulas con respecto a 
+      $\sigma, \mathcal{I_{\sigma}}: FORM \rightarrow \{ 0,1 \}$ como 
+      sigue:
+      \begin{center}
+        $\mathcal{I_{\sigma}}(\bot) = 0$ \\
+        $\mathcal{I_{\sigma}}(\top) = 1$ \\
+        $\mathcal{I_{\sigma}}(P(t_{1},...,t_{m})) = 1$ si y sólo si 
+        $(\mathcal{I_{\sigma}}(t_{1}), ..., \mathcal{I_{\sigma}}(t_{m})) 
+        \in P^{\mathcal{I}}$ \\
+        $\mathcal{I_{\sigma}}(t_{1}=t_{2}) = 1$ si y sólo si 
+        $\mathcal{I_{\sigma}}(t_{1}) = \mathcal{I_{\sigma}}(t_{2})$ \\
+        $\mathcal{I_{\sigma}}(\neg \varphi) = 1$ si y sólo si 
+        $\mathcal{I_{\sigma}}(\varphi) = 0$ \\
+        $\mathcal{I_{\sigma}}(\varphi \land \psi) = 1$ si y sólo si 
+        $\mathcal{I_{\sigma}}(\varphi) = \mathcal{I_{\sigma}}(\psi) = 1$ \\
+        $\mathcal{I_{\sigma}}(\varphi \lor \psi) = 0$ si y sólo si 
+        $\mathcal{I_{\sigma}}(\varphi) = \mathcal{I_{\sigma}}(\psi) = 0$ \\
+        $\mathcal{I_{\sigma}}(\varphi \rightarrow \psi) = 0$ si y sólo si 
+        $\mathcal{I_{\sigma}}(\varphi) = 1$ e $\mathcal{I_{\sigma}}(\psi) = 0$ \\
+        $\mathcal{I_{\sigma}}(\varphi \leftrightarrow \psi) = 1$ si y sólo si 
+        $\mathcal{I_{\sigma}}(\varphi) = \mathcal{I_{\sigma}}(\psi)$ \\
+        $\mathcal{I_{\sigma}}(\forall x \varphi) = 1$ si y sólo si 
+        $\mathcal{I_{\sigma}}_{[x/m]}(\varphi) = 1$ para todo $m \in M$ \\
+        $\mathcal{I_{\sigma}}(\exists x \varphi) = 1$ si y sólo si
+        $\mathcal{I_{\sigma}}_{[x/m]}(\varphi) = 1$ para algún $m \in M$.
+      \end{center}
+
+    \end{define}
+
+    \begin{lema} [\textbf{Lema de coincidencia para fórmulas}]
+      Sean $\varphi$ y $\sigma_{1}, \sigma_{2}$ dos estados de las variables 
+      tales que $\sigma_{1}(x) = \sigma_{2}(x)$ para toda variable 
+      $x \in FV(\varphi)$. Entonces $\mathcal{I}_{\sigma_{1}}(\varphi) = 
+      \mathcal{I}_{\sigma_{2}}(\varphi)$
+    \end{lema}
+
+    % Subsección: Verdad.
+    \subsubsection{Verdad}
+    \begin{define}[\textbf{Satisfacibilidad y Verdad}]
+      Sean $\varphi$ una fórmula y 
+      $\mathcal{M} = \langle M, \mathcal{I} \rangle$ una interpretación. 
+      Entonces
+      \begin{itemize}
+        \item $\varphi$ es satisfacible en $\mathcal{M}$ si existe un estado de 
+        las variables $\sigma$ tal que $\mathcal{I}_{\sigma}(\varphi) = 1$, lo 
+        cual suele denotarse como $\mathcal{M} \models_{\sigma} \varphi$.
+        \item $\varphi$ es verdadera en $\mathcal{M}$ si para todo estado de
+        las variables $\sigma$ se tiene que $\mathcal{I}_{\sigma}(\varphi) = 1$,
+        es decir, si $\varphi$ es satisfacible en $\mathcal{M}$ en todos los 
+        estados posibles.
+        En tal caso también decimos que $M$ es un modelo de $\varphi$, lo cual 
+        se denotará con $\mathcal{M} \models \varphi$.
+      \end{itemize}
+    \end{define}
+
+    Las definiciones anteriores  aplican también para conjuntos de fórmulas, 
+    por ejemplo, $\mathcal{M} \models \Gamma$ denota el hecho de que $\Gamma$
+    tiene un modelo, y $\mathcal{M} \models_{\sigma} \Gamma$ que todas las fórmulas 
+    de $\Gamma$ se satisfacen en $\mathcal{M}$ en el estado $\sigma$.
+
+    % Subsección: Falsedad.
+    \subsubsection{Falsedad}
+    \begin{define}
+      Sean $\mathcal{M} = \langle M, \mathcal{I} \rangle$ una interpretación y
+      $\varphi$ una fórmula. Decimos que $\varphi$ es falsa en $\mathcal{M}$ si
+      y sólo si $\mathcal{M} \models \neg \varphi$. Es decir, $\varphi$ es 
+      falsa sy y sólo si su negación $\neg \varphi$ es verdadera.
+    \end{define}
+
+    Así, una fórmula no verdadera es aquella tal que es insatisfacible en 
+    algún estado de sus variables, o bien tal que su negación es 
+    satisfacible en algún estado de sus variables. Sin embargo, para poder 
+    afirmar que $\varphi$ es falsa, por definición tendríamos que mostrar
+    que $\mathcal{M} \models \neg \varphi$, es decir que $\neg \varphi$ es 
+    satisfacible en todos los estados posibles.
+
+    % Ejemplo.
+    \begin{ejem}
+      Sean $\mathcal{L} = \{ P^{(1)}, Q^{(1)}\}$, 
+      $\mathcal{M} = \langle \mathbb{N}, \mathcal{I} \rangle$ donde 
+      $P^{\mathcal{I}}$ es la propiedad \textit{ser par} y $Q^{\mathcal{I}}$ es 
+      la propiedad \textit{ser impar}. \\
+      Entonces, $\mathcal{M} \models P(x) \lor Q(x)$ puesto que cualquier 
+      número natural es par o impar. Sin embargo, no se cumple que 
+      $\mathcal{M} \models P(x)$ ni que $\mathcal{M} \models Q(x)$. Puesto que 
+      el valor de $x$ no puede ser siempre par o siempre impar, todo depende 
+      del estado de las variables.
+    \end{ejem}
+
+    % Subsección: Propiedades de satisfacibilidad.
+    \subsubsection{Propiedades de satisfacibilidad}
+    \begin{prop}
+      Sean $\mathcal{M}$ una interpretación y $\varphi, \psi$ fórmulas.
+      Entonces 
+      \begin{itemize}
+        \item Si $\mathcal{M} \models \varphi$ entonces 
+        $\mathcal{M} \not \models \neg \varphi$.
+        \item Si $\mathcal{M} \models \varphi \rightarrow \psi$ y 
+        $\mathcal{M} \models \varphi$ entonces $\mathcal{M} \models \psi$
+        \item Si $\mathcal{M} \models \varphi$ entonces 
+        $\mathcal{M} \models \varphi \lor \psi$.
+        \item $\mathcal{M} \models \varphi \land \psi$ si y sólo si 
+        $\mathcal{M} \models \varphi$ y $\mathcal{M} \models \psi$.
+        \item $\mathcal{M} \models \varphi$ si y sólo si 
+        $\mathcal{M} \models \forall \varphi$, donde $\forall \varphi$ denota 
+        a la cerradura universal de $\varphi$, es decir, a la fórmula obtenida
+        al cuantificar universalmente todas las variables libres de $\varphi$.
+      \end{itemize}
+    \end{prop}
+
+    \begin{prop}
+      Sean $\varphi$ un enunciado y 
+      $\mathcal{M} = \langle M, \mathcal{I} \rangle$ una interpretación. 
+      Entonces se cumple una y sólo una de las siguientes condiciones:
+      \begin{enumerate}
+        \item $\mathcal{M} \models \varphi$, es decir, $\varphi$ es verdadero 
+        en $\mathcal{M}$.
+        \item $\mathcal{M} \models \neg \varphi$, es decir, $\varphi$ es falso 
+        en $\mathcal{M}$.
+      \end{enumerate} 
+    \end{prop}
+
+    \begin{cor}
+      Si $\varphi$ es un enunciado, entonces $\varphi$ es falso si y sólo si 
+      $\varphi$ es no verdadero en $\mathcal{M}$.
+    \end{cor}
+
+    % Subsección: Modelos.
+    \subsection{Modelos}
+    Sabemos que un modelo para una fórmula $\varphi$ es una interpretación 
+    $\mathcal{M} = \langle M, \mathcal{I} \rangle$ tal que 
+    $\mathcal{M} \models \varphi$. Entonces, veamos algunos ejemplos:
+    \begin{ejem}
+      Sea $\Gamma = \{ P(b), Q(b), R(b), \exists(P(x) \land 
+      \neg (Q(x) \lor R(x))), \forall x (R(x) \rightarrow P(x))\}$. Queremos 
+      ver si $\Gamma$ tiene un modelo. \\
+      En este caso, lo más fácil es ir construyendo un modelo para cada 
+      fórmula de $\Gamma$. Si logramos que todas las fórmulas de $\Gamma$ sean 
+      verdaderas al mismo tiempo entonces habremos construido un modelos para 
+      $\Gamma$. Analicemos cada fórmula de $\Gamma$.
+    \end{ejem}
+
+    % Sección: El laberinto a resolver (puede variar).
+    \section{El laberinto a resolver}
+    % Sección: Solución del problema.
+    \section{Solución del problema}
+    % Subsección: Bracktracking.
+    \subsubsection{Técnica de Backtracking}
+    % Subsección: Implememtación.
+    \subsubsection{Implementación de la solución}
+    % Sección: Bibliografía.
+    \section{Bibliografía}
+\end{document}
