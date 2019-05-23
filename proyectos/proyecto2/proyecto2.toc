@@ -10,8 +10,8 @@
 \contentsline {subsubsection}{\numberline {1.5.2}Falsedad}{8}% 
 \contentsline {subsubsection}{\numberline {1.5.3}Propiedades de satisfacibilidad}{8}% 
 \contentsline {subsection}{\numberline {1.6}Modelos}{8}% 
-\contentsline {section}{\numberline {2}El laberinto a resolver}{9}% 
-\contentsline {section}{\numberline {3}Soluci\IeC {\'o}n del problema}{9}% 
-\contentsline {subsubsection}{\numberline {3.0.1}T\IeC {\'e}cnica de Backtracking}{9}% 
-\contentsline {subsubsection}{\numberline {3.0.2}Implementaci\IeC {\'o}n de la soluci\IeC {\'o}n}{9}% 
-\contentsline {section}{\numberline {4}Bibliograf\IeC {\'\i }a}{9}% 
+\contentsline {section}{\numberline {2}El laberinto a resolver}{10}% 
+\contentsline {section}{\numberline {3}Soluci\IeC {\'o}n del problema}{10}% 
+\contentsline {subsubsection}{\numberline {3.0.1}T\IeC {\'e}cnica de Backtracking}{10}% 
+\contentsline {subsubsection}{\numberline {3.0.2}Implementaci\IeC {\'o}n de la soluci\IeC {\'o}n}{10}% 
+\contentsline {section}{\numberline {4}Bibliograf\IeC {\'\i }a}{10}% 

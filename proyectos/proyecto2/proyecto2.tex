@@ -566,6 +566,92 @@ Proyecto 2: Implementación de un laberinto en PROLOG}
       fórmula de $\Gamma$. Si logramos que todas las fórmulas de $\Gamma$ sean 
       verdaderas al mismo tiempo entonces habremos construido un modelos para 
       $\Gamma$. Analicemos cada fórmula de $\Gamma$.
+      \begin{enumerate}
+        \item $P(b)$. Para que $\mathcal{M} \models P(b)$ se debe cumplir que 
+        $b^{\mathcal{I}} \in P^{\mathcal{I}}$. Así que al menos debemos tener 
+        $P^{\mathcal{I}} = \{b^{\mathcal{I}}\}$.
+        
+        \item $Q(b).$ Para que $\mathcal{M} \models Q(b)$ se debe cumplir que
+        $b^{\mathcal{I}} \in Q^{\mathcal{I}}$, asi que basta $Q^{I} = 
+        \{b^{\mathcal{I}}\}$.
+
+        \item $R(b).$ Para que $\mathcal{M} \models Q(b)$ se debe cumplir que 
+        $b^{\mathcal{I}} \in R^{\mathcal{I}}$ por lo que basta con $R = 
+        \{b^{\mathcal{I}}\}$.
+
+        \item $\exists(P(x) \land \neg (Q(x) \lor R(x)))$. Es decir, hay un 
+        elemento de $|\mathcal{M}|$ tal que cumple $P$ y no cumple $Q$ ni $R$.
+        Claramente este elemento no puede ser $b^{\mathcal{I}}$ por lo que 
+        $P^{\mathcal{I}}$ debe tener al menos otro elemento, digamos 
+        $P^{I} = \{b^{\mathcal{I}}, m\}$.
+
+        \item $\forall x(R(x) \rightarrow P(x))$. Debemos tener que todo 
+        elemento de $\Gamma$ que cumple $R^{\mathcal{I}}$, debe cumplir 
+        $P^{\mathcal{I}}$, pero de acuerdo a cómo definimos 
+        $R^{\mathcal{I}}$ esto ya se cumple pues $b^{\mathcal{I}} \in
+        R^{\mathcal{I}}$ y $b^{\mathcal{I}} \in P^{\mathcal{I}}$. 
+      \end{enumerate}
+
+      De manera que $P^{\mathcal{I}} = \{ b^{\mathcal{I}}, m\}$ y 
+      $Q^{\mathcal{I}} = \{b^{\mathcal{I}}\} = R^{\mathcal{I}}$ y para que 
+      el modelo resulte más natural podemos tomar $M = \{0,1\}$, 
+      $b^{\mathcal{I}} = 0$ y $m = 1$, con lo que queda 
+      $\mathcal{M} = \langle \{0,1\}, \mathcal{I} \rangle$ con 
+      $P^{\mathcal{I}} = \{0,1\}, Q^{\mathcal{I}} = \{0\} = R^{\mathcal{I}}$ y
+      $b^{\mathcal{I}} = 0$. 
+    \end{ejem}
+
+    \begin{ejem}
+      Sea $\Gamma = \{\exists x P(x) \land \exists x Q(x), 
+      \neg \exists x(P(x) \land Q(x)), \forall x \neg R(x,x), 
+      \forall x \forall y(R(x,y) \rightarrow R(y,x)), \\
+      \forall x (P(x) \rightarrow \exists y (Q(y) \land R(x,y))),
+      \forall x (Q(x) \rightarrow \exists y (Q(y) \land R(x,y)))\}$ \\
+      Queremos hallar un modelo de $\Gamma$, para ello, analicemos cada 
+      fórmula:
+      \begin{enumerate}
+        \item $\exists x P(x) \land \exists x Q(x)$. Es decir, debe existir 
+        $a_{1} \in |M|$ tal que $P^{\mathcal{I}}(a_{1})$ y además debe 
+        existir $a_{2} \in |\mathcal{M}|$ tal que $Q^{\mathcal{I}}(a_{2})$.
+        Obsérvese que podríamos tener $a_{1} = a_{2}$.
+
+        \item $\neg \exists x(P(x) \land Q(x))$. La fórmula indica que no hay
+        un individuo que cumpla $P^{\mathcal{I}}$ y $Q^{\mathcal{I}}$, de 
+        manera que los invididuos encontrados en $(1)$ deben ser diferentes.
+
+        \item $\forall x \neg R(x,x)$. Significa que $R^{\mathcal{I}}$ es 
+        antirreflexiva, por lo que los pares $(a,a)$ no pueden pertenecer a 
+        $R^{\mathcal{I}}$. Obsérvese que esto ya se cumple pues hasta ahora 
+        $R^{\mathcal{I}} = \varnothing$.
+
+        \item $\forall x \forall y(R(x,y) \rightarrow R(y,x))$. La fórmula 
+        indica que la relación $R^{\mathcal{I}}$ es simétrica, pero aún no 
+        exige que haya un par relacionado, por lo que aún tenemos 
+        $R^{\mathcal{I}} = \varnothing$.
+
+        \item $\forall x (P(x) \rightarrow \exists y (Q(y) \land R(x,y)))$.
+        Significa que para cada elemento $a$ que cumpla $P^{\mathcal{I}}$
+        debe existir un elemento $b$ que cumpla $Q^\mathcal{I}$ de manera 
+        que el par $(a,b)$ esté en la relación $R^{\mathcal{I}}$. Como en 
+        $(1)$ obtuvimos que $P^{\mathcal{I}}(a_{1})$ entonces debe existir
+        $b \in |\mathcal{M}|$ tal que $Q^{\mathcal{I}}(b)$ y 
+        $R^{I}(a_{1}, b)$. Obsérvese que podemos tomar $b = a_{2}$, además, 
+        por $(4)$, también debemos tener $R^{\mathcal{I}}(a_{2}, a_{1})$
+
+        \item $\forall x (Q(x) \rightarrow \exists y (Q(y) \land R(x,y)))$.
+        Es similar a la anterior. Como tenemos que $Q^{\mathcal{I}}(a_{2})$,
+        por $(1)$, entonces debe existir $a_{3} \in |\mathcal{M}|$ tal que  
+        $Q^{\mathcal{I}}(a_{3})$ y 
+        $R^{\mathcal{I}}(a_{2}, a_{3})$, además por $(3)$ tenemos que 
+        $a_{3} \neq a_{2}$ y por $(2)$, $a_{3} \neq a_{1}$. Finalmente 
+        también debemos tener que $R^{\mathcal{I}}(a_{3}, a_{2})$ para que  
+        se cumpla $(4)$. 
+      \end{enumerate}
+
+      De manera que las interpretaciones pueden quedar como sigue: \\
+      $|\mathcal{M}| = \{1, 2, 3\}$, $P^{\mathcal{I}} = \{1\}$, 
+      $Q^{\mathcal{I}} = \{2,3\}$, $R^{\mathcal{I}} = \{(1,2), (2,1),
+      (2,3), (3,2)\}$
     \end{ejem}
 
     % Sección: El laberinto a resolver (puede variar).
