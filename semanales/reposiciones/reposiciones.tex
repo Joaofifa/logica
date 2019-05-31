@@ -1,0 +1,519 @@
+\documentclass[letterpaper,12pt]{article}
+
+% Soporte para los acentos.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+% Idioma español.
+\usepackage[spanish,mexico, es-tabla]{babel}
+% Soporte de símbolos adicionales (matemáticas)
+\usepackage{multirow}
+\usepackage{amsmath}		
+\usepackage{amssymb}		
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+% Código
+\usepackage{listings}
+%Tableaux
+\usepackage{prooftrees}
+% Modificamos los márgenes del documento.
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
+% Datos del documento.
+\title{Reposiciones de ejercicios semanales}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        $\#$ de cuenta: 315121719}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    % Semanal 1.
+    \item \textbf{Semanal 1}
+    \begin{enumerate}
+        % Ejercicio 1.1
+        \item Defina recursivamente la función \textbf{nn} especificada como
+        sigue: \\
+        Dada una fórmula $\varphi$, \textbf{nn}$(\varphi)$ devuelve el número de
+        símbolos de negación en la fórmula. 
+
+        \text{Solución:} Definimos la función $nn :: PROP \rightarrow \mathbb{N}$
+        de la siguiente forma:
+        \begin{align*}
+            nn(\top) &= 0 \\
+            nn(\bot) &= 0 \\
+            nn(Var P) &= 0 \\
+            nn(\neg \varphi) &= nn(\varphi) + 1\\
+            nn(\varphi \star \psi) &= nn(\varphi) + nn(\psi) + 0
+        \end{align*}
+        
+        % Ejercicio 1.2
+        \item Demuestre utilizando inducción estructural que para cualquier 
+        fórmula $\varphi$ se cumple 
+
+        \begin{center}
+            \textbf{nn($\varphi$) $\leq$ nn(qi($\varphi)$)}. 
+        \end{center}
+
+        Donde la función $qi$ devuelve una fórmula lógicamente equivalente en 
+        la que no figura el símbolo de implicación.
+
+        \begin{proof}
+            Inducción sobre la fórmula $\varphi$.
+            \begin{itemize}
+                % Base de inducción.
+                \item \textit{Base de inducción.}
+                \begin{itemize}
+                    \item $\varphi = \top$. Entonces 
+                    $nn(\top) = 0 = nn(\top) = nn(qi(\top))$
+                    \item $\varphi = \bot$. Entonces 
+                    $nn(\bot) = 0 = nn(\bot) = nn(qi(\bot))$
+                    \item $\varphi = Var P$. Entonces
+                    $nn(Var P) = 0 = nn(Var P) = nn(qi(Var P))$  
+                \end{itemize}
+
+                % Hipótesis de inducción.
+                \item \textit{Hipótesis de inducción.} \\
+                Supongamos que se cumple para $nn(\varphi ') \leq nn(qi(\varphi '))$
+                y $nn(\varphi '') \leq nn(qi(\varphi ''))$.
+
+                \newpage
+                % Paso inductivo.
+                \item \textit{Paso inductivo.} \\
+                Tenemos dos casos:
+                \begin{enumerate}
+                    \item $\varphi = \neg \varphi '$. Entonces 
+                    \begin{align*}
+                        nn(\varphi) &= nn(\neg \varphi ')
+                        && \text{def. de $\varphi$} \\
+                        &= nn(\varphi ') + 1
+                        && \text{def. recursiva de nn} \\
+                        &\leq nn(qi(\varphi ')) + 1
+                        && \text{H.I.} \\
+                        &\leq nn(\neg (qi(\varphi '))) 
+                        && \text{def. recursiva de nn} \\
+                        &\leq nn(qi(\neg \varphi '))
+                        && \text{def. recursiva de qi} \\
+                        &\leq nn(qi(\varphi))
+                        && \text{def. de $\varphi$}
+                    \end{align*}
+                    
+                    \item $\varphi = \phi \star \psi$. Tenemos tres subcasos:
+                    \begin{itemize}
+                        \item[i)] $\varphi = \phi \star \psi$ con 
+                        $\star \in \{\land, \lor \}$. Entonces 
+                        \begin{align*}
+                            nn(\varphi) 
+                            &= nn(\phi \star \psi)
+                            && \text{def. de $\varphi$} \\
+                            &= nn(\phi) + nn(\psi) + 0
+                            && \text{def. recursiva de nn} \\
+                            &\leq nn(qi(\phi)) + nn(qi(\psi)) + 0
+                            && \text{H.I.} \\
+                            &\leq nn(qi(\phi) \star qi(\psi))
+                            && \text{def. recursiva de nn} \\
+                            &\leq nn(qi(\phi \star \psi))
+                            && \text{def. recursiva de qi} \\
+                            &\leq nn(qi(\varphi)) 
+                            && \text{def. de $\varphi$}
+                        \end{align*}
+
+                        \item[ii)] $\varphi = \phi \star \psi$ con 
+                        $\star \in \{ \rightarrow\}$. Entonces 
+                        \begin{align*}
+                            nn(\varphi) 
+                            &= nn(\phi \rightarrow \psi)
+                            && \text{def. de $\varphi$} \\
+                            &= nn(\phi) + nn(\psi) + 0
+                            && \text{def. recursiva de nn} \\
+                            &\leq nn(qi(\phi)) + nn(qi(\psi)) + 0
+                            && \text{H.I.} \\
+                            &\leq nn(qi(\phi) \rightarrow qi(\psi))
+                            && \text{def. recursiva de nn} \\
+                            &\leq nn(\neg qi(\phi) \lor qi(\psi))
+                            && \text{equivalencia lógica} \\
+                            &\leq nn(qi(\phi \rightarrow \psi))
+                            && \text{def. recursiva de qi} \\
+                            &\leq nn(qi(\varphi))
+                            && \text{def. de $\varphi$}
+                        \end{align*}
+
+                        \item[iii)] $\varphi = \phi \star \psi$ con 
+                        $\star \in \{ \leftrightarrow\}$. Entonces 
+                        \begin{align*}
+                            nn(\varphi) 
+                            &= nn(\phi \leftrightarrow \psi)
+                            && \text{def. de $\varphi$} \\
+                            &= nn(\phi) + nn(\psi) + 0
+                            && \text{def. recursiva de nn} \\
+                            &\leq nn(qi(\phi)) + nn(qi(\psi)) + 0
+                            && \text{H.I.} \\
+                            &\leq nn(qi(\phi) \leftrightarrow qi(\psi))
+                            && \text{def. recursiva de nn} \\
+                            &\leq nn((\neg qi(\phi) \lor qi(\psi)) \land 
+                            (qi(\phi) \lor \neg qi(\psi)))
+                            && \text{equivalencia lógica} \\
+                            &\leq nn(qi(\phi \leftrightarrow \psi))
+                            && \text{def. recursiva de qi} \\
+                            &\leq nn(qi(\varphi))
+                            && \text{def. de $\varphi$}
+                        \end{align*}
+
+                    \end{itemize}
+                \end{enumerate}
+            \end{itemize}
+        \end{proof}
+
+    \end{enumerate}
+
+    \newpage
+    % Semanal 2.
+    \item \textbf{Semanal 2}
+    \begin{enumerate}
+        % Ejercicio 2.1
+        \item Sea 
+        $\varphi = \neg(q \land ((r \rightarrow \neg s \lor r) \rightarrow p))$.
+        Convierta a $\varphi$ en una fórmula lógicamente equivalente $\varphi '$
+        que se encuentre en Forma Normal Negativa. \\
+        \textsc{Solución:}
+        \begin{align*}
+            fnn(\varphi) 
+            &= \neg(q \land ((\neg r \lor \neg s \lor r) \rightarrow p)) \\
+            &= \neg(q \land ((r \land s \land \neg r) \lor p)) \\
+            &= \neg q \lor ((\neg r \lor \neg s \lor r) \land \neg p)
+        \end{align*}
+
+        % Ejercicio 2.2
+        \item Sea 
+        $\Gamma = \{ (a \lor b) \land c, \neg b \lor \neg c\}$ y $\varphi = a$.
+        Determine mediante el método de tableaux si $\Gamma \models \varphi$.
+        \begin{proof}
+            Para mostrar que $\Gamma \models \varphi$ entonces hay que 
+            trabajar nuestro Tableaux con $\Gamma \cup \{\neg \varphi \}$. 
+            Así, \\ 
+
+            \centering
+            \begin{prooftree}{}
+            [(a \lor b) \land c, checked, just={Hip}
+                [\neg b \lor \neg c, checked, just={Hip}
+                    [\neg a, checked, just={Hip}
+                        [c, checked, just={ext. de $\alpha$ en 1}
+                            [a \lor b, checked, just={ext. de $\alpha$ en 1}
+                                [a, checked, close={3,6}, just={ext. de $\beta$ en 5}]
+                                    [b, checked
+                                        [\neg b, checked, close={6,7}, just={ext. de $\beta$ en 2}]
+                                            [\neg c, checked, close={4,7}]]]]]]]
+            \end{prooftree}
+
+            \justify
+            Como todas las ramas se cerraron entonces podemos concluir que 
+            $\Gamma \models \varphi$.
+
+        \end{proof}
+
+    \end{enumerate}
+
+    % Semanal 3.
+    \item \textbf{Semanal 3}
+    \begin{enumerate}
+        % Ejercicio 3.1
+        \item Da la especificación formal del siguiente argumento, definiendo
+        previamente un glosario adecuado.
+        
+        \begin{center}
+            \textit{Todos los estudiantes cursan al menos una materia}
+        \end{center}
+
+        \textsc{Solución:} 
+        \begin{itemize}
+            \item Universo del discurso: Todas las personas.
+            \item Predicados: $E(x) :$ $x$ es estudiante y 
+            $C(x,y) :$ $x$ cursa la materia $y$.
+            \item Especificación Formal: 
+            $\forall x (E(x) \rightarrow \exists y C(x,y))$
+        \end{itemize}
+
+        \newpage
+        % Ejercicio 3.2
+        \item Considere la siguiente expresión.
+
+        \begin{center}
+            $\forall x \exists y (A(y,x) \rightarrow M(x,y) \land 
+            (\exists z A(x,z) \land M(z,x)))$
+        \end{center}
+
+        Aplique la siguiente sustitución: $\sigma = [u := a][z := x][x := n]$.\\ \\
+        \text{Solución:} Primero aplicamos $\alpha-$equivalencia, donde 
+        obtenemos 
+
+        \begin{center}
+            $\forall w \exists s (A(s,w) \rightarrow M(w,s) \land 
+            (\exists r A(w,r) \land M(z,w)))$
+        \end{center}
+
+        Así, al aplicar la sustitución $\sigma$ tenemos que \\
+        $(\forall w \exists s (A(s,w) \rightarrow M(w,s) \land 
+        (\exists r A(w,r) \land M(z,w))))[u := a][z := x][x := n]$ \\  
+        $= (\forall w \exists s (A(s,w) \rightarrow M(w,s) \land 
+        (\exists r A(w,r) \land M(z,w))))[z := x][x := n]$ \\
+        $ = (\forall w \exists s (A(s,w) \rightarrow M(w,s) \land 
+        (\exists r A(w,r) \land M(x,w))))[x := n]$ \\
+        $ = (\forall w \exists s (A(s,w) \rightarrow M(w,s) \land 
+        (\exists r A(w,r) \land M(n,w))))$ 
+
+    \end{enumerate}
+
+    % Semanal 4.
+    \item \textbf{Semanal 4}
+    \begin{enumerate}
+        % Ejercicio 4.1
+        \item $\Gamma = \{ \forall x (Qy \rightarrow Px)\}$. utilizando Tableaux
+        demuestre lo siguiente: 
+
+        \begin{center}
+            $\Gamma \models Qy \rightarrow \forall x Px$
+        \end{center}
+
+        \begin{proof}
+            Para mostrar que $\Gamma \models Qy \rightarrow \forall x Px$ 
+            entonces hay que trabajar nuestro Tableaux con 
+            $\Gamma \cup \{Qy \land \exists x \neg Px\}$. Así, \\ 
+
+            \centering
+            \begin{prooftree}{}
+            [\forall x (Qy \rightarrow Px), just={Hip}
+                [Qy \land \exists x \neg Px, checked, just={Hip}
+                    [Qy, checked, just={ext. de $\alpha$ en 2}
+                        [\exists x \neg Px, checked, just={ext. de $\alpha$ en 2}
+                            [\neg Pa, checked, just={ext. de $\delta$ en 4}
+                                [Qy \rightarrow Pa, checked, just={ext. de $\gamma$ en 1}
+                                    [\neg Qy, checked, close={3,7}, just={ext. de $\beta$ en 6}]
+                                        [Pa, checked, close={5,7}]]]]]]]
+            \end{prooftree}
+
+            \justify
+            Como todas las ramas se cerraron entonces podemos concluir que 
+            $\Gamma \models Qy \rightarrow \forall x Px$.
+
+        \end{proof}
+        
+    \end{enumerate}
+
+    % Semanal 5.
+    \item \textbf{Semanal 5}
+    \begin{enumerate}
+        % Ejercicio 5.1
+        \item Sea 
+        $\varphi = \forall x \exists y (Pxyz \rightarrow (Qz \lor Ryx)) 
+        \rightarrow Qy \land (\exists x \forall z Rxz \lor \exists w Sx)$.
+        Obten la Forma Normal Clausular de $\varphi$. \\
+        \textsc{Solución:} Primero, rectificamos a $\varphi$.
+        \begin{align*}
+            rect(\varphi) &=
+            \forall m \exists n (Pmnz \rightarrow (Qz \lor Rnm)) 
+            \rightarrow Qy \land (\exists s \forall u Rsu \lor Sx)
+        \end{align*}
+
+        Así, 
+        \begin{align*}
+            fnp(\varphi) &=
+            \exists s \forall u (\forall m \exists n (Pmnz \rightarrow (Qz \lor Rnm)) 
+            \rightarrow Qy \land (Rsu \lor Sx)) 
+            && \text{eq. lógica} \\
+            &= 
+            \exists s \forall u \exists m \forall n ((Pmnz \rightarrow 
+            (Qz \lor Rnm)) \rightarrow Qy \land (Rsu \lor Sx)) 
+            && \text{eq. lógica}
+        \end{align*}
+
+        Entonces,
+        \begin{align*}
+            fns(\varphi) &=
+            \forall u \forall n ((Pfunz \rightarrow 
+            (Qz \lor Rnfu)) \rightarrow Qy \land (Rau \lor Sx)) 
+        \end{align*}
+        
+        Luego, 
+        \begin{align*}
+            fnn(\varphi) &=
+            \forall u \forall n ((Pfunz \land (\neg Qz \land \neg Rnfu)) 
+            \lor Qy \land (Rau \lor Sx)) 
+        \end{align*}
+
+        Por lo tanto, 
+        \begin{center}
+            $Cl(\varphi) =
+            Pfunz \land \neg Qz \land (\neg Rnfu \lor Qy) \land (Rau \lor Sx)$
+        \end{center}    
+
+    \end{enumerate}
+
+    % Semanal 6.
+    \item \textbf{Semanal 6}
+    \begin{enumerate}
+        % Ejercicio 6.1
+        \item Transforme a Forma Normal Clausular y decida mediante resolución
+        binaria si se cumple la siguiente consecuencia lógica.
+
+        \begin{center}
+            $\{\forall x (Pxy \rightarrow \exists y Qy), 
+            \exists x \forall y (Qy \rightarrow Pyz \lor Rx),
+            \forall y (Ry \rightarrow \exists x \neg Qa) \} 
+            \models \forall x (Qfa \rightarrow Qa)$
+        \end{center}
+
+        \textsc{Solución:} Ya que trabajaremos con resolución binaria entonces 
+        debemos trabajar con el conjunto
+
+        \begin{center}
+            $\varphi = \{\forall x (Pxy \rightarrow \exists y Qy), 
+            \exists x \forall y (Qy \rightarrow Pyz \lor Rx),
+            \forall y (Ry \rightarrow \exists x \neg Qa),
+            \exists x (Qfa \land \neg Qa)\}$
+        \end{center}
+
+        Para obtener la Forma Normal Clausular, primero
+        rectificamos $\varphi$.
+        \begin{align*}
+            rect(\varphi) &= 
+            \forall m (Pmy \rightarrow \exists n Qn) \land 
+            \exists s \forall r (Qr \rightarrow Prz \lor Rs) \land 
+            \forall u (Ru \rightarrow \neg Qa) \land Qfa \land \neg Qa
+        \end{align*}
+
+        Así,
+        \begin{align*}
+            fnn(\varphi) &=
+            \forall m (\neg Pmy \lor \exists n Qn) \land 
+            \exists s \forall r (\neg Qr \lor Prz \lor Rs) \land 
+            \forall u (\neg Ru \lor \neg Qa) \land Qfa \land \neg Qa 
+        \end{align*}
+
+        Después, 
+        \begin{align*}
+            fnp(\varphi) &=
+            \forall m \exists n \exists s \forall r \forall u
+            ((\neg Pmy \lor Qn) \land (\neg Qr \lor Prz \lor Rs) \land 
+            (\neg Ru \lor \neg Qa) \land Qfa \land \neg Qa)
+        \end{align*}
+
+        Luego, 
+        \begin{align*}
+            fns(\varphi) &= 
+            \forall m \exists s \forall r \forall u
+            ((\neg Pmy \lor Qfm) \land (\neg Qr \lor Prz \lor Rs) \land 
+            (\neg Ru \lor \neg Qa) \land Qfa \land \neg Qa) \\
+            &= 
+            \forall m \forall r \forall u
+            ((\neg Pmy \lor Qfm) \land (\neg Qr \lor Prz \lor Rgm) \land 
+            (\neg Ru \lor \neg Qa) \land Qfa \land \neg Qa)
+        \end{align*}
+
+        Finalmente, 
+        \begin{align*}
+            Cl(\varphi) &=
+            (\neg Pmy \lor Qfm) \land (\neg Qr \lor Prz \lor Rgm) \land 
+            (\neg Ru \lor \neg Qa) \land Qfa \land \neg Qa
+        \end{align*}
+
+        Haciendo resolución binaria tenemos que 
+        \begin{align*}
+            1 &. (\neg Pmy \lor Qfm) 
+            && \text{Hip} \\
+            2 &. (\neg Qr \lor Prz \lor Rgm)
+            && \text{Hip} \\
+            3 &. (\neg Ru \lor \neg Qa)
+            && \text{Hip} \\ 
+            4 &. \; Qfa 
+            && \text{Hip} \\
+            5 &. \; \neg Qa
+            && \text{Hip} \\
+            6 &. \; \square
+            && \text{$Res(4,5) [a := b][b := fa]$}
+        \end{align*}
+
+        \newpage
+        Por lo tanto, podemos concluir que 
+        \begin{center}
+            $\varphi = \{\forall x (Pxy \rightarrow \exists y Qy), 
+            \exists x \forall y (Qy \rightarrow Pyz \lor Rx),
+            \forall y (Ry \rightarrow \exists x \neg Qa),
+            \exists x (Qfa \land \neg Qa)\}$
+        \end{center}
+    \end{enumerate}
+
+    % Semanal 7.
+    \item \textbf{Semanal 7}
+    \begin{enumerate}
+        % Ejercicio 7.1
+        \item Demuestre lo siguiente mediante deducción natural.
+        
+        \begin{center}
+            $\exists x Fx \rightarrow \forall y (Gy \rightarrow Hy),
+            \exists z Jz \rightarrow \exists w Gw 
+            \vdash \exists z (Fz \land Jz) \rightarrow \exists v Hv$
+        \end{center}
+        % Demostración.
+        \begin{proof}
+            Por el Teo. de DN basta mostrar
+
+            \begin{center}
+                $\Gamma = \{ \exists x Fx \rightarrow 
+                \forall y(Gy \rightarrow Hy), \exists z Jz \rightarrow 
+                \exists w Gw, \exists z(Fz \land Jz) \} \vdash\exists v Hv$
+            \end{center}
+            
+            Entonces
+            \begin{align*}
+                1. \; \; &\Gamma \vdash \exists x Fx \rightarrow 
+                \forall y(Gy \rightarrow Hy)
+                && \text{Hip} \\
+                2. \; \; &\Gamma \vdash \exists z Jz \rightarrow 
+                \exists w Gw
+                && \text{Hip} \\
+                3. \; \; &\Gamma \vdash \exists z(Fz \land Jz)
+                && \text{Hip} \\
+                4. \; \; &\Gamma, Fz \land Jz \vdash Fz \land Jz
+                && \text{Hip} \\
+                5. \; \; &\Gamma, Fz \land Jz \vdash Fz 
+                && \text{$(\land E) 4$} \\
+                6. \; \; &\Gamma, Fz \land Jz \vdash Jz
+                && \text{$(\land E) 4$} \\
+                7. \; \; &\Gamma, Fz \land Jz \vdash \exists x Fx
+                && \text{$(\exists I) 4$} \\
+                8. \; \; &\Gamma, Fz \land Jz \vdash \forall y(Gy 
+                \rightarrow Hy)
+                && \text{$(\rightarrow E) 6,1$} \\
+                9. \; \; &\Gamma, Fz \land Jz \vdash \exists z Jz
+                && \text{$(\exists I) 5$} \\
+                10. \; \; &\Gamma, Fz \land Jz \vdash \exists Gw
+                && \text{$(\rightarrow E) 8, 2$} \\
+                11. \; \;  &\Gamma, Fz \land Jz, Gw \vdash Gw 
+                && \text{Hip} \\
+                12. \; \; &\Gamma, Fz \land Jz, Gw \vdash Gw \rightarrow Hw
+                && \text{$(\forall E) 7$} \\
+                13. \; \; &\Gamma Fz \land Jz, Gw \vdash Hw 
+                && \text{$(\rightarrow E) 11,10$} \\
+                14. \; \; &\Gamma, Fz \land Jz, Gw \vdash \exists u Hu
+                && \text{$(\exists I) 12$} \\
+                15. \; \; &\Gamma, Fz \land Jz \vdash \exists u Hu
+                && \text{$(\exists E) 9, 12$} \\
+                16. \; \; &\Gamma \vdash \exists u Hu 
+                && \text{$(\exists E) 3, 15$}
+            \end{align*}
+            Por lo tanto, podemos concluir que 
+
+            \begin{center}
+                $\exists x Fx \rightarrow \forall y (Gy \rightarrow Hy),
+                \exists z Jz \rightarrow \exists w Gw 
+                \vdash \exists z (Fz \land Jz) \rightarrow \exists v Hv$
+            \end{center}
+
+        \end{proof}
+    \end{enumerate}
+\end{enumerate}
+\end{document}
