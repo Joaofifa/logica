@@ -22,19 +22,22 @@
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ Tarea Semanal 2}
-\author{Rubí Rojas Tania Michelle}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        \# cuenta: 315121719}
 \date{28 de febrero de 2019}
 
 \begin{document}
 \maketitle
 
 \begin{enumerate}
-   
    % Pregunta 1.
    \item Sea $\varphi = ((p \rightarrow r) \land (q \rightarrow r)) 
    \rightarrow ((p \land q) \rightarrow r)$. Convierte a $\varphi$ en una
    fórmula equivalente $\varphi'$ que se encuentre en forma normal negativa.\\
    \textit{Solución:}
+   
    \begin{align*}
       \varphi &= ((p \rightarrow r) \land (q \rightarrow r)) 
                  \rightarrow ((p \land q) \rightarrow r) 
@@ -64,6 +67,7 @@
    \item Define recursivamente la función \textbf{isPermutation} que, dadas
    dos listas nos dice si una es permutación de la otra.\\
    \textit{Solución:} 
+   
    \begin{lstlisting}[language=Haskell]
       import Data.List
 
@@ -76,11 +80,13 @@
           | otherwise = False
    \end{lstlisting}
 
+   \newpage
    % Pregunta 3.
    \item Verifica tu definición aplicándola a las siguientes listas (debes
    mostrar paso a paso las llamadas recursivas) $A = [1,2,3,4],$ 
    $B = [1,2,3,4]$, osea, hacer la ejecución de \textbf{isPermutation A B}.\\
    \textit{Solución:}
+   
    \begin{lstlisting}
       isPermutation A B = isPermutation [1,2,3,4] [1,2,3,4]
                         = isPermutation [2,3,4] [2,3,4]
@@ -127,6 +133,7 @@
                                  [q, checked, close={8,9}, just={ext. de $\beta$ en 1}]]
                                     [r, checked, close={7,8}, just={ext. de $\beta$ en 2}]]
                                        [s, checked, close={6,7}, just={ext. de $\beta$ en 3}]]]]]]]
+
    \end{prooftree}
 
    \justify
@@ -134,5 +141,4 @@
    $\Gamma \models \varphi$ se da y el argumento que representa es correcto.
 
 \end{enumerate}
-    
 \end{document}
