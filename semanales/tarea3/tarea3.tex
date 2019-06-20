@@ -20,14 +20,16 @@
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ Tarea Semanal 3}
-\author{Rubí Rojas Tania Michelle}
-\date{\today}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        \# cuenta: 315121719}
+\date{29 de marzo de 2019}
 
 \begin{document}
     \maketitle
 
     \begin{enumerate}
-
         % Ejercicio 1.
         \item Da la especificación formal del siguiente argumento, definiendo
         previamente un glosario adecuado. \\
@@ -36,6 +38,7 @@
         \textsc{Solución:} El universo de discurso serán todas las personas,
         los programadores y los satélites naturales. Los predicados que 
         utilizaremos serán los siguientes:
+        
         \begin{itemize}
             \item $E(x):$ $x$ es alumno de la Facultad de Ciencias.
             \item $P(x):$ $x$ es programador.
@@ -44,11 +47,13 @@
         \end{itemize}
 
         Además, utilizaremos un término:
+        
         \begin{itemize}
             \item l: Luna
         \end{itemize}
 
         Por lo que el argumento queda de la siguiente forma:
+        
         \begin{center}
             $\forall x(A(l) \rightarrow (E(x) \land P(x) \land 
             M(x)))$
@@ -56,6 +61,7 @@
 
         % Ejercicio 2.
         \item Considera las siguientes expresiones:
+        
         \begin{itemize}
             \item[(a)] $\forall x \forall u$ $(M(a,x) \rightarrow M(a,u))$
             \item[(b)] $\forall xu$ $M(a,x) \rightarrow M(a,u)$
@@ -71,6 +77,7 @@
                 $(\forall x \forall u M(a,x)) \rightarrow M(a,u)$ y que $(c)$
                 es equivalente a escribir $\forall x \forall u (M(a,u) 
                 \rightarrow M(a,x))$. Entonces
+                
                 \begin{itemize}
                     % Caso 1.
                     \item $(a) \sim_{\alpha} (b)$ \\
@@ -103,11 +110,13 @@
                 $\sigma = [x, u := L(a,n,d,r,o),$ $C(i,z,o)]$ a cada una 
                 de las expresiones. \\ \\
                 \textit{Solución:}
+                
                 \begin{itemize}
                     % Primera sustitución.
                     \item[(a)] $\forall x \forall u (M(a,x)$ 
                     $\rightarrow M(a,u))$ \\
                     Aplicando la sustitución obtenemos 
+                    
                     \begin{align*}
                         (\forall x \forall u ((M(a,x) 
                         \rightarrow M(a,u)))) \sigma
@@ -127,6 +136,7 @@
                     Notemos que esta expresión es equivalente a escribir 
                     $(\forall x \forall u \; M(a,x)) \rightarrow M(a,u)$. Así,
                     aplicando la sustitución obtenemos 
+                    
                     \begin{align*}
                         (\forall x \forall u \; M(a,x)) 
                         \rightarrow (M(a,u)) \sigma
@@ -139,6 +149,7 @@
                     Notemos que esta expresión es equivalente a escribir 
                     $\forall x \forall u (M(a,u) \rightarrow M(a,x))$. Así, 
                     aplicando la sustitución obtenemos   
+                    
                     \begin{align*}
                         (\forall x \forall u (M(a,u) 
                         \rightarrow M(a,x))) \sigma
@@ -152,13 +163,8 @@
                     Notemos que en este ejercicio no cambió nada con la 
                     sustitución ya que todas las variables a sustituir son 
                     ligadas. 
-
                 \end{itemize}
-
             \end{enumerate}
-
         \end{itemize}
-        
     \end{enumerate}
-
 \end{document}
