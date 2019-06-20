@@ -18,8 +18,11 @@
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ Tarea Semanal 7}
-\author{Rubí Rojas Tania Michelle}
-\date{\today}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        \# cuenta: 315121719}
+\date{16 de mayo de 2019}
 
 \begin{document}
 \maketitle
@@ -31,6 +34,7 @@ Encuentra un programa $t$ que tenga el tipo indicado:
     \item[a)] $\vdash t: (A \rightarrow B \rightarrow C) \rightarrow$ 
     $(A \rightarrow B) \rightarrow (A \rightarrow C)$ \\
     \textsc{Solución:}
+    
     \begin{enumerate}
         \item[1.] $f: A \rightarrow B \rightarrow C, x: A \rightarrow B, y: A
         \vdash f: A \rightarrow B \rightarrow C$ \; \; \; $(Hip)$
@@ -54,6 +58,7 @@ Encuentra un programa $t$ que tenga el tipo indicado:
     \item[b)] $x: (A \rightarrow C) \land (B \rightarrow C) \vdash$
     $t: A \lor B \rightarrow C$ \\
     \textsc{Solución:}
+    
     \begin{enumerate}
         \item[1.] $x: (A \rightarrow C) \land (B \rightarrow C), 
         y: A \lor B \vdash x: (A \rightarrow C) \land (B \rightarrow C)$
@@ -85,8 +90,10 @@ Encuentra un programa $t$ que tenga el tipo indicado:
     \textsc{Solución:} Sabemos que $\Gamma \vdash A \land B \Leftrightarrow 
     \Gamma \vdash A$ y $\Gamma \vdash B$. Así, basta probar cada uno de los
     lados de la conjunción por separado. Entonces 
+    
     \begin{enumerate}
         \item PD. $x: P \rightarrow Q \land R \vdash P \rightarrow Q$
+        
         \begin{enumerate}
             \item[1.] $x: P \rightarrow Q \land R, y: P \vdash x: P \rightarrow Q \land R$ \; \; \; \; \; $(Hip)$
             \item[2.] $x: P \rightarrow Q \land R, y: P \vdash y: P$ \; \; \; \; \; \; \;  \; \; \; \; \; $(Hip)$
@@ -96,6 +103,7 @@ Encuentra un programa $t$ que tenga el tipo indicado:
         \end{enumerate}
 
         \item PD. $x: P \rightarrow Q \land R \vdash P \rightarrow R$
+        
         \begin{enumerate}
             \item[6.] $x: P \rightarrow Q \land R, y: P \vdash x: P \rightarrow Q \land R$ \; \; \; \; \; $(Hip)$
             \item[7.] $x: P \rightarrow Q \land R, y: P \vdash y: P$ \; \; \; \; \; \; \;  \; \; \; \; \; $(Hip)$
@@ -104,8 +112,9 @@ Encuentra un programa $t$ que tenga el tipo indicado:
             \item[10.] $x: P \rightarrow Q \land R \vdash fun(y: P.snd xy): P \rightarrow R$ \; \;$(\rightarrow I) \; 4$
         \end{enumerate}
     \end{enumerate}
+    
     Por lo tanto, $x: P \rightarrow Q \land R \vdash \langle fun(y: P.fst xy): P \rightarrow Q, \; 
     fun(y: P.snd xy): P \rightarrow R \rangle : (P \rightarrow Q) \land (P \rightarrow R)$ por $(\land I) \; 5, 10$
+    
 \end{enumerate}
-
 \end{document}
