@@ -26,7 +26,7 @@
         Universidad Nacional Autónoma de México \\
         taniarubi@ciencias.unam.mx \\
         $\#$ de cuenta: 315121719}
-\date{\today}
+\date{29 de mayo de 2019}
 
 \begin{document}
 \maketitle
@@ -34,6 +34,7 @@
 \begin{enumerate}
     % Semanal 1.
     \item \textbf{Semanal 1}
+    
     \begin{enumerate}
         % Ejercicio 1.1
         \item Defina recursivamente la función \textbf{nn} especificada como
@@ -43,6 +44,7 @@
 
         \text{Solución:} Definimos la función $nn :: PROP \rightarrow \mathbb{N}$
         de la siguiente forma:
+        
         \begin{align*}
             nn(\top) &= 0 \\
             nn(\bot) &= 0 \\
@@ -64,9 +66,11 @@
 
         \begin{proof}
             Inducción sobre la fórmula $\varphi$.
+            
             \begin{itemize}
                 % Base de inducción.
                 \item \textit{Base de inducción.}
+                
                 \begin{itemize}
                     \item $\varphi = \top$. Entonces 
                     $nn(\top) = 0 = nn(\top) = nn(qi(\top))$
@@ -85,8 +89,10 @@
                 % Paso inductivo.
                 \item \textit{Paso inductivo.} \\
                 Tenemos dos casos:
+                
                 \begin{enumerate}
                     \item $\varphi = \neg \varphi '$. Entonces 
+                    
                     \begin{align*}
                         nn(\varphi) &= nn(\neg \varphi ')
                         && \text{def. de $\varphi$} \\
@@ -103,9 +109,11 @@
                     \end{align*}
                     
                     \item $\varphi = \phi \star \psi$. Tenemos tres subcasos:
+                    
                     \begin{itemize}
                         \item[i)] $\varphi = \phi \star \psi$ con 
                         $\star \in \{\land, \lor \}$. Entonces 
+                        
                         \begin{align*}
                             nn(\varphi) 
                             &= nn(\phi \star \psi)
@@ -124,6 +132,7 @@
 
                         \item[ii)] $\varphi = \phi \star \psi$ con 
                         $\star \in \{ \rightarrow\}$. Entonces 
+                        
                         \begin{align*}
                             nn(\varphi) 
                             &= nn(\phi \rightarrow \psi)
@@ -144,6 +153,7 @@
 
                         \item[iii)] $\varphi = \phi \star \psi$ con 
                         $\star \in \{ \leftrightarrow\}$. Entonces 
+                        
                         \begin{align*}
                             nn(\varphi) 
                             &= nn(\phi \leftrightarrow \psi)
@@ -162,17 +172,16 @@
                             &\leq nn(qi(\varphi))
                             && \text{def. de $\varphi$}
                         \end{align*}
-
                     \end{itemize}
                 \end{enumerate}
             \end{itemize}
         \end{proof}
-
     \end{enumerate}
 
     \newpage
     % Semanal 2.
     \item \textbf{Semanal 2}
+    
     \begin{enumerate}
         % Ejercicio 2.1
         \item Sea 
@@ -180,6 +189,7 @@
         Convierta a $\varphi$ en una fórmula lógicamente equivalente $\varphi '$
         que se encuentre en Forma Normal Negativa. \\
         \textsc{Solución:}
+        
         \begin{align*}
             fnn(\varphi) 
             &= \neg(q \land ((\neg r \lor \neg s \lor r) \rightarrow p)) \\
@@ -191,6 +201,7 @@
         \item Sea 
         $\Gamma = \{ (a \lor b) \land c, \neg b \lor \neg c\}$ y $\varphi = a$.
         Determine mediante el método de tableaux si $\Gamma \models \varphi$.
+        
         \begin{proof}
             Para mostrar que $\Gamma \models \varphi$ entonces hay que 
             trabajar nuestro Tableaux con $\Gamma \cup \{\neg \varphi \}$. 
@@ -212,13 +223,12 @@
             \justify
             Como todas las ramas se cerraron entonces podemos concluir que 
             $\Gamma \models \varphi$.
-
         \end{proof}
-
     \end{enumerate}
 
     % Semanal 3.
     \item \textbf{Semanal 3}
+    
     \begin{enumerate}
         % Ejercicio 3.1
         \item Da la especificación formal del siguiente argumento, definiendo
@@ -229,6 +239,7 @@
         \end{center}
 
         \textsc{Solución:} 
+        
         \begin{itemize}
             \item Universo del discurso: Todas las personas.
             \item Predicados: $E(x) :$ $x$ es estudiante y 
@@ -264,11 +275,11 @@
         (\exists r A(w,r) \land M(x,w))))[x := n]$ \\
         $ = (\forall w \exists s (A(s,w) \rightarrow M(w,s) \land 
         (\exists r A(w,r) \land M(n,w))))$ 
-
     \end{enumerate}
 
     % Semanal 4.
     \item \textbf{Semanal 4}
+    
     \begin{enumerate}
         % Ejercicio 4.1
         \item $\Gamma = \{ \forall x (Qy \rightarrow Px)\}$. utilizando Tableaux
@@ -300,11 +311,11 @@
             $\Gamma \models Qy \rightarrow \forall x Px$.
 
         \end{proof}
-        
     \end{enumerate}
 
     % Semanal 5.
     \item \textbf{Semanal 5}
+    
     \begin{enumerate}
         % Ejercicio 5.1
         \item Sea 
@@ -312,13 +323,16 @@
         \rightarrow Qy \land (\exists x \forall z Rxz \lor \exists w Sx)$.
         Obten la Forma Normal Clausular de $\varphi$. \\
         \textsc{Solución:} Primero, rectificamos a $\varphi$.
+        
         \begin{align*}
             rect(\varphi) &=
             \forall m \exists n (Pmnz \rightarrow (Qz \lor Rnm)) 
             \rightarrow Qy \land (\exists s \forall u Rsu \lor Sx)
         \end{align*}
 
+        \newpage
         Así, 
+        
         \begin{align*}
             fnp(\varphi) &=
             \exists s \forall u (\forall m \exists n (Pmnz \rightarrow (Qz \lor Rnm)) 
@@ -331,6 +345,7 @@
         \end{align*}
 
         Entonces,
+        
         \begin{align*}
             fns(\varphi) &=
             \forall u \forall n ((Pfunz \rightarrow 
@@ -338,6 +353,7 @@
         \end{align*}
         
         Luego, 
+        
         \begin{align*}
             fnn(\varphi) &=
             \forall u \forall n ((Pfunz \land (\neg Qz \land \neg Rnfu)) 
@@ -345,15 +361,16 @@
         \end{align*}
 
         Por lo tanto, 
+        
         \begin{center}
             $Cl(\varphi) =
             Pfunz \land \neg Qz \land (\neg Rnfu \lor Qy) \land (Rau \lor Sx)$
         \end{center}    
-
     \end{enumerate}
 
     % Semanal 6.
     \item \textbf{Semanal 6}
+    
     \begin{enumerate}
         % Ejercicio 6.1
         \item Transforme a Forma Normal Clausular y decida mediante resolución
@@ -378,6 +395,7 @@
 
         Para obtener la Forma Normal Clausular, primero
         rectificamos $\varphi$.
+        
         \begin{align*}
             rect(\varphi) &= 
             \forall m (Pmy \rightarrow \exists n Qn) \land 
@@ -386,6 +404,7 @@
         \end{align*}
 
         Así,
+        
         \begin{align*}
             fnn(\varphi) &=
             \forall m (\neg Pmy \lor \exists n Qn) \land 
@@ -394,6 +413,7 @@
         \end{align*}
 
         Después, 
+        
         \begin{align*}
             fnp(\varphi) &=
             \forall m \exists n \exists s \forall r \forall u
@@ -401,7 +421,9 @@
             (\neg Ru \lor \neg Qa) \land Qfa \land \neg Qa)
         \end{align*}
 
+        \newpage
         Luego, 
+        
         \begin{align*}
             fns(\varphi) &= 
             \forall m \exists s \forall r \forall u
@@ -414,6 +436,7 @@
         \end{align*}
 
         Finalmente, 
+        
         \begin{align*}
             Cl(\varphi) &=
             (\neg Pmy \lor Qfm) \land (\neg Qr \lor Prz \lor Rgm) \land 
@@ -421,6 +444,7 @@
         \end{align*}
 
         Haciendo resolución binaria tenemos que 
+        
         \begin{align*}
             1 &. (\neg Pmy \lor Qfm) 
             && \text{Hip} \\
@@ -436,8 +460,8 @@
             && \text{$Res(4,5) [a := b][b := fa]$}
         \end{align*}
 
-        \newpage
         Por lo tanto, podemos concluir que 
+        
         \begin{center}
             $\varphi = \{\forall x (Pxy \rightarrow \exists y Qy), 
             \exists x \forall y (Qy \rightarrow Pyz \lor Rx),
@@ -448,6 +472,7 @@
 
     % Semanal 7.
     \item \textbf{Semanal 7}
+    
     \begin{enumerate}
         % Ejercicio 7.1
         \item Demuestre lo siguiente mediante deducción natural.
@@ -468,6 +493,7 @@
             \end{center}
             
             Entonces
+            
             \begin{align*}
                 1. \; \; &\Gamma \vdash \exists x Fx \rightarrow 
                 \forall y(Gy \rightarrow Hy)
@@ -505,6 +531,7 @@
                 16. \; \; &\Gamma \vdash \exists u Hu 
                 && \text{$(\exists E) 3, 15$}
             \end{align*}
+
             Por lo tanto, podemos concluir que 
 
             \begin{center}
@@ -512,7 +539,6 @@
                 \exists z Jz \rightarrow \exists w Gw 
                 \vdash \exists z (Fz \land Jz) \rightarrow \exists v Hv$
             \end{center}
-
         \end{proof}
     \end{enumerate}
 \end{enumerate}
