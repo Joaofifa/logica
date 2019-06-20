@@ -1,4 +1,4 @@
-\documentclass[letterpaper,11pt]{article}
+\documentclass[letterpaper,10pt]{article}
 
 % Soporte para los acentos.
 \usepackage[utf8]{inputenc}
@@ -20,7 +20,10 @@
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ Tarea Semanal 4}
-\author{Rubí Rojas Tania Michelle}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        \# cuenta: 315121719}
 \date{5 de abril de 2019}
 
 \begin{document}
@@ -31,6 +34,7 @@
     $\exists x \forall y (Qy \rightarrow Pyx \lor Rx), $
     $\forall y(Ry \rightarrow \exists x \neg Qa)\}$.
     Utilizando Tableaux demuestra lo siguiente.
+    
     \begin{center}
         $\Gamma \models \forall x (Qfa \rightarrow Qa)$
     \end{center}
@@ -38,12 +42,14 @@
     \begin{proof}
         Utilizando equivalencias lógicas y eliminando cuantificadores vacuos
         debemos construir el Tableaux para el conjunto
+        
         \begin{center}
             $\{\exists x Pxy \rightarrow \exists y Qy, $
             $\exists x \forall y(Qy \rightarrow Pyx \lor Rx), $
             $\forall y(Ry \rightarrow \neg Qa)\}$ $\cup$ 
             $\{\neg (Qfa \rightarrow Qa)\}$
         \end{center}
+        
         Entonces tenemos que: \\ \\
         % Tableaux.
         \begin{prooftree}{}
@@ -76,14 +82,12 @@
                                                                                                                     [\neg Qa, just={$\beta$ en 13}]]]]]]]]]]]]]]
         \end{prooftree}
 
+        \justify 
         Notemos que ya hemos utilizado todas nuestras hipótesis y fórmulas, 
         y si tratamos de volver a utilizar alguna otra que podamos 
         reutilizar, sigue pasando que queda alguna rama abierta. Por lo 
         tanto, el Tableaux es abierto. \\
         Por lo tanto, $\Gamma \not \models \forall x (Qfa \rightarrow Qa)$.
-    
     \end{proof}
-
 \end{enumerate}
-    
 \end{document}
