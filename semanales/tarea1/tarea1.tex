@@ -1,4 +1,4 @@
-\documentclass[letterpaper,12pt]{article}
+\documentclass[letterpaper,11pt]{article}
 
 % Soporte para los acentos.
 \usepackage[utf8]{inputenc}
@@ -18,20 +18,23 @@
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ Tarea Semanal 1}
-\author{Rubí Rojas Tania Michelle}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        \# cuenta: 315121719}
 \date{21 de febrero de 2019}
 
 \begin{document}
 \maketitle
 
 \begin{enumerate}
-    
     % Ejercicio 1.
     \item Define recursivamente la función $icd$ que se especifica como sigue:
     $icd$ toma como entrada una fórmula $\phi$ y devuelve la fórmula resultante
     al intercambiar en $\phi$ todas las conjunciones por disyunciones, y las 
     disyunciones por conjunciones, respectivamente. Por ejemplo, se debe 
     cumplir que:
+    
     \begin{center}
         $icd (p \land (q \lor \neg r) \rightarrow \neg (r \lor s) \land t) = $
         $p \lor (q \land \neg r) \rightarrow \neg (r \land s) \lor t$
@@ -40,6 +43,7 @@
     % Solución del ejercicio 1.
     \textit{Solución:} Definimos recursivamente la función 
     $icd :: PROP \rightarrow PROP$ de la siguiente forma:
+    
     \begin{itemize}
         \item $icd (\top) = \top$.
         \item $icd (\bot) = \bot$.
@@ -56,6 +60,7 @@
 
     % Solución del ejercicio 2.
     \textit{Solución: }
+    
     \begin{align*}
         icd(p \land (q \lor \neg r) \rightarrow \neg (r \lor s) \land t)
         &= icd(p \land (q\lor\neg r)) \rightarrow icd(\neg (r\lor s) \land t)\\
@@ -73,7 +78,8 @@
     % Solución del ejercicio 3.
     \textit{Solución:} Definimos la función $atom :: PL \rightarrow \mathbb{N}$
     de la siguiente forma:
-    \begin{itemize}
+    \
+    begin{itemize}
         \item $atom(\top) = 1$.
         \item $atom(\bot) = 1$.
         \item $atom(Var P) = 1$.
@@ -83,9 +89,11 @@
 
     % Ejercicio 4.
     \item Demuestra que para cualquier fórmula $\phi \in PL$ se cumple que:
+    
     \begin{center}
         $atom(\phi) \leq con(\phi) + 1$
     \end{center}
+    
     donde $con(\phi$) es la función que devuelve el número de conectivos de 
     $\phi$.
 
@@ -93,6 +101,7 @@
     \begin{proof}
         Inducción sobre la fórmula $\phi$. \\ \\
         \textbf{Base de inducción:} $\phi$ es atómica (no tiene operadores). 
+        
         \begin{itemize}
             \item $\phi = \top$. Entonces 
             $atom(\top)= 1 = 0 + 1 = con(\top) + 1$
@@ -102,15 +111,20 @@
             $atom(Var P) = 1 = 0 + 1 = con(Var P) + 1$
         \end{itemize}
 
+        \justify 
         \textbf{Hipótesis de inducción:} Supongamos que 
+        
         \begin{center}
             $atom(\phi') \leq con(\phi') + 1$ y $atom(\phi'') \leq con(\phi'') + 1$
         \end{center}
 
+        \justify
         \textbf{Paso inductivo:} Probamos la propiedad para dos casos:
+        
         \begin{itemize}
             \item[i)] $\phi = \neg \phi'$. Sabemos que  
             $atom(\phi) = atom(\phi')$ y $con(\phi) = con(\phi')$. Entonces, 
+            
             \begin{align*}
                 atom(\phi) &= atom(\neg \phi')
                            && \text{def. de $\phi$ en el caso $i$)} \\
@@ -123,6 +137,7 @@
             \end{align*} 
 
             \item[ii)] $\phi = (\varphi$ $\star$ $\psi)$. Entonces tenemos que 
+            
             \begin{align*}
                 atom(\phi) &= atom(\varphi \star \psi) 
                            && \text{def. de $\phi$ en el caso $ii)$} \\ 
@@ -137,11 +152,7 @@
                            &\leq con(\phi) + 1
                            && \text{def. de $\phi$ en el caso $ii)$}
             \end{align*}
-
         \end{itemize} 
-        
     \end{proof}
-
 \end{enumerate}
-
 \end{document}
