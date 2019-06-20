@@ -23,7 +23,11 @@
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ Tarea-Examen Semanal}
-\author{Rubí Rojas Tania Michelle}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        \# cuenta: 315121719
+        }
 \date{30 de abril de 2019}
 
 \begin{document}
@@ -33,6 +37,7 @@
         % Ejercicio 1.
         \item Enuncia la sintaxis y semnántica de la lógica de predicados. \\
         \textsc{Solución:}
+
         \begin{itemize}
             % Sixtaxis.
             \item[a)] Sintaxis de la lógica de predicados. \\
@@ -42,8 +47,10 @@
             dos partes ajenas entre sí, la parte común a todos los lenguajes
             determinada por los símbolos lógicos y auxiliares y la parte 
             particular, llamada tipo de semejanza o signatura del lenguaje.
+
             \begin{itemize}
                 \item La parte común a todos los lenguajes consta de:
+                
                 \begin{itemize}
                     \item Un conjunto finito de variables 
                     \texttt{$Var \{x_{1}, ..., x_{n},...\}$}
@@ -57,47 +64,59 @@
                 \end{itemize}
 
                 \item La signatura de un lenguaje en particular está dada por:
+                
                 \begin{itemize}
                     \item Un conjunto $\mathcal{P}$, posiblemente vacío, de
                     símbolos o letras de predicado:
+                    
                     \begin{center}
                         $P_{1}, ..., P_{n}, ...$
                     \end{center}
+
                     A cada símbolo se le asigna un índice o número de argumentos 
                     $m$, el cual se hace explícito escribiendo $P_{n}^{(m)}$ lo 
                     cual significará que el símbolo $P_{n}$ necesita de $m$ 
                     argumentos.
                     \item Un conjunto $\mathcal{F}$, posiblemente vacío, de
                     símbolos o letras de función:
+                    
                     \begin{center}
                         $f_{1},..., f_{n},...$
                     \end{center}
+
                     Análogamente a los símbolos de predicado cada símbolo de 
                     función tiene un índice asignado, $f_{n}^{(m)}$ significará 
                     que el símbolo $f_{n}$ necesita de $m$ argumentos.       
                     \item Un conjunto $\mathcal{C}$, posiblemente vacío, de 
                     símbolos de constante:
+                    
                     \begin{center}
                         $c_{1}, ..., c_{n}, ...$
-                    \end{center}      
+                    \end{center}
+
                     En algunos libros los símbolos de constante se consideran 
                     como parte del conjunto de símbolos de función, puesto que 
                     pueden verse como funciones de índice cero, es decir, 
                     funciones que no reciben argumentos.
                 \end{itemize}
 
+                \newpage
                 Dado que un lenguaje de primer órden queda determinado de manera única
                 por su signatura, abusaremos de la notación y escribiremos
+                
                 \begin{center}
                     $\mathcal{L} = \mathcal{P} \cup \mathcal{F} \cup \mathcal{C}$
                 \end{center}
+
                 para denotar al lenguaje dado por tal signarura.
             \end{itemize}
 
             Los términos del lenguaje son variables, constantes y funciones aplicados
             a estos.
+            
             \begin{teo}[\textbf{Términos}]
                 Los términos son definidos como sigue:
+                
                 \begin{itemize}
                     \item Una variable es un término.
                     \item Si $c \in F$ es una función nula, entonces $c$ es un término.
@@ -108,6 +127,7 @@
             \end{teo}
 
             En forma de Backus Naur se escribe:
+            
             \begin{center}
                 $t :: x$ $|$ $c$ $|$ $f(t_{1},...,t_{n})$
             \end{center}
@@ -116,6 +136,7 @@
                 Sean $P$ el conjunto de predicados y $F$ el conjunto de símbolos de 
                 función. Se define el conjunto de fórmulas sobre $(F, P)$
                 inductivamente usando la definición de Términos sobre F.
+                
                 \begin{itemize}
                     \item Si $p \in \mathcal{P}$ (símbolo de predicado) con 
                     índice $n \geq 1$ y si $t_{1}, t_{2}, ..., t_{n}$ son términos
@@ -132,11 +153,11 @@
                     entonces $\exists x \varphi$ es una fórmula.
                     \item No hay más.
                 \end{itemize}
-
             \end{teo}
 
             Es decir, la sintaxis de la lógica de predicados en forma de Backus 
             Naur se define como:
+            
             \begin{center}
                 $\varphi :: P(t_{1}, ..., t_{n})$ $|$ $\neg \varphi$ $|$ 
                 $\varphi \land \varphi$ $|$ $\varphi \lor \varphi$ $|$ 
@@ -147,6 +168,7 @@
 
             % Semántica.
             \item[b)] Semántica de la lógica de predicados.
+            
             \begin{teo}
                 Sea $\mathcal{L} = \mathcal{P} \cup \mathcal{F} \cup 
                 \mathcal{C}$ un lenguaje de primer órden. Una estructura o 
@@ -155,6 +177,7 @@
                 $M \neq \varnothing$ es un conjunto no vacío llamado el 
                 universo de la estructura e $\mathcal{I}$ es una función con
                 dominio $\mathcal{L}$ tal que 
+                
                 \begin{itemize}
                     \item Si $P^{(n)} \in \mathcal{P}$ entonces 
                     $\mathcal{I}(P)$ es una relación de $m$-argumentos sobre 
@@ -174,6 +197,7 @@
                 
                 Dada una interpretación $\mathcal{M} = \langle M, 
                 \mathcal{I} \rangle$, la siguiente notación es de utilidad:
+                
                 \begin{center}
                     $|\mathcal{M}| =_{def} M$ \\
                     $P^{\mathcal{I}} =_{def} \mathcal{I}(P)$ \\
@@ -182,6 +206,7 @@
                 \end{center}
             \end{teo}
 
+            \newpage
             \begin{teo}[\textbf{Estado o Asignación}]
                 Un estado, asignación o evaluación de las variables es una
                 función $\sigma: Var \rightarrow M$
@@ -192,6 +217,7 @@
                 de interpretación o significado de los términos con respecto a
                 $\sigma, \mathcal{I_{\sigma}}: TERM \rightarrow |\mathcal{M}|$
                 como sigue:
+                
                 \begin{center}
                     $\mathcal{I_{\sigma}}(x) = \sigma(x)$ \\
                     $\mathcal{I_{\sigma}}(c) = \mathcal{I}(c)$ \\
@@ -206,6 +232,7 @@
                 función de interpretación o significado de las fórmulas con 
                 respecto a $\sigma, \mathcal{I_{\sigma}}: FORM \rightarrow
                 \{ 0,1 \}$ como sigue:
+                
                 \begin{center}
                     $\mathcal{I_{\sigma}}(\bot) = 0$ \\
                     $\mathcal{I_{\sigma}}(\top) = 1$ \\
@@ -239,15 +266,19 @@
             \end{teo}
         
         \end{itemize}
+        
         % Ejercicio 2.
         \item Obtén la Forma Normal Prenex de la siguiente fórmula:
+        
         \begin{center}
             $\forall x \forall y[\exists z (A(x,z) \land B(y,z)) 
             \rightarrow \exists u C(x,y,z)]$
         \end{center}
+
         \textsc{Solución:}\\
         Sea $\varphi = \forall x \forall y[\exists z (A(x,z) \land B(y,z)) 
         \rightarrow \exists u C(x,y,z)]$. Primero, rectificamos a $\varphi$:
+        
         \begin{align*}
             rec(\varphi) 
             &= \forall x \forall y[\exists z (A(x,z) \land B(y,z)) \rightarrow 
@@ -257,7 +288,9 @@
             C(x,y,z)]
             && \text{$\alpha - equivalencia$}
         \end{align*}
+
         Ahora, obtenemos $fnn(\varphi)$:
+        
         \begin{align*}
             fnn(\varphi) 
             =& \forall x \forall y[\neg \exists w (A(x,w) \land B(y,w)) \lor
@@ -270,31 +303,39 @@
             lor C(x,y,z)]
             && \text{eq. lógica}
         \end{align*}
+        
         Finalmente, obtenemos $fnp(\varphi)$:
+        
         \begin{align*}
             fnp(\varphi) 
             =& \forall x \forall y \forall w [(\neg A(x,w) \lor \neg B(y,w)) 
             \lor C(x,y,z)] 
         \end{align*}
+        
         Por lo tanto, la Forma Normal Prenex de $\varphi$ es $fnp(\varphi)$, 
         definido anteriormente.
 
         % Ejercicio 3.
         \item Obtén la Forma Normal de Skolem de la siguiente fórmula:
+        
         \begin{center}
             $\forall x[(A(x,y) \rightarrow \exists y P(x,y,z)) 
             \rightarrow \neg \forall z Q(x,z)]$
         \end{center}
+        
         \textsc{Solución:} \\
         Sea $\varphi = \forall x[(A(x,y) \rightarrow \exists y P(x,y,z)) 
         \rightarrow \neg \forall z Q(x,z)]$. Primero, rectificamos $\varphi$:
+        
         \begin{align*}
             rec(\varphi)
             =& \forall x[(A(x,y) \rightarrow \exists u P(x,u,z)) 
             \rightarrow \neg \forall w Q(x,w)]
             && \text{$\alpha$ - equivalencia}
         \end{align*}
+        
         Ahora, obtenemos $fnn(\varphi)$:
+        
         \begin{align*}
             fnn(\varphi) 
             =& \forall x[\neg (\neg A(x,y) \lor \exists u P(x,u,z)) \lor \neg 
@@ -307,37 +348,45 @@
             \exists w \neg Q(x,w)]
             && \text{eq. lógica} 
         \end{align*}
+        
         Luego, obtenemos $fnp(\varphi)$:
+        
         \begin{align*}
             fnp(\varphi)
             =& \forall x \forall u \exists w[(A(x,y) \land \neg P(x,u,z)) \lor 
             \neg Q(x,w)] 
         \end{align*}
+        
         Finalmente, obtenemos $fns(\varphi)$:
+        
         \begin{align*}
             fns(\varphi) 
             =& \forall x \forall u[(A(x,y) \land \neg P(x,u,z)) \lor 
             \neg Q(x,f(x,u))] 
         \end{align*}
 
-        \newpage
         % Ejercicio 4.
         \item Obtén la Forma Normal Clausular de la siguiente fórmula:
+        
         \begin{center}
             $\{ \forall x (P(x,y) \rightarrow \exists y Q(y)), \exists x 
             \forall y (Q(y) \rightarrow P(y,x) \lor R(x)), \forall y(R(y) 
             \rightarrow \exists x \neg Q(a))\}$ \\
             $\models \forall x (Q(fa) \rightarrow Q(a))$
         \end{center}
+        
         \textsc{Solución:} \\
         Primero, reorganizamos nuestro conjunto de fórmulas:
+        
         \begin{center}
             $\{ \forall x (P(x,y) \rightarrow \exists y Q(y)), \exists x 
             \forall y (Q(y) \rightarrow P(y,x) \lor R(x)), \forall y(R(y) 
             \rightarrow \exists x \neg Q(a)), \neg \forall x (Q(fa) 
             \rightarrow Q(a)) \}$
         \end{center}
+        
         de donde
+        
         \begin{align*}
             \varphi =& \forall x (P(x,y) \rightarrow \exists y Q(y)) \land  
             \exists x \forall y (Q(y) \rightarrow P(y,x) \lor R(x)) \land 
@@ -346,6 +395,7 @@
         \end{align*}
 
         Así, primero rectificamos a $\varphi$:
+        
         \begin{align*}
             rec(\varphi) 
             =& \forall x (P(x,y) \rightarrow \exists y Q(y)) \land  
@@ -357,9 +407,11 @@
             \forall z(R(z) \rightarrow \neg Q(a)) \land \neg (Q(fa) 
             \rightarrow Q(a))
         \end{align*}
+        
         donde eliminamos los cuantificadores vacuos y aplicamos $\alpha$-
         equivalencia. \\
         Ahora, obtenemos $fnn(\varphi)$:
+        
         \begin{align*}
             fnn(\varphi) 
             =& \forall x (\neg P(x,y) \lor \exists s Q(s)) \land  
@@ -372,6 +424,7 @@
         \end{align*}
 
         Luego, obtenemos $fnp(\varphi)$:
+        
         \begin{align*}
             fnp(\varphi) 
             =& \forall x \exists s(\neg P(x,y) \lor Q(s)) \land  
@@ -383,6 +436,7 @@
         \end{align*}
 
         Después, obtenemos $fns(\varphi)$:
+        
         \begin{align*}
             fns(\varphi)
             =& \forall x \exists w \forall u \forall z[(\neg P(x,y) \lor 
@@ -394,6 +448,7 @@
         \end{align*}
 
         Finalmente, obtenemos $Cl(\varphi)$:
+        
         \begin{align*}
             Cl(\varphi)
             =& (\neg P(x,y) \lor Q(f(x))) \land  (\neg Q(u) \lor P(u, h(x)) 
@@ -401,21 +456,25 @@
             \land \neg Q(a)
         \end{align*}
 
-        \newpage
         % Ejercicio 5.
         \item Demuestra mediante deducción natural lo siguiente:
+        
         \begin{itemize}
             % Ejercicio 5.1
             \item $\forall x (Hx \rightarrow Gx \land Kx), 
             \neg \exists z(Fz \land Gz) \vdash \forall w \neg (Fw \land Hw)$
+            
             \begin{proof}
                 Utilizando equivalencias lógicas, basta mostrar que 
+                
                 \begin{center}
                     $\Gamma = \{\forall x (Hx \rightarrow Gx \land Kx), 
                     \forall z (\neg Fz \lor \neg Gz)\} \vdash \forall w 
                     \neg (Fw \land Hw)$
                 \end{center}
+                
                 Entonces 
+                
                 \begin{align*}
                     1.\; \; &\Gamma \vdash \forall x (Hx \rightarrow Gx \land Kx)
                     && \text{Hip} \\
@@ -428,6 +487,7 @@
                 \end{align*}
 
                 de donde, tenemos dos casos:
+                
                 \begin{align*}
                     5. \; \; &\Gamma, \neg Fw \vdash \neg Fw
                     && \text{Hip} \\
@@ -455,15 +515,16 @@
 
                 Por $(\lor E)$ podemos concluir que $\Gamma \vdash \forall w 
                 \neg (Fw \land Hw)$.
-                
             \end{proof}
 
             % Ejercicio 5.2
             \item $\exists x Fx \rightarrow \forall y(Gy \rightarrow Hy),
             \exists z Jz \rightarrow \exists w Gw \vdash \exists z(Fz \land Jz)
             \rightarrow \exists v Hv$
+            
             \begin{proof}
                 Por el Teo. de DN basta mostrar
+                
                 \begin{center}
                     $\Gamma = \{ \exists x Fx \rightarrow 
                     \forall y(Gy \rightarrow Hy), \exists z Jz \rightarrow 
@@ -471,6 +532,7 @@
                 \end{center}
                 
                 Entonces
+                
                 \begin{align*}
                     1. \; \; &\Gamma \vdash \exists x Fx \rightarrow 
                     \forall y(Gy \rightarrow Hy)
@@ -508,9 +570,9 @@
                     16. \; \; &\Gamma \vdash \exists u Hu 
                     && \text{$(\exists E) 3, 15$}
                 \end{align*}
+                
                 Por lo tanto, podemos concluir que $\Gamma \vdash \exists u Hu$.
             \end{proof}
-
         \end{itemize}
     \end{enumerate}
 \end{document}
