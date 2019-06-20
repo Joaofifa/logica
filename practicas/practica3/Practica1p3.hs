@@ -35,10 +35,12 @@ maxdegree (Graph{gId = gId, nodes = (x:xs) , edges = e}) =
 
 {- |4| Función path: Recibe dos nodos y una gráfica. Nos dice si existe un
    camino entre ambos nodos.
-
-path :: String -> String -> Graph -> Bool
-path = error "Implementar"
 -}
+path :: String -> String -> Graph -> Bool
+path _ _ (Graph {gId = gId, nodes = n, edges = []}) = False
+path nodoInicial nodoFinal grafica
+                | (elemm nodoInicial (neighbors nodoFinal grafica)) = True
+                | otherwise = (auxPath grafica nodoInicial (neighbors nodoFinal grafica))
 
 {- |5| Funciónn delete: Recibe un nodo y una gráfica. Elimina el nodo de la 
    gráfica.
@@ -68,8 +70,7 @@ simplify phi = case phi of
     Top -> Top 
     Bot -> Bot
     Var p -> Var p
-    Neg (Var p) -> Neg (simplify (Var p))
-    Neg (Neg (Var p)) -> simplify (Var p)
+    Neg p -> simplify p
     Conj p q -> Conj (simplify p) (simplify q)
     Disy p q -> Disy (simplify p) (simplify q)
     Impl p q -> Impl (simplify p) (simplify q)
@@ -122,7 +123,7 @@ inter phi [(valor, k)] = case phi of
     Conj p q -> (inter p [(valor, k)]) && (inter q [(valor, k)])
     Disy p q -> (inter p [(valor, k)]) || (inter q [(valor, k)])
     Impl p q -> not (inter p [(valor, k)]) || (inter q [(valor, k)])
-    Syss p q -> (inter p [(valor, k)]) && (inter q [(valor, k)]) 
+    Syss p q -> (inter p [(valor, k)]) == (inter q [(valor, k)]) 
 
 {- |10| Función fnc: Recibe una expresión proposicional P. Regresa la Forma
    Normal Conjuntiva de una expresión proposicional P.
@@ -153,9 +154,9 @@ esFNC phi = case phi of
 {- |12| Función correcto: Recibe una lista de expresiones proposicionales 
    [P, Q,..] y una conclusión C. Nos dice si el argumento es lógicamente 
    correcto o no.
--}
 correcto :: [Prop] -> Prop -> Bool
 correcto gamma phi = consecuencia gamma phi
+-}
 
 -- Funciones auxiliares. 
 
@@ -231,21 +232,6 @@ distri phi psi = case (phi, psi) of
 consecuencia :: [Prop] -> Prop -> Bool
 consecuencia gamma phi = insatisfConj ((Neg phi) : gamma)
 
-{- |Aux. 8| Función insatisfConj: Recibe una lista de expresiones 
-   proposicionales [P, Q, ...]. Nos dice si el conjunto de proposiciones
-   es insatisfacible.
--}
-insatisfConj :: [Prop] -> Bool
-insatisfConj [psi] = modelos(psi) == []
-
-{- |Aux. 9| Función modelos: Regresa la lista con todos aquellos estados I 
-   tales que I(phi) = 1
--}
-modelos :: Prop -> [Prop]
-modelos psi = 
-    [i | i <- estados psi, (inter psi [("Top", i)]) == True,  
-    (inter psi [("Bot", i)]) == True]
-
 {- |Aux. 10| Función estados: Recibe una expresión proposicional. Devuelve
    la lista con los 2^n estados distintos para la expresión proposicional.
 -}
@@ -265,3 +251,37 @@ vars phi = case phi of
     Disy p q -> vars (p) ++ vars (q)
     Impl p q -> vars (p) ++ vars (q)
     Syss p q -> vars (p) ++ vars (q)
+
+{- |Aux. 11| Función elemm : Recibe un elemento y una lista. Nos dice si el elemento
+   pertenece a la lista pasada como parámetro.
+
+   Descripción: Si la lista entonces nos regresará False como resultado. En otro caso,
+   revisa si el elemento x es igual a la cabeza de la lista, de ser así nos regresa True,
+   en otro caso se hace recursión sobre la cola de la lista y se repite lo anterior.
+
+   Ejemplos de entrada:
+   *PracticaN> elemm 'a' ['a','b']
+   True
+-}
+
+elemm :: (Eq a) => a -> [a] -> Bool
+elemm _ []       = False
+elemm x (y:ys)   = x == y || elem x ys
+
+{- |Aux. 9| Función auxPath. Recibe una gráfica, una cadena y una lista de cadenas.
+   La cadena representa el nodo inicial y la lista de cadenas sus vecinos. 
+   Nos regresa True si entre dos nodos existe un camino y False en otro caso.
+
+   Descripción:
+   Si la lista de vecinos es vacía, entonces no existen vestices adyacentes en la
+   gráfica y por lo tanto no existe ningún camino, así que la función regresará 
+   False como resultado.
+
+   En otro caso, revisa que el nodo inicial pertenezca a la lista de vecinos o
+   a los vecinos de sus vecinos.   
+-}
+
+auxPath :: Graph -> String -> [String] -> Bool
+auxPath grafica nodoInicial [] = False
+auxPath grafica nodoInicial (vecinos:xs) = (elemm nodoInicial (neighbors vecinos grafica)) || 
+                                           (auxPath grafica nodoInicial xs)

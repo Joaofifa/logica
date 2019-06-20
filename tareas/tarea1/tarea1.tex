@@ -24,14 +24,16 @@
 \usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Lógica Computacional \\ Tarea 1}
-\author{Rubí Rojas Tania Michelle}
+\author{Rubí Rojas Tania Michelle \\
+        Universidad Nacional Autónoma de México \\
+        taniarubi@ciencias.unam.mx \\
+        \# cuenta: 315121719}
 \date{28 de febrero de 2019}
 
 \begin{document}
     \maketitle
 
     \begin{enumerate}
-        
         % Ejercicio 1.
         \item Enuncia formalmente lo siguiente:
         \begin{itemize}
@@ -76,6 +78,7 @@
             % Definición 2. 
             \item[b)] Semántica de la lógica proposicional. \\ 
             \textit{Solución:}
+
             \newtheorem{teo}{Definición}[]
             \begin{teo} 
                 El tipo de valores booleanos denotado \textbf{Bool} se define
@@ -85,9 +88,11 @@
             \begin{teo}
                 Un estado o asignación de las variables (proposicionales) es 
                 una función 
+
                 \begin{center}
                     $\mathcal{I} : (Var P) \rightarrow Bool$
                 \end{center}
+
                 Dadas $n$ variables proposicionales existen $2^{n}$ estados
                 distintos para estas variables.
             \end{teo}
@@ -98,6 +103,7 @@
                 interpretación de las fórmulas con respecto a $\mathcal{I}$ 
                 como la función $\mathcal{I^{\star}} : PROP \rightarrow Bool$
                 tal que: 
+
                 \begin{itemize}
                     \item $\mathcal{I^{\star}}(p) = \mathcal{I}(p)$ para 
                     $p \in Var P$, es decir, 
@@ -118,10 +124,8 @@
                     \item $\mathcal{I^{\star}}(\varphi \leftrightarrow \psi) = 1$
                     sii $\mathcal{I^{\star}}(\varphi) = 
                     \mathcal{I^{\star}}(\psi)$
-
                 \end{itemize}
             \end{teo}
-
         \end{itemize}
 
         % Ejercicio 2.
@@ -151,11 +155,14 @@
         % Ejercicio 3.
         \item Utilizando interpretaciones verifica si el siguiente argumento
         es verdadero o falso.
+
         \begin{center}
             $\{ (p \land q), (q \lor r), (\neg s) \} \models p \land s$
         \end{center}
+
         \textit{Solución:} Debemos mostrar que $\mathcal{I}(p \land s) = 1$.
-        Entonces 
+        Entonces
+
         \begin{align*}
             \mathcal{I}(p \land q) &= 1
             && \text{Premisa (1)} \\
@@ -180,33 +187,33 @@
         % Ejercicio 4.
         \item Demuestra que los siguientes secuentes son válidos usando
         deducción natural.
-        \begin{itemize}
 
+        \begin{itemize}
             % Demostración 1.
             \item[a)] $\{ p \rightarrow (q \lor r) \} \vdash
             (p \rightarrow q) \lor (p \rightarrow r)$
+
             \begin{proof}
-                Utilizando una estrategia de derivación que está en las notas 
-                de clase, basta derivar 
-                $\{ p \rightarrow (q \lor r) \} \vdash (p \rightarrow q)$ o
-                bien, $\{ p \rightarrow (q \lor r) \} \vdash 
-                (p \rightarrow r)$. Así, 
+                Sabemos que en DN es válido utilizar equivalencias lógicas,
+                por lo que nuestro contexto queda de la forma:
+
                 \begin{align*}
-                    p \rightarrow (q \lor r)
-                    && \text{Premisa (1)} \\
-                    \neg p \lor (q \lor r)
-                    && \text{Eliminación de equivalencia en 1, (2)} \\
-                    (\neg p \lor \neg p) \lor (q \lor r)
-                    && \text{idempotencia en 2, (3)} \\
-                    (\neg p \lor q) \lor (\neg p \lor r)
-                    && \text{conmuta. y asocia. en 3, (4)} \\
-                    (p \rightarrow q) \lor (p \rightarrow r)
-                    && \text{$P \rightarrow Q \equiv \neg P \lor Q$, 
-                    en 4, (5)}
+                    \Gamma &= p \rightarrow (q \lor r)
+                    && \text{Hip.} \\
+                    &= \neg p \lor (q \lor r)
+                    && \text{equiv. logica} \\
+                    &=  (\neg p \lor \neg p) \lor (q \lor r)
+                    && \text{idempotencia} \\
+                    &= (\neg p \lor q) \lor (\neg p \lor r)
+                    && \text{conmutatividad y asociatividad} \\
+                    &= (p \rightarrow q) \lor (p \rightarrow r)
+                    && \text{equiv. lógica}
                 \end{align*}
-                Por lo tanto, podemos concluir que es válido 
+
+                Así, por la definición de consecuencia lógica, podemos 
+                concluir que 
                 $\{ p \rightarrow (q \lor r) \} \vdash
-                (p \rightarrow q) \lor (p \rightarrow r)$
+                (p \rightarrow q) \lor (p \rightarrow r)$.
 
             \end{proof}
 
@@ -214,29 +221,32 @@
             \item[b)] $\{ \} \vdash p \lor (q \land r) 
             \rightarrow (p \land r) \lor q$
             \begin{proof}
-                Utilizando una estrategia de derivación que está en las notas
-                de clase, basta derivar 
-                $\{p\lor (q \land r) \} \vdash (p \land r) \lor q$. Así, 
+                Por el Teo. de DN basta derivar
+                $\{p\lor (q \land r) \} \vdash (p \land r) \lor q$. Sabemos que
+                es válido utilizar equivalencias lógicas en DN, por lo que 
+                nuestro contexto queda de la forma 
+
                 \begin{align*}
-                    p \lor (q \land r) 
-                    && \text{Premisa (1)} \\
-                    q \lor (p \land r) 
-                    && \text{Conmuta. y asocia. en 1, (2)} \\
-                    (p \land r) \lor q
-                    && \text{Conmutatividad en 2, (3)}
+                    \Gamma &= p \lor (q \land r) 
+                    && \text{Hip.} \\
+                    &= q \lor (p \land r) 
+                    && \text{conmutatividad y asociatividad} \\
+                    &= (p \land r) \lor q
+                    && \text{conmutatividad}
                 \end{align*}
-                Por lo tanto, podemos concluir que es válido
+
+                Así, por la definición de consecuencia lógica, podemos
+                concluir que 
                 $\{p\lor (q \land r) \} \vdash (p \land r) \lor q$
             \end{proof}
-        
         \end{itemize}
 
         \newpage
         % Ejercicio 5.
         \item Realiza las siguientes sustituciones eliminando los paréntesis
         innecesarios en el resultado:
-        \begin{itemize}
-            
+
+        \begin{itemize}    
             % Sustitución 1.
             \item[a)] $((q \lor r) [q, p := \neg p, s] 
             \rightarrow (r \land \neg (r \leftrightarrow p)))
@@ -255,25 +265,28 @@
             \item[b)] $(u \lor t) \rightarrow 
             (\neg r \leftrightarrow (u \leftrightarrow s))[r, u, t := u, t, r]$ \\
             \textit{Solución:}
+
             \begin{align*}
                 (u \lor t) \rightarrow (\neg r \leftrightarrow (u \leftrightarrow s))
                 [r, u, t := u, t, r]
                 &= (u \lor t) \rightarrow (\neg (u) \leftrightarrow ((t) \leftrightarrow s)) \\
                 &= (u \lor t) \rightarrow (\neg u \leftrightarrow (t \leftrightarrow s))
             \end{align*}
-
         \end{itemize}
 
         % Ejercicio 6. 
         \item Realizar el Tableaux de la siguiente fórmula en $PL$ y da el
         modelo que satisfaga la fórmula en caso de que el Tableaux sea 
         abierto.
+
         \begin{center}
             $\neg ((q \lor \neg (p \rightarrow r)) 
             \rightarrow (p \land (q \rightarrow r)))$
         \end{center}
+
         \textit{Solución:} Primero, eliminamos las implicaciones y simplificamos la 
         expresión para facilitar la elaboración de nuestro Tableaux:
+        
         \begin{align*}
             \neg ((q \lor \neg (p \rightarrow r)) 
             \rightarrow (p \land (q \rightarrow r)))
@@ -344,6 +357,7 @@
             \item[a)] $((q \rightarrow r) \rightarrow q) 
             \land (r \rightarrow q)$ \\
             \textit{Solución:}
+
             \begin{align*}
                 ((q \rightarrow r) \rightarrow q) \land (r \rightarrow q)
                 &\equiv (\neg (\neg q \lor r) \lor q) \land (\neg r \lor q)
@@ -365,6 +379,7 @@
 
             \item[b)] $\neg p \land q \rightarrow p \land (r \rightarrow q)$ \\
             \textit{Solución:} 
+
             \begin{align*}
                 \neg p \land q \rightarrow p \land (r \rightarrow q)
                 &\equiv (\neg p \land q) \rightarrow (p \land (r \rightarrow q))
@@ -383,8 +398,7 @@
 
             Como $\varphi =  (p \lor \neg q) \land (\neg r \lor q)$ es una 
             conjunción de disyunciones, entonces $\varphi$ es de la Forma 
-            Normal Conjuntiva.
-             
+            Normal Conjuntiva. 
         \end{itemize}
 
         % Ejercicio 8.
@@ -392,6 +406,7 @@
         $\neg (w \rightarrow \neg p) \lor \neg ((\neg s \leftrightarrow w) 
         \lor (p \land s))$. \\
         \textit{Solución:} 
+
         \begin{align*}
             \neg (w \rightarrow \neg p) \lor \neg ((\neg s \leftrightarrow w) 
             \lor (p \land s))
@@ -409,6 +424,7 @@
 
         Por falta de espacio, no pude colocar arriba la justificación de cada 
         paso, pero lo explico en seguida:
+
         \begin{itemize}
             \item Eliminamos la implicación, ya que 
             $P \rightarrow Q \equiv \neg P \lor Q$.
@@ -425,10 +441,12 @@
         \land \neg p) \lor \neg s$ es una disyunción de conjunciones o
         literales, entonces $\varphi$ es de la Forma Normal Disyuntiva.
         
+        \newpage
         % Ejercicio 9.
         \item Obtener la Forma Normal Negativa de 
         $(p \land (q \rightarrow r)) \rightarrow s$ \\
         \textit{Solución:}
+
         \begin{align*}
             (p \land (q \rightarrow r)) \rightarrow s 
             &\equiv \neg (p \land (\neg q \lor r)) \lor s
@@ -446,11 +464,9 @@
         $\varphi$ sólo afectan a fórmulas atómicas, entonces $\varphi$
         es de la Forma Normal Negativa.
             
-        \newpage
         % Ejercicio 10.
         \item 
         \begin{itemize}
-
             % Ejercicio 10.1
             \item [a)] Define una función recursiva \textbf{pa} que, dada una 
             fórmula $\phi$, devuelve el número de paréntesis abiertos $"("$ que
@@ -484,7 +500,8 @@
             % Ejercicio 10.3
             \item[c)] Sea $\phi = ((( \neg p \land q) \lor \neg r) 
             \rightarrow r)$. Prueba que 
-            \textbf{pa}$(\phi)$ - \textbf{pc}$(\phi) = 0$. 
+            \textbf{pa}$(\phi)$ - \textbf{pc}$(\phi) = 0$.
+
             \begin{proof}
                 Aplicamos la definición de \textbf{pa} a $\phi$:
 
@@ -507,6 +524,7 @@
                 \end{align*}
 
                 Análogamente, aplicamos la definición de \textbf{pc} a $\phi$:
+                
                 \begin{align*}
                     pc(\phi) 
                     &= pc(((( \neg p \land q) \lor \neg r) \rightarrow r))
@@ -527,22 +545,21 @@
 
                 Por lo tanto, 
                 \textbf{pa}$(\phi)$ - \textbf{pc}$(\phi) = 3 - 3 = 0$.
-
             \end{proof}
-
         \end{itemize}
 
-        \newpage
         % Ejercicio 11.
         \item Define recursivamente una función \textbf{compress} que comprime 
         los elementos consecutivos repetidos de una lista. Ejemplo:
         \textit{> compress ''mooloolaba'' = ''mololaba''}. Prueba, usando tu
         definición, que:
+
         \begin{center}
             \textit{compress [1,2,2,3,3,3] = [1,2,3]}
         \end{center}
 
         \textit{Solución:}
+
         \begin{lstlisting}
             compress :: (Eq a) => [a] -> [a]
             compress [] = []
@@ -553,6 +570,7 @@
          \end{lstlisting}
 
          Finalmente, probemos que \textit{compress [1,2,2,3,3,3] = [1,2,3]}
+
          \begin{proof}
             \begin{align*}
                 compress [1,2,3,3,3] 
@@ -563,9 +581,6 @@
                 &= 1 : 2 : [3] \\
                 &= [1, 2, 3]
             \end{align*} 
-
          \end{proof}
-
     \end{enumerate}
-
 \end{document}
