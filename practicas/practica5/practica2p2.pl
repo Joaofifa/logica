@@ -152,18 +152,7 @@ sumaLista([X|XS], R) :- sumaLista(XS, R1), R is X + R1.
  * L1 es igual al cabeza de la lista reversa de L2.
  *
 */
-acumulador(XS,YS) :- reverseL(XSR,YSR),reverse(XS,XSR),reverse(YS,YSR)
-.
-reverseL([X|XS],[Y|YS]) :- reverseL(XS,YS), Y is SUM, sum([X|XS],SUM).
-
-sum([],0).
-sum([X|XS],total) :- sum(XS,total1), total is X + total1.
-
-/*
-acumulador([_,X1],[Y,Y1]) :- Y1 is X1+Y.
-acumulador([X|XS],[Y|YS]) :- Y is acuAux(X,Y,YS), acumulador(XS,YS).
-
-acuAux(X,Y,[Z|_]) :- Z is X+Y.*/
+acumulador(L,K) :- acumulador_aux(L,0,K).
 
 /**
  * |8| Regla update. Recibe cuatro parámetros: N, E, XS y R.
@@ -196,6 +185,7 @@ acuAux(X,Y,[Z|_]) :- Z is X+Y.*/
    false.
 
  */
+update(_,_, [], []).
 update(0, E, [_|XS], [E|XS]).
 update(N, E, [X|XS], [X|YS]) :- N>0, M is N-1, update(M, E, XS, YS).
 
@@ -270,15 +260,38 @@ union(A, B, C) :- concatena(A, B ,C).
  * se llega a N = 0.
  * ésta regla para nuestra implementación de union.
  * 
- * Ejemplos de entrada:
  */
 
-splitL([X|XS],0,[X],XS).
-splitL([X|XS],N,[X|YS],L2) :- M is N-1, splitL(XS,M,YS,L2).
+splitL([],_,[],[]).
+splitL([X|XS],X,[X],XS).
+splitL([Y|XS],X,[],[Y|XS]) :- X < Y.
+splitL([Y|XS],X,[Y|LS],RS) :- X > Y, splitL(XS,X,LS,RS).
 
 /*
  * |12| Regla drop. Recibe tres parámetros: N, L y R.
  * La regla se satisface si se cumple la propiedad de que se eliminó cada
  * N-ésimo elemento de la lista L. La lista resultante se guarda en la
  * variable R.
+ *
  */
+drop(N,L,R):- drop_aux(L,N,1,R).
+
+/* Reglas auxiliares. */
+
+/*
+ * |1| Auxiliar drop. Recibe cuatro parámetros: L, N, M, R.
+ * Ignora al elemento en la posición N para que ya no aparezca en la lista
+ * resultante.
+ *
+ */
+drop_aux([], _, _, []).
+drop_aux([_|XS], N, N, R) :- drop_aux(XS, N, 1, R).
+drop_aux([X|XS], N, M, [X|R]) :- M < N, M1 is M + 1, drop_aux(XS, N, M1, R).
+
+/*
+ * |2| Auxiliar acumulador. Recibe tres parámetros: L, N, M, R.
+ * Acumula la suma de los elementos anteriores en la i-ésima posición.
+ * 
+ */
+acumulador_aux([],_,[]).
+acumulador_aux([X|XS],S,[Y|YS]) :- Y is X + S, acumulador_aux(XS,Y,YS).
