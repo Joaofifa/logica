@@ -45,7 +45,12 @@ Compute odd 101.*)
 
 (*Ejercicio 3*)
 Theorem proove_false_x_x : ~False.
-Admitted.
+Proof.
+unfold not.
+intros proove_false.
+exact proove_false.
+Qed.
+
 
 Require Import Bool.
 
@@ -57,10 +62,12 @@ match b1, b2 with
 |false, false => true
 end.
 
-(*Ejercicio 4*
+(*Ejercicio 4*)
 Definition ifb (b1 b2 b3 : bool) : bool :=
-AQUI VA SU CÓDIGO
-*)
+match b1  with
+|true => b2
+|false => b3
+end.
 
 Lemma neutro_aditivo: forall n:nat, 0+n = n.
 Proof.
