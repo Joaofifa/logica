@@ -70,7 +70,7 @@ hermano(M,N) :- padres(A,B,M), padres(A,B,N), M \== N.
 % | 5 | Regla mediohermano. Recibe dos parámetros: D y E. La regla es 
 % satisfactoria cuando D es mediohermano de E.
 mediohermano(D,E) :- 
-    ((papa(A,D), papa(A,E)); (mama(A,D), mama(A,E))), not(hermano(D,E)), 
+    ((papa(A,D), papa(A,E)); (mama(A,D), mama(A,E))), \+ (hermano(D,E)), 
     D \== E.
 
 % | 6 | Regla tio. Recibe dos parámetros: S y T. La regla es 
