@@ -1,4 +1,5 @@
 module Practica1p3 where
+import Data.List
 
 data Graph = Graph { gId :: Int, 
                      nodes :: [String],
@@ -49,18 +50,25 @@ delete :: String -> Graph -> Graph
 delete a (Graph {gId = gId, nodes = (xs), edges = e}) = 
     (Graph {gId = gId, nodes = (deleteElemento a xs), edges = (deleteEdges a e)})
 
--- Tipo de dato para representar expresiones de la lógica proposicional.
-data Prop = Top -- True
-           | Bot -- False
-           | Var String -- Var P
-           | Neg Prop -- neg P
-           | Conj Prop Prop -- (P ∧ Q)
-           | Disy Prop Prop -- (P ∨ Q)
-           | Impl Prop Prop -- (P → Q)
-           | Syss Prop Prop -- (P ↔ Q)
-           deriving (Eq, Ord, Show)
+-- Las variables proposicionales son del tipo Char.
+type VarP = Char
 
-type Estado = [(String, Prop)]
+{- Los estados son listas de tuplas donde la primer componente de la tupla es 
+   una variable proposicional y su segundo componente será el valor booleano 
+   asociado a dicha variable.
+-}
+type Estado = [(VarP, Bool)]
+
+-- El tipo de dato para representar las fórmulas proposicionales.
+data Prop = Top -- True
+          | Bot -- False
+          | Var VarP  -- Var "R"
+          | Neg Prop   -- ~P
+          | Conj Prop Prop -- P ^ Q
+          | Disy Prop Prop -- P v Q
+          | Impl Prop Prop -- P -> Q
+          | Syss Prop Prop -- P <-> Q
+          deriving (Eq,  Ord, Show)
 
 {-|6| Función simplify: Recibe una expresión proposicional P. Regresa una
       expresión proposional P' equivalente a P sin dobles negaciones en P'.
@@ -110,20 +118,41 @@ demorgan phi = case phi of
     Impl p q -> Impl (demorgan p) (demorgan q)
     Syss p q -> Syss (demorgan p) (demorgan q)
 
-{- |9| Función inter: Recibe una expresión proposicional P y un estado
-   booleano. Regresa la interpretación de la expresión proposicional P con el
-   estado dado. 
+{- |9| Función interp. Recibe una fórmula (phi) y un estado e. Regresa la 
+   interpretación de phi con el estado dado.
+
+   Descripción:
+   Siguiendo nuestra definición de interpretación, sabemos que
+   - I(v) = v, donde v es una variable proposicional. 
+   - I(Top) = 1
+   - I(Bot) = 0
+   - I(~P) = 1 <-> I(P) = 0
+   - I(P ^ Q) = 1 <-> I(P) = I(Q) = 1
+   - I(P v Q) = 0 <-> I(P) = I(Q) = 0
+   - I(P -> Q) = 0 <-> I(P) = 1 e I(Q) = 0
+   - I(P <-> Q) = 1 <-> I(P) = I(Q)
+   
+   donde la única modificación que hacemos en nuestra implementación es para 
+   el operador Impl, ya que utilizamos una equivalencia lógica para facilitar
+   el cálculo de la interpretación de dicho operador.
+
+   Ejemplos de entrada:
+   *Main> interp (Conj (Var 'p') (Var 'q')) [('p', True), ('q', False)]
+   False
+
+   *Main> interp (Disy (Neg (Var 'x')) (Neg (Var 'y'))) [('x', False), ('y', True)]
+   True
 -}
-inter :: Prop -> Estado -> Bool
-inter phi [(valor, k)] = case phi of 
-    Top -> True 
+interp :: Prop -> Estado -> Bool
+interp phi e = case phi of 
+    Top -> True
     Bot -> False 
-    Var p -> elem p [valor] 
-    Neg p -> not (inter p [(valor, k)])
-    Conj p q -> (inter p [(valor, k)]) && (inter q [(valor, k)])
-    Disy p q -> (inter p [(valor, k)]) || (inter q [(valor, k)])
-    Impl p q -> not (inter p [(valor, k)]) || (inter q [(valor, k)])
-    Syss p q -> (inter p [(valor, k)]) == (inter q [(valor, k)]) 
+    Var v -> buscaBool v e
+    Neg p -> not (interp p e)
+    Conj p q -> (interp p e) && (interp q e)
+    Disy p q -> (interp p e) || (interp q e)
+    Impl p q -> not (interp p e) || (interp q e)
+    Syss p q -> (interp p e) == (interp q e)
 
 {- |10| Función fnc: Recibe una expresión proposicional P. Regresa la Forma
    Normal Conjuntiva de una expresión proposicional P.
@@ -151,12 +180,27 @@ esFNC phi = case phi of
     Conj p q-> isClause p && isClause q 
     _ -> False 
 
-{- |12| Función correcto: Recibe una lista de expresiones proposicionales 
-   [P, Q,..] y una conclusión C. Nos dice si el argumento es lógicamente 
-   correcto o no.
+{- |12| Función correcto. Recibe una lista de fórmulas proposicionales (gamma) 
+   y una conclusión (phi). Nos dice si el argumento es lógicamente correcto o 
+   no.
+
+   Descripción:
+   Un argumento con premisas A1, A2, ..., An y una conclusión B es lógicamente
+   correcto si {A1, A2, ..., An} es consecuencia lógica de B. Así, basta saber
+   si (gamma) es consecuencia lógica de (phi).
+
+   Ejemplos de entrada:
+   *PracticaN> correcto [Impl(Var 'P')(Var 'Q'), Impl(Var 'R')(Var 'S'), 
+   Disy(Var 'P')(Var 'R'), Neg(Conj(Var 'Q')(Var 'S'))] 
+   (Impl(Var 'P')(Conj(Neg(Var 'R'))(Var 'S')))
+   False
+
+   *PracticaN> correcto [Impl(Var 'P')(Var 'Q'), Impl(Var 'Q')(Var 'R'), 
+   Disy(Conj(Var 'P')(Neg(Var 'R')))(Conj(Var 'R')(Neg(Var 'P')))] (Var 'R')
+   True
+-}
 correcto :: [Prop] -> Prop -> Bool
 correcto gamma phi = consecuencia gamma phi
--}
 
 -- Funciones auxiliares. 
 
@@ -185,6 +229,22 @@ deleteEdges a [] = []
 deleteEdges a ((x1,x2):xs)
    | a == x1 || a ==x2 = deleteEdges a xs
    | otherwise = ((x1,x2):deleteEdges a xs)
+
+{- |Aux. 4 | Función buscaBool. Recibe una variable proposicional varP, y 
+   un estado e = [(VarP, Bool)]. Regresa la segunda componente del primer par 
+   ordenado de la lista de estados I, cuyo primer componente sea igual a la
+   variable varP. Es decir, regresa el valor booleano asociado a la primer 
+   variable proposicional varP que encuentre.
+
+   Ejemplos de entrada:
+   *Main> buscaBool 'r' [('p', True), ('q', True), ('r', False)]
+   False
+
+   *Main> buscaBool 'x' [('l', False), ('x', True), ('m', True), ('s', True)]
+   True
+-}
+buscaBool :: (Eq varP) => varP -> [(varP, Bool)] -> Bool
+buscaBool v e = head [b | (v',b) <- e, v == v']
     
 {- |Aux. 4| Función isClause: Recibe una expresión proposicional P. Nos dice
    si una expresión proposicional P es una cláusula.
@@ -225,34 +285,159 @@ distri phi psi = case (phi, psi) of
     (n, Conj phi psi) -> Conj (distri n psi) (distri n psi)
     (phi, psi) -> Disy phi psi
 
-{- |Aux. 7| Función consecuencia: Recibe una lista de expresiones 
-   proposicionales [P, Q,..] y una conclusión C. Nos dice si la conclusión
-   es consecuencia lógica de los argumentos.
+{- |Aux. 7| Función varsConj. Recibe una lista de fórmulas (gamma). Regresa la
+   lista de variables proposicionales que figuran en todas las fórmulas que 
+   están en gamma.
+
+   Descripción:
+   Utilizamos una lista de comprensión para obtener todas las variables que 
+   figuran en las fórmulas que contiene gamma. Utilizamos concat para obtener
+   la lista de listas que tenemos después de aplicar la función "vars" a cada
+   una de las fórmulas que tiene gamma.
+
+   Ejemplos de entrada:
+   *PracticaN> varsConj [Impl(Var 'P')(Var 'Q'), Disy(Var 'P')(Var 'R')]
+   "PQPR"
+
+   *PracticaN> varsConj [Conj(Neg(Var 'J'))(Var 'A'), Syss(Var 'D')(Var 'K'), 
+   Disy(Var 'K')(Var 'P'), Impl(Var 'R')(Var 'M'), Neg(Var 'A')]
+   "JADKKPRMA"
+-}
+varsConj :: [Prop] ->[VarP]
+varsConj gamma = concat [vars psi | psi <- gamma]
+
+{- |Aux. 8| Función estadosConj. Recibe una lista de fórmulas (gamma). Regresa
+   la lista con los estados posibles para (phi).
+
+   Descripción:
+   Para obtener la lista de estados, debemos obtener el subconjunto de listas
+   de la lista de variables proposicionales de (gamma), hacer las combinaciones
+   posibles entre los estados y los valores booleanos e ir concatenando las
+   tuplas para formar una lista (que es justo lo que hacemos en la función
+   "subconj"), Y como subconj trabaja con listas de comprensión, al final 
+   tendremos una lista de listas con los estados deseados.
+
+   Ejemplos de entrada:
+   *PracticaN> estadosConj [Disy(Neg(Var 'P'))(Var 'Q'), Impl(Var 'R')(Var 'S')]
+   [[('P',True),('Q',True),('R',True),('S',True)], 
+   [('P',True),('Q',True),('R',True),('S',False)],
+   [('P',True),('Q',True),('R',False),('S',True)],
+   [('P',True),('Q',True),('R',False),('S',False)],
+   [('P',True),('Q',False),('R',True),('S',True)],
+   [('P',True),('Q',False),('R',True),('S',False)],
+   [('P',True),('Q',False),('R',False),('S',True)],
+   [('P',True),('Q',False),('R',False),('S',False)],
+   [('P',False),('Q',True),('R',True),('S',True)],
+   [('P',False),('Q',True),('R',True),('S',False)],
+   [('P',False),('Q',True),('R',False),('S',True)],
+   [('P',False),('Q',True),('R',False),('S',False)],
+   [('P',False),('Q',False),('R',True),('S',True)],
+   [('P',False),('Q',False),('R',True),('S',False)],
+   [('P',False),('Q',False),('R',False),('S',True)],
+   [('P',False),('Q',False),('R',False),('S',False)]]
+-}
+estadosConj :: [Prop] -> [Estado]
+estadosConj gamma = subconj (varsConj gamma)
+    where subconj [] = [[]]
+          subconj (x:xs) = 
+            [(x,True):i | i <- subconj xs] ++ [(x,False):i | i <- subconj xs] 
+
+{- |Aux. 9| Función satisfenConj. Recibe un estado e y una lista de fórmulas 
+   (gamma). Nos dice si el conjunto de fórmulas es satisfacible con el estado
+   dado.
+
+   Descripción:
+   Utilizamos una lista de comprensión para obtener la lista de listas con la 
+   interpretación de cada una de las fórmulas con el estado e. Utilizamos 
+   "and" para determinar si todas las interpretaciones obtenidas son verdaderas
+   (en tal caso gamma es satisfacible) o si alguna de ellas es falsa (en tal 
+   caso gamma no es satisfacible).
+
+   Ejemplos de entrada:
+   *PracticaN> satisfenConj [('S', False), ('P', True), ('Q', False)] 
+   [Impl(Var 'P')(Var 'Q'), Conj(Disy(Var 'S')(Var 'P'))(Neg(Var 'Q')), 
+   Neg(Var 'S')]
+   False
+
+   *PracticaN> satisfenConj [('P', False), ('R', False), ('S', False), 
+   ('T', False), ('Q', True)] [Impl(Var 'P')(Neg(Var 'Q')), 
+   Impl(Disy(Var 'R')(Var 'S'))(Var 'T'), Impl(Var 'T')(Var 'Q')]
+   True
+-}
+satisfenConj :: Estado -> [Prop] -> Bool
+satisfenConj e phi = and [satisfen e psi | psi <- phi]
+
+{- |Aux. 10| Función satisfen. Recibe un estado e y una fórmula (phi). Nos dice
+   si (phi) es satisfacible con el estado dado.
+
+   Descripción:
+   La función es simple. Si la interpretación de (phi) con el estado dado es 
+   verdadera, entonces (phi) es satisfacible por definición. 
+
+   Ejemplos de entrada:
+   *PracticaN> satisfen [('P', True), ('R', False), ('S', True)] 
+   (Disy(Impl(Var 'P')(Var 'R'))(Conj(Neg(Var 'S'))(Var 'P')))
+   True
+
+   *PracticaN> satisfen [('P', True), ('R', False), ('S', True)] 
+   (Disy(Impl(Var 'P')(Var 'R'))(Conj(Neg(Var 'S'))(Var 'P')))
+   False
+-}
+satisfen :: Estado -> Prop -> Bool
+satisfen i phi = interp phi i == True
+
+{- |Aux. 11| Función consecuencia. Recibe una lista de fórmulas gamma y una 
+   conclusión (phi). Nos dice si (phi) es consecuencia lógica de (gamma).
+
+   Descripción:
+   Para mostrar que (phi) es consecuencia lógica de (gamma) basta verificar que
+   no existen modelos de (gamma) que no sean modelos de (phi), es decir, que la
+   lista de modelos de (gamma) que no son modelos de (phi) es vacía. Esto lo 
+   hacemos usando una lista de comprensión, donde escribimos las 
+   espeficicaciones antes mencionadas.
+
+   Ejemplos de entrada:
+   *PracticaN> consecuencia [Impl(Var 'P')(Conj(Var 'Q')(Var 'R'))] 
+   (Disy(Impl(Var 'P')(Var 'Q'))(Impl(Var 'P')(Var 'R')))
+   True
+
+   *PracticaN> consecuencia [Impl(Var 'P')(Var 'Q'), Impl(Var 'R')(Var 'S'), 
+   Disy(Var 'P')(Var 'R'), Neg(Conj(Var 'Q')(Var 'S'))] 
+   (Conj(Impl(Var 'Q')(Var 'P'))(Impl(Var 'S')(Var 'R')))
+   True
 -}
 consecuencia :: [Prop] -> Prop -> Bool
-consecuencia gamma phi = insatisfConj ((Neg phi) : gamma)
+consecuencia gamma phi = null [i | i <- estadosConj (phi: gamma), 
+                               satisfenConj i gamma, not (satisfen i phi)]    
 
-{- |Aux. 10| Función estados: Recibe una expresión proposicional. Devuelve
-   la lista con los 2^n estados distintos para la expresión proposicional.
--}
-estados :: Prop -> [Prop]
-estados psi = vars psi
+{- |Aux. 12| Función vars. Recibe una formula (phi). Regresa la lista de 
+   variables proposicionales que figuran en (phi), sin repetición.
 
-{- |Aux. 11| Función vars: Recibe una expresión proposicional. Regresa la lista
-   de variables proposicionales que figuran en la expresión proposicional.
+   Descripción: 
+   Simplemente utilizamos la función 'union' para unir las listas finales
+   que contienen las variables proposicionales de cada una de las fórmulas. 
+   Por cómo está definida 'union', nos regresa la lista que contiene todos 
+   los elementos de las listas que recibe, sin repetición.
+
+   Ejemplos de entrada:
+   *Main> vars (Syss (Impl (Var 'p') (Var 'r')) (Conj (Var 'q') (Var 's')))
+   "prqs"
+
+   *Main vars (Disy (Neg (Var 'x')) (Neg (Var 'y')))
+   "xy"
 -}
-vars :: Prop -> [Prop]
+vars :: Prop -> [VarP]
 vars phi = case phi of
     Top -> []
-    Bot -> [] 
-    Var p -> [Var p]
-    Neg p -> vars(p)
-    Conj p q -> vars (p) ++ vars (q)
-    Disy p q -> vars (p) ++ vars (q)
-    Impl p q -> vars (p) ++ vars (q)
-    Syss p q -> vars (p) ++ vars (q)
+    Bot -> []
+    Var i -> [i]
+    Neg p -> vars p
+    Conj p q -> vars p `union` vars q
+    Disy p q -> vars p `union` vars q
+    Impl p q -> vars p `union` vars q
+    Syss p q -> vars p `union` vars q
 
-{- |Aux. 11| Función elemm : Recibe un elemento y una lista. Nos dice si el elemento
+{- |Aux. 13| Función elemm : Recibe un elemento y una lista. Nos dice si el elemento
    pertenece a la lista pasada como parámetro.
 
    Descripción: Si la lista entonces nos regresará False como resultado. En otro caso,
@@ -268,7 +453,7 @@ elemm :: (Eq a) => a -> [a] -> Bool
 elemm _ []       = False
 elemm x (y:ys)   = x == y || elem x ys
 
-{- |Aux. 9| Función auxPath. Recibe una gráfica, una cadena y una lista de cadenas.
+{- |Aux. 14| Función auxPath. Recibe una gráfica, una cadena y una lista de cadenas.
    La cadena representa el nodo inicial y la lista de cadenas sus vecinos. 
    Nos regresa True si entre dos nodos existe un camino y False en otro caso.
 
